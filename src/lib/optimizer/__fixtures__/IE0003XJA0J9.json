@@ -1,0 +1,377 @@
+{
+  "profile": {
+    "isin": "IE0003XJA0J9",
+    "name": "Amundi Prime All Country World UCITS ETF (Acc)",
+    "provider": "Amundi Luxembourg S.A.",
+    "index": "Solactive GBS Glb Mar L&M Cap TR USD",
+    "ter": 0.07,
+    "ongoingCharges": null,
+    "swapBased": false,
+    "launchDate": "2024-06-05",
+    "fundVolumeEur": 8598831168,
+    "numberOfHoldings": 3398
+  },
+  "exposures": {
+    "countries": [
+      {
+        "name": "Vereinigte Arabische Emirate",
+        "value": 0.22517,
+        "code": "AE"
+      },
+      {
+        "name": "Australien",
+        "value": 1.59773,
+        "code": "AU"
+      },
+      {
+        "name": "Österreich",
+        "value": 0.10236,
+        "code": "AT"
+      },
+      {
+        "name": "Belgien",
+        "value": 0.21558,
+        "code": "BE"
+      },
+      {
+        "name": "Brasilien",
+        "value": 0.52425,
+        "code": "BR"
+      },
+      {
+        "name": "Kanada",
+        "value": 3.08089,
+        "code": "CA"
+      },
+      {
+        "name": "Schweiz",
+        "value": 2.09196,
+        "code": "CH"
+      },
+      {
+        "name": "Chile",
+        "value": 0.06091,
+        "code": "CL"
+      },
+      {
+        "name": "China",
+        "value": 2.72459,
+        "code": "CN"
+      },
+      {
+        "name": "Kolumbien",
+        "value": 0.0314,
+        "code": "CO"
+      },
+      {
+        "name": "Zypern",
+        "value": 0.00898,
+        "code": "CY"
+      },
+      {
+        "name": "Tschechien",
+        "value": 0.01888,
+        "code": "CZ"
+      },
+      {
+        "name": "Deutschland",
+        "value": 1.82616,
+        "code": "DE"
+      },
+      {
+        "name": "Dänemark",
+        "value": 0.34376,
+        "code": "DK"
+      },
+      {
+        "name": "Ägypten",
+        "value": 0.01085,
+        "code": "EG"
+      },
+      {
+        "name": "Spanien",
+        "value": 0.78433,
+        "code": "ES"
+      },
+      {
+        "name": "Finnland",
+        "value": 0.19114,
+        "code": "FI"
+      },
+      {
+        "name": "Frankreich",
+        "value": 1.75853,
+        "code": "FR"
+      },
+      {
+        "name": "Vereinigtes Königreich (England)",
+        "value": 2.90276,
+        "code": "GB"
+      },
+      {
+        "name": "Griechenland",
+        "value": 0.07403,
+        "code": "GR"
+      },
+      {
+        "name": "Hong Kong",
+        "value": 0.44465,
+        "code": "HK"
+      },
+      {
+        "name": "Ungarn",
+        "value": 0.0429,
+        "code": "HU"
+      },
+      {
+        "name": "Indonesien",
+        "value": 0.08987,
+        "code": "ID"
+      },
+      {
+        "name": "Indien",
+        "value": 1.49405,
+        "code": "IN"
+      },
+      {
+        "name": "Irland",
+        "value": 0.13449,
+        "code": "IE"
+      },
+      {
+        "name": "Israel",
+        "value": 0.32048,
+        "code": "IL"
+      },
+      {
+        "name": "Italien",
+        "value": 0.67747,
+        "code": "IT"
+      },
+      {
+        "name": "Japan",
+        "value": 5.81586,
+        "code": "JP"
+      },
+      {
+        "name": "Südkorea",
+        "value": 2.31329,
+        "code": "KR"
+      },
+      {
+        "name": "Kuwait",
+        "value": 0.07211,
+        "code": "KW"
+      },
+      {
+        "name": "Luxemburg",
+        "value": 0.00324,
+        "code": "LU"
+      },
+      {
+        "name": "Macau",
+        "value": 0.00522,
+        "code": "MO"
+      },
+      {
+        "name": "Mexiko",
+        "value": 0.23639,
+        "code": "MX"
+      },
+      {
+        "name": "Malaysia",
+        "value": 0.17751,
+        "code": "MY"
+      },
+      {
+        "name": "Niederlande",
+        "value": 1.22197,
+        "code": "NL"
+      },
+      {
+        "name": "Norwegen",
+        "value": 0.18126,
+        "code": "NO"
+      },
+      {
+        "name": "Neuseeland",
+        "value": 0.05153,
+        "code": "NZ"
+      },
+      {
+        "name": "Philippinen",
+        "value": 0.03752,
+        "code": "PH"
+      },
+      {
+        "name": "Polen",
+        "value": 0.14935,
+        "code": "PL"
+      },
+      {
+        "name": "Portugal",
+        "value": 0.04272,
+        "code": "PT"
+      },
+      {
+        "name": "Katar",
+        "value": 0.05791,
+        "code": "QA"
+      },
+      {
+        "name": "Saudi Arabien",
+        "value": 0.29559,
+        "code": "SA"
+      },
+      {
+        "name": "Singapur",
+        "value": 0.44732,
+        "code": "SG"
+      },
+      {
+        "name": "Schweden",
+        "value": 0.80952,
+        "code": "SE"
+      },
+      {
+        "name": "Thailand",
+        "value": 0.20202,
+        "code": "TH"
+      },
+      {
+        "name": "Türkei",
+        "value": 0.11505,
+        "code": "TR"
+      },
+      {
+        "name": "Taiwan",
+        "value": 3.25686,
+        "code": "TW"
+      },
+      {
+        "name": "Vereinigte Staaten (USA)",
+        "value": 62.37116,
+        "code": "US"
+      },
+      {
+        "name": "Südafrika",
+        "value": 0.31628,
+        "code": "ZA"
+      }
+    ],
+    "sectors": [
+      {
+        "name": "Grundmaterialien",
+        "value": 3.44799,
+        "code": "basic_materials"
+      },
+      {
+        "name": "Zykl. Konsumgüter",
+        "value": 8.70337,
+        "code": "consumer_cyclical"
+      },
+      {
+        "name": "Finanzen",
+        "value": 16.57323,
+        "code": "financial_services"
+      },
+      {
+        "name": "Immobilien",
+        "value": 1.56663,
+        "code": "real_estate"
+      },
+      {
+        "name": "Basiskonsumgüter",
+        "value": 4.63221,
+        "code": "consumer_defense"
+      },
+      {
+        "name": "Gesundheitswesen",
+        "value": 8.32313,
+        "code": "healthcare"
+      },
+      {
+        "name": "Versorger",
+        "value": 2.31745,
+        "code": "utilities"
+      },
+      {
+        "name": "Kommunikation",
+        "value": 7.98512,
+        "code": "communication_services"
+      },
+      {
+        "name": "Industrie",
+        "value": 10.51396,
+        "code": "industrials"
+      },
+      {
+        "name": "Technologie",
+        "value": 32.01097,
+        "code": "technology"
+      },
+      {
+        "name": "Energie",
+        "value": 3.88379,
+        "code": "energy"
+      }
+    ],
+    "regions": [
+      {
+        "name": "Asien",
+        "value": 18.10405,
+        "code": "asien"
+      },
+      {
+        "name": "Pazifik",
+        "value": 1.6492600000000002,
+        "code": "australasia"
+      },
+      {
+        "name": "Europa",
+        "value": 13.36128,
+        "code": "europe"
+      },
+      {
+        "name": "Lateinamerika",
+        "value": 0.85295,
+        "code": "latin_america"
+      },
+      {
+        "name": "Nordamerika",
+        "value": 65.45205,
+        "code": "america_north"
+      },
+      {
+        "name": "Osteuropa",
+        "value": 0.21113,
+        "code": "europe_east"
+      },
+      {
+        "name": "Afrika",
+        "value": 0.32713000000000003,
+        "code": "africa"
+      }
+    ],
+    "msci": [
+      {
+        "name": "Emerging Markets",
+        "value": 12.52678
+      },
+      {
+        "name": "Developed Markets",
+        "value": 87.41363000000001
+      },
+      {
+        "name": "Below-FM",
+        "value": 0.01744
+      }
+    ],
+    "asOfDate": "2026-08-12",
+    "sums": {
+      "countries": 99.9579,
+      "sectors": 99.9579,
+      "regions": 99.9578
+    }
+  }
+}

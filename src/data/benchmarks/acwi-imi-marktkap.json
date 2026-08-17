@@ -1,0 +1,404 @@
+{
+ "description": "MSCI ACWI IMI Benchmark — Marktkapitalisierung via SPDR ACWI IMI (IE00B3YLTY66)",
+ "source": "SPDR ACWI IMI UCITS ETF via extraETF",
+ "asOf": "2026-07-31",
+ "countryCount": 56,
+ "weights": {
+  "AE": {
+   "name": "Vereinigte Arabische Emirate",
+   "weight": 0.001678,
+   "weightPct": 0.1676
+  },
+  "AU": {
+   "name": "Australien",
+   "weight": 0.015562,
+   "weightPct": 1.5539
+  },
+  "AT": {
+   "name": "Österreich",
+   "weight": 0.000304,
+   "weightPct": 0.0304
+  },
+  "BE": {
+   "name": "Belgien",
+   "weight": 0.002158,
+   "weightPct": 0.2155
+  },
+  "BR": {
+   "name": "Brasilien",
+   "weight": 0.005809,
+   "weightPct": 0.5801
+  },
+  "CA": {
+   "name": "Kanada",
+   "weight": 0.031113,
+   "weightPct": 3.1067
+  },
+  "CH": {
+   "name": "Schweiz",
+   "weight": 0.020664,
+   "weightPct": 2.0633
+  },
+  "CL": {
+   "name": "Chile",
+   "weight": 0.000382,
+   "weightPct": 0.0382
+  },
+  "CN": {
+   "name": "China",
+   "weight": 0.022929,
+   "weightPct": 2.2896
+  },
+  "CO": {
+   "name": "Kolumbien",
+   "weight": 0.000199,
+   "weightPct": 0.0199
+  },
+  "CY": {
+   "name": "Zypern",
+   "weight": 3e-06,
+   "weightPct": 0.0003
+  },
+  "CZ": {
+   "name": "Tschechien",
+   "weight": 0.000618,
+   "weightPct": 0.0617
+  },
+  "DE": {
+   "name": "Deutschland",
+   "weight": 0.018837,
+   "weightPct": 1.8809
+  },
+  "DK": {
+   "name": "Dänemark",
+   "weight": 0.004606,
+   "weightPct": 0.4599
+  },
+  "EG": {
+   "name": "Ägypten",
+   "weight": 1.2e-05,
+   "weightPct": 0.0012
+  },
+  "ES": {
+   "name": "Spanien",
+   "weight": 0.007744,
+   "weightPct": 0.7733
+  },
+  "FI": {
+   "name": "Finnland",
+   "weight": 0.001243,
+   "weightPct": 0.1241
+  },
+  "FR": {
+   "name": "Frankreich",
+   "weight": 0.019148,
+   "weightPct": 1.912
+  },
+  "GB": {
+   "name": "Vereinigtes Königreich (England)",
+   "weight": 0.032139,
+   "weightPct": 3.2091
+  },
+  "GR": {
+   "name": "Griechenland",
+   "weight": 0.000368,
+   "weightPct": 0.0367
+  },
+  "GT": {
+   "name": "Guatemala",
+   "weight": 8.4e-05,
+   "weightPct": 0.0084
+  },
+  "HK": {
+   "name": "Hong Kong",
+   "weight": 0.005568,
+   "weightPct": 0.556
+  },
+  "HU": {
+   "name": "Ungarn",
+   "weight": 0.000122,
+   "weightPct": 0.0122
+  },
+  "ID": {
+   "name": "Indonesien",
+   "weight": 0.000575,
+   "weightPct": 0.0574
+  },
+  "IN": {
+   "name": "Indien",
+   "weight": 0.015963,
+   "weightPct": 1.5939
+  },
+  "IE": {
+   "name": "Irland",
+   "weight": 0.000904,
+   "weightPct": 0.0902
+  },
+  "IS": {
+   "name": "Island",
+   "weight": 3e-06,
+   "weightPct": 0.0003
+  },
+  "IL": {
+   "name": "Israel",
+   "weight": 0.003272,
+   "weightPct": 0.3267
+  },
+  "IT": {
+   "name": "Italien",
+   "weight": 0.006832,
+   "weightPct": 0.6822
+  },
+  "JE": {
+   "name": "Jersey",
+   "weight": 1.3e-05,
+   "weightPct": 0.0013
+  },
+  "JP": {
+   "name": "Japan",
+   "weight": 0.057082,
+   "weightPct": 5.6997
+  },
+  "KR": {
+   "name": "Südkorea",
+   "weight": 0.023298,
+   "weightPct": 2.3263
+  },
+  "KW": {
+   "name": "Kuwait",
+   "weight": 0.000804,
+   "weightPct": 0.0803
+  },
+  "LT": {
+   "name": "Litauen",
+   "weight": 5e-06,
+   "weightPct": 0.0005
+  },
+  "LU": {
+   "name": "Luxemburg",
+   "weight": 4.7e-05,
+   "weightPct": 0.0047
+  },
+  "MO": {
+   "name": "Macau",
+   "weight": 6.2e-05,
+   "weightPct": 0.0062
+  },
+  "MX": {
+   "name": "Mexiko",
+   "weight": 0.002603,
+   "weightPct": 0.2599
+  },
+  "MY": {
+   "name": "Malaysia",
+   "weight": 0.001599,
+   "weightPct": 0.1596
+  },
+  "NL": {
+   "name": "Niederlande",
+   "weight": 0.012385,
+   "weightPct": 1.2367
+  },
+  "NO": {
+   "name": "Norwegen",
+   "weight": 0.001351,
+   "weightPct": 0.1349
+  },
+  "NZ": {
+   "name": "Neuseeland",
+   "weight": 0.001084,
+   "weightPct": 0.1082
+  },
+  "PE": {
+   "name": "Peru",
+   "weight": 3e-05,
+   "weightPct": 0.003
+  },
+  "PH": {
+   "name": "Philippinen",
+   "weight": 0.000187,
+   "weightPct": 0.0187
+  },
+  "PL": {
+   "name": "Polen",
+   "weight": 0.000498,
+   "weightPct": 0.0497
+  },
+  "PR": {
+   "name": "Puerto Rico",
+   "weight": 1e-05,
+   "weightPct": 0.001
+  },
+  "PT": {
+   "name": "Portugal",
+   "weight": 0.00062,
+   "weightPct": 0.0619
+  },
+  "QA": {
+   "name": "Katar",
+   "weight": 0.000655,
+   "weightPct": 0.0654
+  },
+  "RO": {
+   "name": "Rumänien",
+   "weight": 0.000489,
+   "weightPct": 0.0488
+  },
+  "SA": {
+   "name": "Saudi Arabien",
+   "weight": 0.002698,
+   "weightPct": 0.2694
+  },
+  "SG": {
+   "name": "Singapur",
+   "weight": 0.005521,
+   "weightPct": 0.5513
+  },
+  "SE": {
+   "name": "Schweden",
+   "weight": 0.007651,
+   "weightPct": 0.764
+  },
+  "TH": {
+   "name": "Thailand",
+   "weight": 0.001164,
+   "weightPct": 0.1162
+  },
+  "TR": {
+   "name": "Türkei",
+   "weight": 0.000621,
+   "weightPct": 0.062
+  },
+  "TW": {
+   "name": "Taiwan",
+   "weight": 0.030589,
+   "weightPct": 3.0544
+  },
+  "US": {
+   "name": "Vereinigte Staaten (USA)",
+   "weight": 0.627399,
+   "weightPct": 62.6472
+  },
+  "ZA": {
+   "name": "Südafrika",
+   "weight": 0.002694,
+   "weightPct": 0.269
+  }
+ },
+ "sectors": [
+  {
+   "code": "basic_materials",
+   "name": "Grundmaterialien",
+   "weight": 0.038823
+  },
+  {
+   "code": "consumer_cyclical",
+   "name": "Zykl. Konsumgüter",
+   "weight": 0.091482
+  },
+  {
+   "code": "financial_services",
+   "name": "Finanzen",
+   "weight": 0.165633
+  },
+  {
+   "code": "real_estate",
+   "name": "Immobilien",
+   "weight": 0.022321
+  },
+  {
+   "code": "consumer_defense",
+   "name": "Basiskonsumgüter",
+   "weight": 0.046064
+  },
+  {
+   "code": "healthcare",
+   "name": "Gesundheitswesen",
+   "weight": 0.085206
+  },
+  {
+   "code": "utilities",
+   "name": "Versorger",
+   "weight": 0.02357
+  },
+  {
+   "code": "communication_services",
+   "name": "Kommunikation",
+   "weight": 0.075835
+  },
+  {
+   "code": "industrials",
+   "name": "Industrie",
+   "weight": 0.11799
+  },
+  {
+   "code": "technology",
+   "name": "Technologie",
+   "weight": 0.29247
+  },
+  {
+   "code": "energy",
+   "name": "Energie",
+   "weight": 0.040607
+  }
+ ],
+ "regions": [
+  {
+   "code": "asien",
+   "name": "Asien",
+   "weight": 0.174269
+  },
+  {
+   "code": "australasia",
+   "name": "Pazifik",
+   "weight": 0.016646
+  },
+  {
+   "code": "europe",
+   "name": "Europa",
+   "weight": 0.137021
+  },
+  {
+   "code": "latin_america",
+   "name": "Lateinamerika",
+   "weight": 0.009119
+  },
+  {
+   "code": "america_north",
+   "name": "Nordamerika",
+   "weight": 0.658512
+  },
+  {
+   "code": "europe_east",
+   "name": "Osteuropa",
+   "weight": 0.001727
+  },
+  {
+   "code": "africa",
+   "name": "Afrika",
+   "weight": 0.002706
+  }
+ ],
+ "msci": [
+  {
+   "code": "",
+   "name": "Emerging Markets",
+   "weight": 0.116098
+  },
+  {
+   "code": "",
+   "name": "Developed Markets",
+   "weight": 0.883187
+  },
+  {
+   "code": "",
+   "name": "Below-FM",
+   "weight": 0.000219
+  },
+  {
+   "code": "",
+   "name": "Frontier Markets",
+   "weight": 0.000497
+  }
+ ]
+}

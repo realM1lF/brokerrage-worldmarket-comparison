@@ -1,7 +1,7 @@
 # Plan: Portfolio ↔ Weltmarkt-Analyse
 
 Stand: 2026-08-17. Konzeption abgeschlossen.
-**Status: Umsetzung STARTET.** Go-Befehl am Ende des Dokuments.
+**Status: V1-Kern umgesetzt** (Datenpipeline + Rechenkern + UI, Schritte 1-5).
 **Design (Optik) noch NICHT definiert.** Funktional zuerst, Optik zuletzt.
 
 ## Ziel (korrigiert)
@@ -185,9 +185,49 @@ unbrauchbar. Freifloat-Gewichte kommen aus dem Daten-Spike (MSCI-Factsheet oder 
 
 1. Design/Optik (bewusst offen, zuletzt)
 2. **Datenquelle-Entscheidung:** extraETF-Genehmigung anfragen (Mail-Entwurf: docs/anfrage-extraetf.md) vs. Lizenzdaten
-3. Benchmark-Quelle finalisieren (SPDR-ACWI-IMI via extraETF vs. MSCI-Factsheet)
+3. Benchmark-Quelle finalisieren: GELÖST — SPDR ACWI IMI via extraETF, statisch abgelegt
 4. ToS-Ergebnis (geprüft): extraETF UND BlackRock: privat okay, kommerziell nur mit Genehmigung. Keine freie öffentliche API für markenübergreifende Ländergewichte.
-5. ETF-Preise (€-Umschichtung): separate Quelle (Yahoo/yfinance)
+5. ETF-Preise (€-Umschichtung): separate Quelle (Yahoo/yfinance) — V1 arbeitet mit €-Input
+6. Sparplan-Analyse + Sparplan-Vorschlag: Konzept in `docs/plan-sparplan.md`, Design-Entscheidungen offen
+
+## Umsetzungsstand (2026-08-17)
+
+Schritte 1-5 abgeschlossen + Blend-Benchmark + Methodik-Doku + UI-Dashboard +
+Sparplan (Stufe 1+2) + **Stufe B (fehlende ETFs vorschlagen)** +
+Finanzfluss-Styling. Details: `docs/CHANGELOG.md`.
+
+- **Stack:** Next.js 16 (App Router) + TS + Netlify. Route Handler = Netlify Functions.
+- **Pipeline:** extraETF HTML-`frontend-state` geparst (`<profilId>.b.results[0].portfolio_breakdown`),
+  Endpoint `/api/etf/[isin]`, TTL-Cache (Netlify Blobs / lokale Datei).
+- **Befund:** Sektor-/Regionen-Codes anbieterübergreifend konsistent. IWDA-Daten enthalten
+  China/Brasilien/Mexiko (extraETF-Klassifizierung).
+- **Benchmark:** 4 Modelle statisch (`src/data/benchmarks/`). Marktkap = SPDR ACWI IMI (skaliert),
+  GDP/PPP = World Bank 2023 über ACWI-IMI-Universum, Taiwan via IMF,
+  Blend = 50/25/25 (Marktkap/GDP nom/GDP PPP). Methodik: `docs/methodology.md`.
+- **Rechenkern:** `src/lib/optimizer/optimize.ts` — PGD auf Simplex, Grid-Search-validiert.
+  Restposten als `_OTHER` bestraft. Ist-/Ziel-Scores getrennt.
+  `src/lib/optimizer/savings.ts` — Sparplan-Analyse (Ist) + Vorschlag
+  (benchmark-treu / konvergenz-optimal mit geschlossener Form).
+  `src/lib/optimizer/candidates.ts` — Stufe B: gierige Treppe (max 3 Stufen) +
+  Tausch-Hinweis. Katalog: `src/data/candidates.ts`, API `/api/candidates`.
+- **UI:** Dashboard-Grid, Laien-Tooltips, Interaktivität (Live-Toggle, Hover, Donut-Klick,
+  sortierbare Tabelle), View-Toggle Bestand/Sparplan, inline editierbare Sparraten,
+  Universum-Toggle „Nur meine ETFs | Mit neuen ETFs" mit Treppen-Karte,
+  „neuer ETF"-Badges, Tausch-Hinweis. Finanzfluss-inspiriertes Styling (Outfit-Font
+  self-hosted, Navy/Indigo-Palette, Soft-Shadow-Karten).
+- **Tests:** 44 grün (Vitest). `npm test`.
+- **Nächste Schritte:** Stufe 3 (Konvergenz-Prognose „Monate bis Ziel"),
+  Anteile-Input (Kursquelle), Benchmark-Auto-Update, extraETF-Genehmigung,
+  Design-Feinschliff nach RIn-Abnahme.
+
+### Ausführen
+
+```bash
+npm install
+npm run dev       # http://localhost:3000
+npm test          # Vitest
+npm run build     # Netlify-Build
+```
 
 ## Skills
 
@@ -197,31 +237,24 @@ unbrauchbar. Freifloat-Gewichte kommen aus dem Daten-Spike (MSCI-Factsheet oder 
 ## Go-Befehl (neue Session)
 
 ```
-Projekt: /home/rin/Work/_private/finance (Portfolio ↔ Weltmarkt-Analyse-App). Umsetzung startet jetzt.
+Projekt: /home/rin/Work/_private/finance (Portfolio ↔ Weltmarkt-Analyse). Review-Session:
+aktuellen Stand gemeinsam anschauen — RIn bringt Punkte mit.
 
-1. Lies docs/plan.md KOMPLETT. Vollständige Quelle: Umfang, V1-Katalog, Rechenkern,
-   Daten-Spike-Ergebnisse, Deployment-Entscheidung, ToS-Lage.
-2. Was gilt:
-   - Multi-ETF. Input €/Anteile. Output Ziel-Gewichtung + Delta + €-Umschichtung.
-     Stufe A zuerst (vorhandene ETFs umschichten), Stufe B (fehlende ETFs vorschlagen) später.
-   - Datenquelle primär: extraETF (privat nutzbar, alle Anbieter, volle Länder/Sektoren/
-     Regionen, Zugriffsdetails im Spike-Abschnitt). Backup: iShares-API.
-   - Benchmark: MSCI ACWI IMI Default, Toggle Marktkap/GDP/PPP. Benchmark statisch cachen.
-   - Deployment: Netlify, alles TypeScript (Next.js + Netlify Functions). Rechenkern in TS.
-3. Privates Tool, KEINE öffentliche Website geplant. extraETF-Anfrage läuft, blockiert nichts.
-4. Arbeitsweise: bottom-up, plan-driven. Erst Datenpipeline + Rechenkern + Tests, dann UI.
-   Optik bewusst offen (Design zuletzt). Keine Commits ohne explizite Aufforderung.
-   Kleinste Diffs, bestehende Konventionen. Kommunikation Deutsch, Caveman.
-5. V1-Reihenfolge:
-   (1) Projekt-Scaffold (Next.js + TS, Netlify-ready)
-   (2) Daten-Pipeline: extraETF ISIN → Länder/Sektoren/Regionen als Serverless Function
-       + Caching. Kurz verifizieren, dass Endpoints noch funktionieren (Spike-ETFs).
-   (3) Benchmark-Tabelle generieren + statisch ablegen (SPDR ACWI IMI, Marktkap-Modell;
-       GDP/PPP-Tabellen aus World-Bank-Daten vorbereiten)
-   (4) Rechenkern in TS: konvexe Optimierung (Σw=1, w≥0) + Active Share, Länder-Drift,
-       Sektor-Drift. Tests gegen die 5 Spike-ETFs mit bekannten Werten.
-   (5) Minimale UI mit V1-Katalog (Deckungs-Score, Ziel-Gewichtung, Umschichtungs-Plan,
-       Länder-Drift, Top Über/Untergewichte, fehlende Länder, Regionen, Sektoren).
-   (6) Handoff-Notizen in docs/CHANGELOG.md, Zwischenstand in docs/plan.md.
-6. Starte mit Schritt 1 + 2. Nicht neu nachfragen, direkt umsetzen.
+1. Lies docs/CHANGELOG.md + docs/plan.md (Umsetzungsstand) + docs/methodology.md
+   + docs/plan-sparplan.md. Das ist der komplette Stand.
+2. Was existiert:
+   - V1-Kern: extraETF-Pipeline (privat nutzbar), Optimizer (PGD auf Simplex),
+     Ist-/Ziel-Scores getrennt.
+   - 4 Benchmarks: Marktkap (SPDR ACWI IMI), GDP, PPP, Blend (50/25/25) — Toggle in UI.
+   - Dashboard-UI: Bestand- + Sparplan-View, Laien-Tooltips, Live-Reanalyse,
+     Donut-Drilldown, sortierbare Tabelle, inline editierbare Sparraten.
+   - Sparplan Stufe 1+2 fertig: Ist-Analyse (Flow) + Vorschlag
+     (Weltmarkt spiegeln / Lücken füllen, Default). Offen: Stufe 3
+     (Konvergenz-Prognose „Monate bis Ziel"), Stufe B (fehlende ETFs),
+     Anteile-Input, Benchmark-Auto-Update, Design-Feinschliff.
+   - 34 Tests grün, lint/tsc/build grün. NICHTS committet.
+3. Modus: erst zuhören, RIn hat Punkte. Feedback vs. neue Anforderungen gemeinsam
+   einordnen. Nichts implementieren, bevor Prioritäten geklärt sind.
+4. Zum Anschauen: `npm run dev` (Port 3000 belegt → 3100), http://localhost:3100
+5. Kommunikation Deutsch, kurze einfache Sprache. Keine Commits ohne Aufforderung.
 ```

@@ -1,0 +1,316 @@
+{
+  "profile": {
+    "isin": "IE00BKM4GZ66",
+    "name": "iShares Core MSCI EM IMI UCITS ETF (Acc)",
+    "provider": "BlackRock Asset Management (DEU) AG",
+    "index": "MSCI Emerging Markets IMI",
+    "ter": 0.18,
+    "ongoingCharges": null,
+    "swapBased": false,
+    "launchDate": "2014-05-30",
+    "fundVolumeEur": 45533491996,
+    "numberOfHoldings": 3399
+  },
+  "exposures": {
+    "countries": [
+      {
+        "name": "Vereinigte Arabische Emirate",
+        "value": 1.17814,
+        "code": "AE"
+      },
+      {
+        "name": "Belgien",
+        "value": 0.02573,
+        "code": "BE"
+      },
+      {
+        "name": "Brasilien",
+        "value": 3.61106,
+        "code": "BR"
+      },
+      {
+        "name": "Kanada",
+        "value": 0.00524,
+        "code": "CA"
+      },
+      {
+        "name": "Chile",
+        "value": 0.51007,
+        "code": "CL"
+      },
+      {
+        "name": "China",
+        "value": 18.63661,
+        "code": "CN"
+      },
+      {
+        "name": "Kolumbien",
+        "value": 0.19669,
+        "code": "CO"
+      },
+      {
+        "name": "Zypern",
+        "value": 0,
+        "code": "CY"
+      },
+      {
+        "name": "Tschechien",
+        "value": 0.1165,
+        "code": "CZ"
+      },
+      {
+        "name": "Ägypten",
+        "value": 0.08384,
+        "code": "EG"
+      },
+      {
+        "name": "Spanien",
+        "value": 0.00281,
+        "code": "ES"
+      },
+      {
+        "name": "Vereinigtes Königreich (England)",
+        "value": 0.01619,
+        "code": "GB"
+      },
+      {
+        "name": "Griechenland",
+        "value": 0.59467,
+        "code": "GR"
+      },
+      {
+        "name": "Hong Kong",
+        "value": 0.57768,
+        "code": "HK"
+      },
+      {
+        "name": "Ungarn",
+        "value": 0.3389,
+        "code": "HU"
+      },
+      {
+        "name": "Indonesien",
+        "value": 0.59929,
+        "code": "ID"
+      },
+      {
+        "name": "Indien",
+        "value": 12.78055,
+        "code": "IN"
+      },
+      {
+        "name": "Südkorea",
+        "value": 19.01758,
+        "code": "KR"
+      },
+      {
+        "name": "Kuwait",
+        "value": 0.59902,
+        "code": "KW"
+      },
+      {
+        "name": "Luxemburg",
+        "value": 0.02658,
+        "code": "LU"
+      },
+      {
+        "name": "Mexiko",
+        "value": 1.70958,
+        "code": "MX"
+      },
+      {
+        "name": "Malaysia",
+        "value": 1.18779,
+        "code": "MY"
+      },
+      {
+        "name": "Neuseeland",
+        "value": 0.00335,
+        "code": "NZ"
+      },
+      {
+        "name": "Peru",
+        "value": 0.24252,
+        "code": "PE"
+      },
+      {
+        "name": "Philippinen",
+        "value": 0.38233,
+        "code": "PH"
+      },
+      {
+        "name": "Polen",
+        "value": 1.2413,
+        "code": "PL"
+      },
+      {
+        "name": "Katar",
+        "value": 0.51078,
+        "code": "QA"
+      },
+      {
+        "name": "Rumänien",
+        "value": 0.03886,
+        "code": "RO"
+      },
+      {
+        "name": "Russland",
+        "value": 0.00008,
+        "code": "RU"
+      },
+      {
+        "name": "Saudi Arabien",
+        "value": 2.53767,
+        "code": "SA"
+      },
+      {
+        "name": "Singapur",
+        "value": 0.02038,
+        "code": "SG"
+      },
+      {
+        "name": "Thailand",
+        "value": 1.18012,
+        "code": "TH"
+      },
+      {
+        "name": "Türkei",
+        "value": 0.54045,
+        "code": "TR"
+      },
+      {
+        "name": "Taiwan",
+        "value": 26.94799,
+        "code": "TW"
+      },
+      {
+        "name": "Vereinigte Staaten (USA)",
+        "value": 1.02679,
+        "code": "US"
+      },
+      {
+        "name": "Südafrika",
+        "value": 2.81286,
+        "code": "ZA"
+      }
+    ],
+    "sectors": [
+      {
+        "name": "Grundmaterialien",
+        "value": 6.42453,
+        "code": "basic_materials"
+      },
+      {
+        "name": "Zykl. Konsumgüter",
+        "value": 8.85929,
+        "code": "consumer_cyclical"
+      },
+      {
+        "name": "Finanzen",
+        "value": 18.09777,
+        "code": "financial_services"
+      },
+      {
+        "name": "Immobilien",
+        "value": 1.55679,
+        "code": "real_estate"
+      },
+      {
+        "name": "Basiskonsumgüter",
+        "value": 2.93275,
+        "code": "consumer_defense"
+      },
+      {
+        "name": "Gesundheitswesen",
+        "value": 3.63482,
+        "code": "healthcare"
+      },
+      {
+        "name": "Versorger",
+        "value": 1.90166,
+        "code": "utilities"
+      },
+      {
+        "name": "Kommunikation",
+        "value": 5.91833,
+        "code": "communication_services"
+      },
+      {
+        "name": "Industrie",
+        "value": 7.6733,
+        "code": "industrials"
+      },
+      {
+        "name": "Technologie",
+        "value": 38.93073,
+        "code": "technology"
+      },
+      {
+        "name": "Energie",
+        "value": 3.34512,
+        "code": "energy"
+      }
+    ],
+    "regions": [
+      {
+        "name": "Asien",
+        "value": 86.69638,
+        "code": "asien"
+      },
+      {
+        "name": "Europa",
+        "value": 0.6659800000000001,
+        "code": "europe"
+      },
+      {
+        "name": "Lateinamerika",
+        "value": 6.26992,
+        "code": "latin_america"
+      },
+      {
+        "name": "Nordamerika",
+        "value": 1.03203,
+        "code": "america_north"
+      },
+      {
+        "name": "Osteuropa",
+        "value": 1.73564,
+        "code": "europe_east"
+      },
+      {
+        "name": "Afrika",
+        "value": 2.8967,
+        "code": "africa"
+      },
+      {
+        "name": "Pazifik",
+        "value": 0.00335,
+        "code": "australasia"
+      }
+    ],
+    "msci": [
+      {
+        "name": "Emerging Markets",
+        "value": 97.55631000000002
+      },
+      {
+        "name": "Developed Markets",
+        "value": 1.67817
+      },
+      {
+        "name": "Below-FM",
+        "value": 0.02666
+      },
+      {
+        "name": "Frontier Markets",
+        "value": 0.03886
+      }
+    ],
+    "asOfDate": "2026-08-12",
+    "sums": {
+      "countries": 99.3,
+      "sectors": 99.2751,
+      "regions": 99.3
+    }
+  }
+}

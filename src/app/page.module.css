@@ -1,150 +1,133 @@
-.page {
-  --background: #fafafa;
-  --foreground: #fff;
-
-  --text-primary: #000;
-  --text-secondary: #666;
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-  --button-secondary-border: #ebebeb;
-
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-geist-sans);
-  background-color: var(--background);
-}
-
 .main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem;
+}
+
+/* ---- Dashboard Grid ---- */
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.dashboard > .card {
+  margin-bottom: 0;
+}
+
+/* Row 1: Score-Gauge + Top-Deltas.
+   Die Score-Karte enthält das Kreis-Diagramm (CoverageGauge): laut Design
+   einzige Karte mit weißem Hintergrund + Schatten. */
+.scoreCard {
+  grid-column: span 4;
+}
+
+:global(.card).scoreCard {
+  background: #ffffff;
+  border-color: transparent;
+  box-shadow: var(--shadow-card);
+}
+
+.topDeltasCard {
+  grid-column: span 8;
+}
+
+/* Row 2: Länder-Drift, Sektor-Drift, Regionen-Donut */
+.countryCard {
+  grid-column: span 4;
+}
+
+.sectorCard {
+  grid-column: span 4;
+}
+
+.regionCard {
+  grid-column: span 4;
+}
+
+/* Row 3: Ziel-Gewichtung + Fehlende Länder */
+.allocationCard {
+  grid-column: span 6;
+}
+
+.missingCard {
+  grid-column: span 6;
+}
+
+/* Row 4: Umschichtungs-Tabelle — volle Breite */
+.wideCard {
+  grid-column: span 12;
+}
+
+/* ---- Score Card (Gauge + Details) ---- */
+
+.scoreCardInner {
   display: flex;
-  flex: 1;
-  width: 100%;
-  max-width: 800px;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  background-color: var(--foreground);
-  padding: 120px 60px;
-}
-
-.intro {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 24px;
-}
-
-.intro h1 {
-  max-width: 320px;
-  font-size: 40px;
-  font-weight: 600;
-  line-height: 48px;
-  letter-spacing: -2.4px;
-  text-wrap: balance;
-  color: var(--text-primary);
-}
-
-.intro p {
-  max-width: 440px;
-  font-size: 18px;
-  line-height: 32px;
-  text-wrap: balance;
-  color: var(--text-secondary);
-}
-
-.intro a {
-  font-weight: 500;
-  color: var(--text-primary);
-}
-
-.ctas {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  max-width: 440px;
-  gap: 16px;
-  font-size: 14px;
-}
-
-.ctas a {
-  display: flex;
-  justify-content: center;
   align-items: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 128px;
-  border: 1px solid transparent;
-  transition: 0.2s;
-  cursor: pointer;
-  width: fit-content;
-  font-weight: 500;
+  gap: 0.75rem;
 }
 
-a.primary {
-  background: var(--text-primary);
-  color: var(--background);
-  gap: 8px;
+.metricList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
 }
 
-a.secondary {
-  border-color: var(--button-secondary-border);
+.metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.35rem 0;
+  font-size: 0.85rem;
+  border-bottom: 1px solid var(--border);
 }
 
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
-
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
+.metric:last-child {
+  border-bottom: none;
 }
 
-@media (max-width: 600px) {
-  .main {
-    padding: 48px 24px;
-  }
-
-  .intro {
-    gap: 16px;
-  }
-
-  .intro h1 {
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -1.92px;
-  }
+.metric dt {
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
-  }
-
-  .page {
-    --background: #000;
-    --foreground: #000;
-
-    --text-primary: #ededed;
-    --text-secondary: #999;
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-    --button-secondary-border: #1a1a1a;
-  }
+.metric dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
 }
 
-.code {
-  font-family: var(--font-geist-mono);
-  font-size: 0.9em;
-  background: color-mix(in srgb, currentColor 8%, transparent);
-  padding: 0.1em 0.4em;
-  border-radius: 6px;
+/* ---- Abschnitts-Titel (Ist-Analyse / Vorschlag) ---- */
+
+.sectionTitle {
+  font-size: 1.15rem;
+  margin: 1.5rem 0 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* ---- Responsive: 1 Spalte mobil ---- */
+
+@media (max-width: 640px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .scoreCard,
+  .topDeltasCard,
+  .countryCard,
+  .sectorCard,
+  .regionCard,
+  .allocationCard,
+  .missingCard,
+  .wideCard {
+    grid-column: span 1;
+  }
 }

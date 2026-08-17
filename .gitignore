@@ -20,6 +20,15 @@
 # production
 /build
 
+# local env files
+.env*.local
+
+# netlify (local blobs cache, deploy artifacts)
+.netlify/
+
+# local dev cache
+.cache/
+
 # misc
 .DS_Store
 *.pem

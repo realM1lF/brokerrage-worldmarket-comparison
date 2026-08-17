@@ -1,0 +1,291 @@
+{
+ "description": "GDP PPP 2023 (USD), Gewichte über MSCI-ACWI-IMI-Universum",
+ "source": "World Bank API NY.GDP.MKTP.PP.CD; Taiwan: IMF WEO April 2024",
+ "year": 2023,
+ "countryCount": 56,
+ "totalUsd": 157566771402475.66,
+ "weights": {
+  "AE": {
+   "name": "Vereinigte Arabische Emirate",
+   "ppp": 817937250430.128,
+   "weight": 0.005191
+  },
+  "AT": {
+   "name": "Österreich",
+   "ppp": 678135494455.28,
+   "weight": 0.004304
+  },
+  "AU": {
+   "name": "Australien",
+   "ppp": 1926784790365.08,
+   "weight": 0.012228
+  },
+  "BE": {
+   "name": "Belgien",
+   "ppp": 855572977229.887,
+   "weight": 0.00543
+  },
+  "BR": {
+   "name": "Brasilien",
+   "ppp": 4474720701758.22,
+   "weight": 0.028399
+  },
+  "CA": {
+   "name": "Kanada",
+   "ppp": 2601676541838.53,
+   "weight": 0.016512
+  },
+  "CH": {
+   "name": "Schweiz",
+   "ppp": 835013969788.183,
+   "weight": 0.005299
+  },
+  "CL": {
+   "name": "Chile",
+   "ppp": 652152910210.552,
+   "weight": 0.004139
+  },
+  "CN": {
+   "name": "China",
+   "ppp": 35549988086663.2,
+   "weight": 0.225619
+  },
+  "CO": {
+   "name": "Kolumbien",
+   "ppp": 1113485546859.04,
+   "weight": 0.007067
+  },
+  "CY": {
+   "name": "Zypern",
+   "ppp": 57343530633.666,
+   "weight": 0.000364
+  },
+  "CZ": {
+   "name": "Tschechien",
+   "ppp": 609064222115.211,
+   "weight": 0.003865
+  },
+  "DE": {
+   "name": "Deutschland",
+   "ppp": 6018523537416.52,
+   "weight": 0.038197
+  },
+  "DK": {
+   "name": "Dänemark",
+   "ppp": 460445058423.324,
+   "weight": 0.002922
+  },
+  "EG": {
+   "name": "Ägypten",
+   "ppp": 2123505572183.05,
+   "weight": 0.013477
+  },
+  "ES": {
+   "name": "Spanien",
+   "ppp": 2691365412053.06,
+   "weight": 0.017081
+  },
+  "FI": {
+   "name": "Finnland",
+   "ppp": 354393161505.558,
+   "weight": 0.002249
+  },
+  "FR": {
+   "name": "Frankreich",
+   "ppp": 4165720740902.3,
+   "weight": 0.026438
+  },
+  "GB": {
+   "name": "Vereinigtes Königreich (England)",
+   "ppp": 4165470729171.24,
+   "weight": 0.026436
+  },
+  "GR": {
+   "name": "Griechenland",
+   "ppp": 443495290411.467,
+   "weight": 0.002815
+  },
+  "GT": {
+   "name": "Guatemala",
+   "ppp": 249245675150.065,
+   "weight": 0.001582
+  },
+  "HK": {
+   "name": "Hong Kong",
+   "ppp": 538975658407.944,
+   "weight": 0.003421
+  },
+  "HU": {
+   "name": "Ungarn",
+   "ppp": 444849116289.335,
+   "weight": 0.002823
+  },
+  "ID": {
+   "name": "Indonesien",
+   "ppp": 4338308807417.93,
+   "weight": 0.027533
+  },
+  "IE": {
+   "name": "Irland",
+   "ppp": 708773959826.188,
+   "weight": 0.004498
+  },
+  "IL": {
+   "name": "Israel",
+   "ppp": 544663843842.694,
+   "weight": 0.003457
+  },
+  "IN": {
+   "name": "Indien",
+   "ppp": 14169361699611.9,
+   "weight": 0.089926
+  },
+  "IS": {
+   "name": "Island",
+   "ppp": 31723299258.7663,
+   "weight": 0.000201
+  },
+  "IT": {
+   "name": "Italien",
+   "ppp": 3559677647109.66,
+   "weight": 0.022592
+  },
+  "JE": {
+   "name": "Jersey",
+   "ppp": 0,
+   "weight": 0.0,
+   "note": "keine World-Bank-Daten, Gewicht 0"
+  },
+  "JP": {
+   "name": "Japan",
+   "ppp": 6565294640128.01,
+   "weight": 0.041667
+  },
+  "KR": {
+   "name": "Südkorea",
+   "ppp": 2969845527350.41,
+   "weight": 0.018848
+  },
+  "KW": {
+   "name": "Kuwait",
+   "ppp": 257635961747.528,
+   "weight": 0.001635
+  },
+  "LT": {
+   "name": "Litauen",
+   "ppp": 151390159239.107,
+   "weight": 0.000961
+  },
+  "LU": {
+   "name": "Luxemburg",
+   "ppp": 101694636711.411,
+   "weight": 0.000645
+  },
+  "MO": {
+   "name": "Macau",
+   "ppp": 79028897190.6274,
+   "weight": 0.000502
+  },
+  "MX": {
+   "name": "Mexiko",
+   "ppp": 3267926340143.66,
+   "weight": 0.02074
+  },
+  "MY": {
+   "name": "Malaysia",
+   "ppp": 1282002684291.74,
+   "weight": 0.008136
+  },
+  "NL": {
+   "name": "Niederlande",
+   "ppp": 1437170091488.24,
+   "weight": 0.009121
+  },
+  "NO": {
+   "name": "Norwegen",
+   "ppp": 594836234715.422,
+   "weight": 0.003775
+  },
+  "NZ": {
+   "name": "Neuseeland",
+   "ppp": 285738436246.213,
+   "weight": 0.001813
+  },
+  "PE": {
+   "name": "Peru",
+   "ppp": 576782393044.635,
+   "weight": 0.003661
+  },
+  "PH": {
+   "name": "Philippinen",
+   "ppp": 1263215410391.29,
+   "weight": 0.008017
+  },
+  "PL": {
+   "name": "Polen",
+   "ppp": 1778349511630.98,
+   "weight": 0.011286
+  },
+  "PR": {
+   "name": "Puerto Rico",
+   "ppp": 152444689652.621,
+   "weight": 0.000967
+  },
+  "PT": {
+   "name": "Portugal",
+   "ppp": 526796742406.973,
+   "weight": 0.003343
+  },
+  "QA": {
+   "name": "Katar",
+   "ppp": 342694016165.464,
+   "weight": 0.002175
+  },
+  "RO": {
+   "name": "Rumänien",
+   "ppp": 876458840208.491,
+   "weight": 0.005562
+  },
+  "SA": {
+   "name": "Saudi Arabien",
+   "ppp": 2413917173181.58,
+   "weight": 0.01532
+  },
+  "SE": {
+   "name": "Schweden",
+   "ppp": 721315715902.549,
+   "weight": 0.004578
+  },
+  "SG": {
+   "name": "Singapur",
+   "ppp": 856451638819.689,
+   "weight": 0.005435
+  },
+  "TH": {
+   "name": "Thailand",
+   "ppp": 1692060914184.4,
+   "weight": 0.010739
+  },
+  "TR": {
+   "name": "Türkei",
+   "ppp": 3685769235019.18,
+   "weight": 0.023392
+  },
+  "TW": {
+   "name": "Taiwan",
+   "ppp": 1734456000000,
+   "weight": 0.011008,
+   "note": "IMF WEO April 2024 (World Bank listet Taiwan nicht)"
+  },
+  "US": {
+   "name": "Vereinigte Staaten (USA)",
+   "ppp": 27811516999999.9,
+   "weight": 0.176506
+  },
+  "ZA": {
+   "name": "Südafrika",
+   "ppp": 961603281287.569,
+   "weight": 0.006103
+  }
+ }
+}

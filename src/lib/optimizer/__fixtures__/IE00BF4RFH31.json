@@ -1,0 +1,321 @@
+{
+  "profile": {
+    "isin": "IE00BF4RFH31",
+    "name": "iShares MSCI World Small Cap UCITS ETF",
+    "provider": "BlackRock Asset Management (DEU) AG",
+    "index": "MSCI World Small Cap",
+    "ter": 0.35,
+    "ongoingCharges": null,
+    "swapBased": false,
+    "launchDate": "2018-03-27",
+    "fundVolumeEur": 9018745689,
+    "numberOfHoldings": 3589
+  },
+  "exposures": {
+    "countries": [
+      {
+        "name": "Australien",
+        "value": 3.40741,
+        "code": "AU"
+      },
+      {
+        "name": "Österreich",
+        "value": 0.35071,
+        "code": "AT"
+      },
+      {
+        "name": "Belgien",
+        "value": 0.52369,
+        "code": "BE"
+      },
+      {
+        "name": "Brasilien",
+        "value": 0.12621,
+        "code": "BR"
+      },
+      {
+        "name": "Kanada",
+        "value": 4.0019,
+        "code": "CA"
+      },
+      {
+        "name": "Schweiz",
+        "value": 1.52392,
+        "code": "CH"
+      },
+      {
+        "name": "China",
+        "value": 0.17215,
+        "code": "CN"
+      },
+      {
+        "name": "Zypern",
+        "value": 0.05244,
+        "code": "CY"
+      },
+      {
+        "name": "Deutschland",
+        "value": 1.31861,
+        "code": "DE"
+      },
+      {
+        "name": "Dänemark",
+        "value": 0.62074,
+        "code": "DK"
+      },
+      {
+        "name": "Spanien",
+        "value": 0.48715,
+        "code": "ES"
+      },
+      {
+        "name": "Finnland",
+        "value": 0.34499,
+        "code": "FI"
+      },
+      {
+        "name": "Frankreich",
+        "value": 1.23339,
+        "code": "FR"
+      },
+      {
+        "name": "Vereinigtes Königreich (England)",
+        "value": 4.5497,
+        "code": "GB"
+      },
+      {
+        "name": "Guernsey",
+        "value": 0.00745,
+        "code": "GG"
+      },
+      {
+        "name": "Griechenland",
+        "value": 0.04896,
+        "code": "GR"
+      },
+      {
+        "name": "Hong Kong",
+        "value": 0.3539,
+        "code": "HK"
+      },
+      {
+        "name": "Indonesien",
+        "value": 0.01606,
+        "code": "ID"
+      },
+      {
+        "name": "Indien",
+        "value": 0.04885,
+        "code": "IN"
+      },
+      {
+        "name": "Irland",
+        "value": 0.10993,
+        "code": "IE"
+      },
+      {
+        "name": "Island",
+        "value": 0.00409,
+        "code": "IS"
+      },
+      {
+        "name": "Israel",
+        "value": 1.26812,
+        "code": "IL"
+      },
+      {
+        "name": "Italien",
+        "value": 0.85477,
+        "code": "IT"
+      },
+      {
+        "name": "Japan",
+        "value": 12.32883,
+        "code": "JP"
+      },
+      {
+        "name": "Litauen",
+        "value": 0.00935,
+        "code": "LT"
+      },
+      {
+        "name": "Luxemburg",
+        "value": 0.01893,
+        "code": "LU"
+      },
+      {
+        "name": "Macau",
+        "value": 0.02934,
+        "code": "MO"
+      },
+      {
+        "name": "Mauritius",
+        "value": 0.01303,
+        "code": "MU"
+      },
+      {
+        "name": "Niederlande",
+        "value": 0.51277,
+        "code": "NL"
+      },
+      {
+        "name": "Norwegen",
+        "value": 0.71918,
+        "code": "NO"
+      },
+      {
+        "name": "Neuseeland",
+        "value": 0.09563,
+        "code": "NZ"
+      },
+      {
+        "name": "Puerto Rico",
+        "value": 0.18635,
+        "code": "PR"
+      },
+      {
+        "name": "Portugal",
+        "value": 0.07168,
+        "code": "PT"
+      },
+      {
+        "name": "Singapur",
+        "value": 0.77503,
+        "code": "SG"
+      },
+      {
+        "name": "Schweden",
+        "value": 1.61934,
+        "code": "SE"
+      },
+      {
+        "name": "Taiwan",
+        "value": 0.03132,
+        "code": "TW"
+      },
+      {
+        "name": "Vereinigte Staaten (USA)",
+        "value": 61.69567,
+        "code": "US"
+      },
+      {
+        "name": "Südafrika",
+        "value": 0.02744,
+        "code": "ZA"
+      }
+    ],
+    "sectors": [
+      {
+        "name": "Grundmaterialien",
+        "value": 7.42176,
+        "code": "basic_materials"
+      },
+      {
+        "name": "Zykl. Konsumgüter",
+        "value": 10.77173,
+        "code": "consumer_cyclical"
+      },
+      {
+        "name": "Finanzen",
+        "value": 13.85185,
+        "code": "financial_services"
+      },
+      {
+        "name": "Immobilien",
+        "value": 7.8194,
+        "code": "real_estate"
+      },
+      {
+        "name": "Basiskonsumgüter",
+        "value": 3.9312,
+        "code": "consumer_defense"
+      },
+      {
+        "name": "Gesundheitswesen",
+        "value": 11.00841,
+        "code": "healthcare"
+      },
+      {
+        "name": "Versorger",
+        "value": 2.48755,
+        "code": "utilities"
+      },
+      {
+        "name": "Kommunikation",
+        "value": 3.05361,
+        "code": "communication_services"
+      },
+      {
+        "name": "Industrie",
+        "value": 19.02775,
+        "code": "industrials"
+      },
+      {
+        "name": "Technologie",
+        "value": 15.43701,
+        "code": "technology"
+      },
+      {
+        "name": "Energie",
+        "value": 4.71793,
+        "code": "energy"
+      }
+    ],
+    "regions": [
+      {
+        "name": "Pazifik",
+        "value": 3.50304,
+        "code": "australasia"
+      },
+      {
+        "name": "Europa",
+        "value": 14.929349999999998,
+        "code": "europe"
+      },
+      {
+        "name": "Lateinamerika",
+        "value": 0.31255999999999995,
+        "code": "latin_america"
+      },
+      {
+        "name": "Nordamerika",
+        "value": 65.69757,
+        "code": "america_north"
+      },
+      {
+        "name": "Asien",
+        "value": 15.076039999999997,
+        "code": "asien"
+      },
+      {
+        "name": "Afrika",
+        "value": 0.04047,
+        "code": "africa"
+      }
+    ],
+    "msci": [
+      {
+        "name": "Developed Markets",
+        "value": 98.76706
+      },
+      {
+        "name": "Emerging Markets",
+        "value": 0.47099
+      },
+      {
+        "name": "Below-FM",
+        "value": 0.29451
+      },
+      {
+        "name": "Frontier Markets",
+        "value": 0.02647
+      }
+    ],
+    "asOfDate": "2026-08-13",
+    "sums": {
+      "countries": 99.559,
+      "sectors": 99.5282,
+      "regions": 99.559
+    }
+  }
+}

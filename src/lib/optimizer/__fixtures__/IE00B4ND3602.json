@@ -1,0 +1,26 @@
+{
+  "profile": {
+    "isin": "IE00B4ND3602",
+    "name": "iShares Physical Gold ETC",
+    "provider": "BlackRock Asset Management (DEU) AG",
+    "index": "LBMA Gold Price PM USD",
+    "ter": 0.12,
+    "ongoingCharges": null,
+    "swapBased": false,
+    "launchDate": "2011-04-08",
+    "fundVolumeEur": 186486842,
+    "numberOfHoldings": 1
+  },
+  "exposures": {
+    "countries": [],
+    "sectors": [],
+    "regions": [],
+    "msci": [],
+    "asOfDate": "2014-11-30",
+    "sums": {
+      "countries": 0,
+      "sectors": 0,
+      "regions": 0
+    }
+  }
+}

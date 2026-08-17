@@ -1,0 +1,252 @@
+{
+  "profile": {
+    "isin": "LU0908500753",
+    "name": "Amundi Core Stoxx Europe 600 UCITS ETF (Acc)",
+    "provider": "Amundi Luxembourg S.A.",
+    "index": "STOXX Europe 600",
+    "ter": 0.07,
+    "ongoingCharges": null,
+    "swapBased": false,
+    "launchDate": "2024-02-08",
+    "fundVolumeEur": 21475867009,
+    "numberOfHoldings": 612
+  },
+  "exposures": {
+    "countries": [
+      {
+        "name": "Österreich",
+        "value": 0.65418,
+        "code": "AT"
+      },
+      {
+        "name": "Belgien",
+        "value": 1.45292,
+        "code": "BE"
+      },
+      {
+        "name": "Schweiz",
+        "value": 14.449,
+        "code": "CH"
+      },
+      {
+        "name": "Zypern",
+        "value": 0.0358,
+        "code": "CY"
+      },
+      {
+        "name": "Tschechien",
+        "value": 0.02152,
+        "code": "CZ"
+      },
+      {
+        "name": "Deutschland",
+        "value": 13.10467,
+        "code": "DE"
+      },
+      {
+        "name": "Dänemark",
+        "value": 2.64961,
+        "code": "DK"
+      },
+      {
+        "name": "Spanien",
+        "value": 5.84453,
+        "code": "ES"
+      },
+      {
+        "name": "Finnland",
+        "value": 1.45647,
+        "code": "FI"
+      },
+      {
+        "name": "Frankreich",
+        "value": 13.78272,
+        "code": "FR"
+      },
+      {
+        "name": "Vereinigtes Königreich (England)",
+        "value": 21.21988,
+        "code": "GB"
+      },
+      {
+        "name": "Hong Kong",
+        "value": 0.21886,
+        "code": "HK"
+      },
+      {
+        "name": "Irland",
+        "value": 0.93808,
+        "code": "IE"
+      },
+      {
+        "name": "Israel",
+        "value": 0.02315,
+        "code": "IL"
+      },
+      {
+        "name": "Italien",
+        "value": 5.17898,
+        "code": "IT"
+      },
+      {
+        "name": "Luxemburg",
+        "value": 0.07132,
+        "code": "LU"
+      },
+      {
+        "name": "Mexiko",
+        "value": 0.04764,
+        "code": "MX"
+      },
+      {
+        "name": "Niederlande",
+        "value": 9.15145,
+        "code": "NL"
+      },
+      {
+        "name": "Norwegen",
+        "value": 1.2619,
+        "code": "NO"
+      },
+      {
+        "name": "Polen",
+        "value": 0.98899,
+        "code": "PL"
+      },
+      {
+        "name": "Portugal",
+        "value": 0.26868,
+        "code": "PT"
+      },
+      {
+        "name": "Singapur",
+        "value": 0.23345,
+        "code": "SG"
+      },
+      {
+        "name": "Schweden",
+        "value": 5.22378,
+        "code": "SE"
+      },
+      {
+        "name": "Vereinigte Staaten (USA)",
+        "value": 1.12548,
+        "code": "US"
+      },
+      {
+        "name": "Südafrika",
+        "value": 0.01681,
+        "code": "ZA"
+      }
+    ],
+    "sectors": [
+      {
+        "name": "Grundmaterialien",
+        "value": 4.89345,
+        "code": "basic_materials"
+      },
+      {
+        "name": "Zykl. Konsumgüter",
+        "value": 6.71709,
+        "code": "consumer_cyclical"
+      },
+      {
+        "name": "Finanzen",
+        "value": 25.34087,
+        "code": "financial_services"
+      },
+      {
+        "name": "Immobilien",
+        "value": 1.1239,
+        "code": "real_estate"
+      },
+      {
+        "name": "Basiskonsumgüter",
+        "value": 7.21572,
+        "code": "consumer_defense"
+      },
+      {
+        "name": "Gesundheitswesen",
+        "value": 12.04836,
+        "code": "healthcare"
+      },
+      {
+        "name": "Versorger",
+        "value": 4.23141,
+        "code": "utilities"
+      },
+      {
+        "name": "Kommunikation",
+        "value": 2.72609,
+        "code": "communication_services"
+      },
+      {
+        "name": "Industrie",
+        "value": 19.82886,
+        "code": "industrials"
+      },
+      {
+        "name": "Technologie",
+        "value": 9.13649,
+        "code": "technology"
+      },
+      {
+        "name": "Energie",
+        "value": 5.27857,
+        "code": "energy"
+      }
+    ],
+    "regions": [
+      {
+        "name": "Europa",
+        "value": 96.70817,
+        "code": "europe"
+      },
+      {
+        "name": "Asien",
+        "value": 0.51126,
+        "code": "asien"
+      },
+      {
+        "name": "Osteuropa",
+        "value": 1.01051,
+        "code": "europe_east"
+      },
+      {
+        "name": "Lateinamerika",
+        "value": 0.04764,
+        "code": "latin_america"
+      },
+      {
+        "name": "Nordamerika",
+        "value": 1.12548,
+        "code": "america_north"
+      },
+      {
+        "name": "Afrika",
+        "value": 0.01681,
+        "code": "africa"
+      }
+    ],
+    "msci": [
+      {
+        "name": "Developed Markets",
+        "value": 98.23779
+      },
+      {
+        "name": "Below-FM",
+        "value": 0.10711999999999999
+      },
+      {
+        "name": "Emerging Markets",
+        "value": 1.07496
+      }
+    ],
+    "asOfDate": "2026-08-12",
+    "sums": {
+      "countries": 99.4199,
+      "sectors": 98.5408,
+      "regions": 99.4199
+    }
+  }
+}

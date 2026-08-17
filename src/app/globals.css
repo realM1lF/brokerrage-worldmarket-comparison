@@ -1,49 +1,704 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html {
-  height: 100%;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --bg: #ffffff;
+  --fg: #15284b;
+  --muted: #6c788e;
+  --border: #dcdfe4;
+  --card-border: #e8eaed;
+  --card-bg: #f6f7f9;
+  --accent: #4d6bdd;
+  --accent-hover: #4560c7;
+  --accent-soft: #edf0fc;
+  --accent-soft-border: #becbff;
+  --accent-soft-text: #405dca;
+  --pos: #13cc89;
+  --pos-soft: #e9fbf3;
+  --pos-stroke: #b5f2d9;
+  --neg: #ff6b4a;
+  --neg-soft: #fff1ec;
+  --neg-stroke: #ffd9cf;
+  --warn: #ff9b40;
+  --warn-soft: #fff4e9;
+  --warn-stroke: #ffe4c9;
+  --warn-text: #a35000;
+  --violet: #7f56d9;
+  --violet-soft: #f1edfb;
+  --info-soft: #d9f0fe;
+  --info-stroke: #b3e2fc;
+  --info-text: #2b719e;
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08), 0 0 2px rgba(0, 0, 0, 0.16);
+  --shadow-card-hover: 0 2px 8px rgba(0, 0, 0, 0.08), 0 0 2px rgba(0, 0, 0, 0.16);
+  --shadow-tooltip: 0 4px 24px rgba(0, 0, 0, 0.08), 0 0 2px rgba(0, 0, 0, 0.16);
+  --radius-card: 8px;
 }
 
 * {
   box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
   padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family:
+    'Outfit Variable', 'Outfit', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+h1 {
+  font-size: 1.5rem;
+  margin: 0 0 0.25rem;
+}
+
+h3 {
+  font-size: 1.05rem;
+  margin: 0 0 0.75rem;
+}
+
+h4 {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.muted {
+  color: var(--muted);
+  margin: 0.25rem 0;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-card);
+  box-shadow: none;
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.flexCenter {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.error {
+  background: var(--neg-soft);
+  border: 1px solid var(--neg-stroke);
+  color: var(--neg);
+  border-radius: var(--radius-card);
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.hint {
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-soft-border);
+  color: var(--accent-soft-text);
+  border-radius: var(--radius-card);
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
+/* ---- Formular ---- */
+
+.addForm {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.addForm input {
+  flex: 1;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+button {
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: #fff;
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius-card);
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+
+button:hover:not(:disabled) {
+  background: var(--accent-soft);
+  border-color: var(--accent-soft-border);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  padding: 0.6rem 1.4rem;
+}
+
+.primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.remove {
+  padding: 0.15rem 0.5rem;
+  color: var(--muted);
+}
+
+/* ---- Tabelle ---- */
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 0.55rem 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.table tbody tr {
+  transition: background 0.12s;
+}
+
+.table tbody tr:hover {
+  background: #f9f9fa;
+}
+
+.table th {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.isinSub {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  margin-top: 0.1rem;
+}
+
+.monthlyInput {
+  width: 6.5rem;
+  padding: 0.3rem 0.45rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  text-align: right;
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
+  background: #fff;
+}
+
+.monthlyInput:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(77, 107, 221, 0.15);
+}
+
+.pos {
+  color: var(--pos);
+}
+
+.neg {
+  color: var(--neg);
+}
+
+/* ---- Segmented control ---- */
+
+.modelRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.segmented {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.segmented button {
+  border: none;
+  border-radius: 0;
+  border-right: 1px solid var(--border);
+}
+
+.segmented button:last-child {
+  border-right: none;
+}
+
+.segmented button.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ---- Gauge ---- */
+
+.gauge {
+  text-align: center;
+}
+
+.gaugeLabel {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-top: -0.25rem;
+}
+
+/* ---- Drift-Balken ---- */
+
+.driftList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.driftRow {
+  display: grid;
+  grid-template-columns: 180px 1fr 90px;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.driftLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.driftTrack {
+  position: relative;
+  height: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.driftAxis {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--border);
+}
+
+.driftBar {
+  height: 14px;
+  border-radius: 3px;
+}
+
+.driftBar.over {
+  background: var(--neg);
+  margin-left: 50%;
+}
+
+.driftBar.under {
+  background: var(--accent);
+}
+
+.allocBar {
+  height: 14px;
+  border-radius: 3px;
+}
+
+.allocBar.current {
+  background: #c3c9d4;
+}
+
+.allocBar.target {
+  background: var(--accent);
+  margin-left: 2px;
+}
+
+.driftValue {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.overText {
+  color: var(--neg);
+}
+
+.underText {
+  color: var(--accent);
+}
+
+/* ---- Donut ---- */
+
+.donutWrap {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.donutLegend {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.donutLegend li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.donutLegend b {
+  margin-left: auto;
+  padding-left: 1rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* ---- Rank-Listen + Tags ---- */
+
+.twoCol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.rankList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.rankList li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  background: var(--accent-soft);
+  color: var(--accent-soft-text);
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+.tag small {
+  color: var(--muted);
+}
+
+/* ---- Sparplan-Kaufliste (Δ zur aktuellen Rate) ---- */
+
+.buyDelta {
+  font-size: 0.78rem;
+  margin-left: 0.5rem;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.buyDelta.pos {
+  color: var(--pos);
+}
+
+.buyDelta.neg {
+  color: var(--neg);
+}
+
+/* ---- Badge "neuer ETF" (Finanzfluss-Chip, grün) ---- */
+
+.chipNew {
+  display: inline-block;
+  margin-left: 0.5rem;
+  background: var(--pos-soft);
+  border: 1px solid var(--pos-stroke);
+  color: var(--pos);
+  border-radius: 999px;
+  padding: 0.05rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+/* ---- Treppen-Karte (Stufe B) ---- */
+
+.staircase {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0.25rem 0 0;
   margin: 0;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+.stairStep {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+.stairArrow {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.stairChip {
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-soft-border);
+  color: var(--accent-soft-text);
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.stairChip b {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.stairChip.base {
+  background: #fff;
+  border: 1px solid var(--border);
+  color: var(--fg);
+}
+
+.replacementHint {
+  margin: 0.9rem 0 0;
+  padding: 0.6rem 0.9rem;
+  background: var(--warn-soft);
+  border: 1px solid var(--warn-stroke);
+  color: var(--warn-text);
+  border-radius: var(--radius-card);
+  font-size: 0.85rem;
+}
+
+/* ---- Tooltip (Laien-Info) ---- */
+
+.tipWrap {
+  position: relative;
+  display: inline-flex;
+  cursor: help;
+  vertical-align: middle;
+}
+
+.tipIcon {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-left: 0.25rem;
+  line-height: 1;
+  user-select: none;
+}
+
+.tipPopup {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--fg);
+  color: #fff;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-card);
+  font-size: 0.8rem;
+  white-space: normal;
+  max-width: 280px;
+  width: max-content;
+  line-height: 1.4;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s, visibility 0.15s;
+  z-index: 100;
+  pointer-events: none;
+  font-weight: 400;
+  box-shadow: var(--shadow-tooltip);
+}
+
+.tipPopup::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--fg);
+}
+
+.tipWrap:hover .tipPopup,
+.tipWrap:focus-within .tipPopup {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ---- Bar-Hover-Tooltip ---- */
+
+.driftTrack {
+  position: relative;
+  overflow: visible;
+}
+
+.barTip {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100%);
+  background: var(--fg);
+  color: #fff;
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  line-height: 1.5;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.12s, visibility 0.12s;
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: var(--shadow-tooltip);
+}
+
+.barTip b {
+  display: block;
+  font-size: 0.78rem;
+  margin-bottom: 0.15rem;
+}
+
+.barTip span {
+  color: #d1d5db;
+}
+
+.barTip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: var(--fg);
+}
+
+.driftRow:hover .barTip {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ---- Donut-Interaktion ---- */
+
+.donutSlice {
+  cursor: pointer;
+}
+
+.donutSlice:hover {
+  stroke-opacity: 0.85 !important;
+}
+
+.donutSlice:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.donutLegendItem {
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 0.15rem 0.35rem;
+  margin: 0 -0.35rem;
+  transition: background 0.12s;
+}
+
+.donutLegendItem:hover {
+  background: var(--accent-soft);
+}
+
+.donutLegendItem[data-selected='true'] {
+  background: var(--accent-soft);
+  font-weight: 600;
+}
+
+/* ---- Sortierbare Tabelle ---- */
+
+.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.sortable:hover {
+  color: var(--fg);
+}
+
+.sortInd {
+  font-size: 0.7rem;
+  margin-left: 0.15rem;
+}
+
+/* ---- Region-Drilldown ---- */
+
+.regionDrill {
+  margin-top: 0.5rem;
+}
+
+.drillDivider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0.5rem 0 0.75rem;
+}
+
+/* ---- Responsive ---- */
+
+@media (max-width: 640px) {
+  .driftRow {
+    grid-template-columns: 110px 1fr 70px;
+  }
+
+  .twoCol {
+    grid-template-columns: 1fr;
+  }
+
+  .addForm {
+    flex-direction: column;
+  }
+
+  .barTip {
+    font-size: 0.7rem;
+    max-width: 200px;
+    white-space: normal;
   }
 }

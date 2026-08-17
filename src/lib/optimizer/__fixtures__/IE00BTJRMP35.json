@@ -1,0 +1,281 @@
+{
+  "profile": {
+    "isin": "IE00BTJRMP35",
+    "name": "Xtrackers MSCI Emerging Markets UCITS ETF (Acc)",
+    "provider": "Deutsche Asset Management S.A. (ETF)",
+    "index": "MSCI Emerging Markets",
+    "ter": 0.18,
+    "ongoingCharges": null,
+    "swapBased": false,
+    "launchDate": "2017-06-21",
+    "fundVolumeEur": 14046201616,
+    "numberOfHoldings": 1286
+  },
+  "exposures": {
+    "countries": [
+      {
+        "name": "Vereinigte Arabische Emirate",
+        "value": 1.06334,
+        "code": "AE"
+      },
+      {
+        "name": "Brasilien",
+        "value": 3.76756,
+        "code": "BR"
+      },
+      {
+        "name": "Chile",
+        "value": 0.44389,
+        "code": "CL"
+      },
+      {
+        "name": "China",
+        "value": 19.37091,
+        "code": "CN"
+      },
+      {
+        "name": "Kolumbien",
+        "value": 0.06938,
+        "code": "CO"
+      },
+      {
+        "name": "Zypern",
+        "value": 0,
+        "code": "CY"
+      },
+      {
+        "name": "Tschechien",
+        "value": 0.10867,
+        "code": "CZ"
+      },
+      {
+        "name": "Ägypten",
+        "value": 0.04965,
+        "code": "EG"
+      },
+      {
+        "name": "Griechenland",
+        "value": 0.46508,
+        "code": "GR"
+      },
+      {
+        "name": "Hong Kong",
+        "value": 0.59277,
+        "code": "HK"
+      },
+      {
+        "name": "Ungarn",
+        "value": 0.32447,
+        "code": "HU"
+      },
+      {
+        "name": "Indonesien",
+        "value": 0.56597,
+        "code": "ID"
+      },
+      {
+        "name": "Indien",
+        "value": 10.74926,
+        "code": "IN"
+      },
+      {
+        "name": "Südkorea",
+        "value": 22.86515,
+        "code": "KR"
+      },
+      {
+        "name": "Kuwait",
+        "value": 0.52507,
+        "code": "KW"
+      },
+      {
+        "name": "Luxemburg",
+        "value": 0.03222,
+        "code": "LU"
+      },
+      {
+        "name": "Mexiko",
+        "value": 1.73258,
+        "code": "MX"
+      },
+      {
+        "name": "Malaysia",
+        "value": 0.99795,
+        "code": "MY"
+      },
+      {
+        "name": "Peru",
+        "value": 0.22659,
+        "code": "PE"
+      },
+      {
+        "name": "Philippinen",
+        "value": 0.27072,
+        "code": "PH"
+      },
+      {
+        "name": "Polen",
+        "value": 1.03457,
+        "code": "PL"
+      },
+      {
+        "name": "Katar",
+        "value": 0.48408,
+        "code": "QA"
+      },
+      {
+        "name": "Rumänien",
+        "value": 0.04114,
+        "code": "RO"
+      },
+      {
+        "name": "Russland",
+        "value": 0.01945,
+        "code": "RU"
+      },
+      {
+        "name": "Saudi Arabien",
+        "value": 2.37519,
+        "code": "SA"
+      },
+      {
+        "name": "Thailand",
+        "value": 0.98617,
+        "code": "TH"
+      },
+      {
+        "name": "Türkei",
+        "value": 0.35601,
+        "code": "TR"
+      },
+      {
+        "name": "Taiwan",
+        "value": 25.93511,
+        "code": "TW"
+      },
+      {
+        "name": "Vereinigte Staaten (USA)",
+        "value": 1.02255,
+        "code": "US"
+      },
+      {
+        "name": "Südafrika",
+        "value": 2.57076,
+        "code": "ZA"
+      }
+    ],
+    "sectors": [
+      {
+        "name": "Grundmaterialien",
+        "value": 5.81893,
+        "code": "basic_materials"
+      },
+      {
+        "name": "Zykl. Konsumgüter",
+        "value": 8.45637,
+        "code": "consumer_cyclical"
+      },
+      {
+        "name": "Finanzen",
+        "value": 17.39497,
+        "code": "financial_services"
+      },
+      {
+        "name": "Immobilien",
+        "value": 0.97738,
+        "code": "real_estate"
+      },
+      {
+        "name": "Basiskonsumgüter",
+        "value": 2.6349,
+        "code": "consumer_defense"
+      },
+      {
+        "name": "Gesundheitswesen",
+        "value": 2.52803,
+        "code": "healthcare"
+      },
+      {
+        "name": "Versorger",
+        "value": 1.88358,
+        "code": "utilities"
+      },
+      {
+        "name": "Kommunikation",
+        "value": 6.0545,
+        "code": "communication_services"
+      },
+      {
+        "name": "Industrie",
+        "value": 6.64287,
+        "code": "industrials"
+      },
+      {
+        "name": "Technologie",
+        "value": 43.19134,
+        "code": "technology"
+      },
+      {
+        "name": "Energie",
+        "value": 3.42376,
+        "code": "energy"
+      }
+    ],
+    "regions": [
+      {
+        "name": "Asien",
+        "value": 87.1377,
+        "code": "asien"
+      },
+      {
+        "name": "Lateinamerika",
+        "value": 6.24,
+        "code": "latin_america"
+      },
+      {
+        "name": "Osteuropa",
+        "value": 1.5282999999999998,
+        "code": "europe_east"
+      },
+      {
+        "name": "Afrika",
+        "value": 2.62041,
+        "code": "africa"
+      },
+      {
+        "name": "Europa",
+        "value": 0.49729999999999996,
+        "code": "europe"
+      },
+      {
+        "name": "Nordamerika",
+        "value": 1.02255,
+        "code": "america_north"
+      }
+    ],
+    "msci": [
+      {
+        "name": "Emerging Markets",
+        "value": 97.33813
+      },
+      {
+        "name": "Below-FM",
+        "value": 0.051669999999999994
+      },
+      {
+        "name": "Developed Markets",
+        "value": 1.61532
+      },
+      {
+        "name": "Frontier Markets",
+        "value": 0.04114
+      }
+    ],
+    "asOfDate": "2026-05-31",
+    "sums": {
+      "countries": 99.0463,
+      "sectors": 99.0066,
+      "regions": 99.0463
+    }
+  }
+}
