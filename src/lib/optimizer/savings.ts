@@ -201,7 +201,7 @@ export function proposeSavings(
   portfolio: PortfolioEtf[],
   model: BenchmarkModel,
   mode: SavingsProposalMode,
-  opts?: { keepIsins?: ReadonlySet<string> },
+  opts?: { keepIsins?: ReadonlySet<string>; maxTer?: number | null },
 ): SavingsProposalResult {
   if (savings.length === 0) throw new Error('Keine Sparplan-ETFs angegeben');
   const Mtotal = savings.reduce((a, s) => a + s.monthlyEur, 0);
@@ -237,14 +237,25 @@ export function proposeSavings(
   }
 
   let solveSavings = equitySavings;
+  const maxTer = opts?.maxTer ?? null;
+  const cheapEquity =
+    maxTer == null
+      ? equitySavings
+      : equitySavings.filter(s => {
+          const ter = s.data.profile.ter;
+          return ter != null && Number.isFinite(ter) && ter > 0 && ter <= maxTer + 1e-9;
+        });
+  const pickFrom = cheapEquity.length > 0 ? cheapEquity : equitySavings;
   const keepIsins = opts?.keepIsins;
   if (keepIsins && keepIsins.size > 0) {
-    const sparse = equitySavings.filter(s => keepIsins.has(s.isin));
+    const sparse = pickFrom.filter(s => keepIsins.has(s.isin));
     if (sparse.length > 0) solveSavings = sparse;
   } else if (effectiveMode === 'bestDepot') {
-    const keep = new Set(pickBestDepotEtfs(equitySavings, model).map(p => p.isin));
-    const sparse = equitySavings.filter(s => keep.has(s.isin));
+    const keep = new Set(pickBestDepotEtfs(pickFrom, model).map(p => p.isin));
+    const sparse = pickFrom.filter(s => keep.has(s.isin));
     if (sparse.length > 0) solveSavings = sparse;
+  } else if (pickFrom !== equitySavings) {
+    solveSavings = pickFrom;
   }
 
   const A = buildMatrix(solveSavings, universe);

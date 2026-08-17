@@ -8,7 +8,6 @@ import { useUniverseCandidates, usesCatalog, type Universe } from '@/lib/hooks/u
 import { optimize, optimizeSparse, type OptimizeResult, type PortfolioEtf } from '@/lib/optimizer/optimize';
 import {
   analyzeSavings,
-  proposeSavings,
   projectDepotAfterMonths,
   horizonToMonths,
   type HorizonUnit,
@@ -17,14 +16,17 @@ import {
 } from '@/lib/optimizer/savings';
 import { useDepotState } from '@/lib/hooks/useDepotState';
 import {
+  filterByMaxTer,
+  proposalPool,
+  TER_CAP,
   suggestAdditions,
-  suggestAdditionsSavings,
   suggestFewestEtfs,
   suggestReplacement,
   type AdditionsResult,
   type CandidateWithData,
   type ReplacementHint,
 } from '@/lib/optimizer/candidates';
+import { planSavingsProposal } from '@/lib/optimizer/plan-savings';
 import { DepotSwitcher } from '@/components/DepotSwitcher';
 import { PortfolioInput } from '@/components/PortfolioInput';
 import { CoverageGauge } from '@/components/CoverageGauge';
@@ -123,14 +125,26 @@ function EquityScoreHint({ share, scope }: { share: number; scope: string }) {
   );
 }
 
+function catalogOf(
+  cands: CandidateWithData[] | null,
+  maxTer: number | null,
+): CandidateWithData[] | null {
+  if (!cands) return null;
+  return filterByMaxTer(cands, maxTer);
+}
+
 function UniverseToggle({
   universe,
   candidatesLoading,
+  maxTer,
   onSelect,
+  onMaxTer,
 }: {
   universe: Universe;
   candidatesLoading: boolean;
+  maxTer: number | null;
   onSelect: (u: Universe) => void;
+  onMaxTer: (t: number | null) => void;
 }) {
   return (
     <div className="modelRow">
@@ -156,6 +170,16 @@ function UniverseToggle({
         </button>
       </div>
       {candidatesLoading && <span className="muted">lädt Kandidaten…</span>}
+      {usesCatalog(universe) && (
+        <label className="terCap" title="Nichts über 0,20 % TER im Vorschlag, auch nicht wenn der ETF schon im Depot liegt. Gold bleibt.">
+          <input
+            type="checkbox"
+            checked={maxTer != null}
+            onChange={e => onMaxTer(e.target.checked ? TER_CAP : null)}
+          />
+          Kein TER über 0,20 %
+        </label>
+      )}
     </div>
   );
 }
@@ -174,6 +198,8 @@ export default function Home() {
     setSavingsMode,
     universe,
     setUniverse,
+    maxTer,
+    setMaxTer,
     hydrated,
     loading: depotLoading,
     error,
@@ -205,6 +231,7 @@ export default function Home() {
     setUniverse,
     setError,
   );
+  const catalog = catalogOf(candidates, maxTer);
 
   /* ---- Abgeleitete Listen ---- */
   const bestandEtfs = portfolio.filter(e => e.amountEur > 0);
@@ -228,7 +255,7 @@ export default function Home() {
   const analyzeBestand = useCallback(
     (
       m: BenchmarkModel,
-      cands: CandidateWithData[] | null = candidates,
+      cands: CandidateWithData[] | null = catalog,
       uni: Universe = universe,
       etfs: PortfolioEtf[] = bestandEtfs,
     ) => {
@@ -241,10 +268,11 @@ export default function Home() {
       const useExtended = usesCatalog(uni) && cands && cands.length > 0;
       try {
         if (useExtended && uni === 'few') {
-          const pool = [
-            ...etfs.filter(e => e.amountEur > 0),
-            ...cands!.filter(c => !etfs.some(e => e.isin === c.isin)),
-          ];
+          const pool = proposalPool(
+            etfs.filter(e => e.amountEur > 0),
+            cands!,
+            maxTer,
+          );
           const additionsRes = suggestFewestEtfs(pool, m);
           setAdditions(additionsRes);
           const keep = new Set(additionsRes.steps.map(s => s.isin));
@@ -291,7 +319,7 @@ export default function Home() {
         setReplacement(null);
       }
     },
-    [bestandEtfs, candidates, universe, setError],
+    [bestandEtfs, catalog, universe, maxTer, setError],
   );
 
   const computeSavings = useCallback(
@@ -299,7 +327,7 @@ export default function Home() {
       m: BenchmarkModel,
       mode: SavingsProposalMode,
       portf: PortfolioEtf[] = portfolio,
-      cands: CandidateWithData[] | null = candidates,
+      cands: CandidateWithData[] | null = catalog,
       uni: Universe = universe,
     ) => {
       const flow = portf.filter(e => (e.monthlyEur ?? 0) > 0);
@@ -338,44 +366,24 @@ export default function Home() {
           monthlyEur: e.monthlyEur ?? 0,
           data: e.data,
         }));
-        if (useExtended && uni === 'few') {
-          const pool = [
-            ...universeEtfs,
-            ...cands!.filter(c => !universeEtfs.some(u => u.isin === c.isin)),
-          ];
-          const additionsRes = suggestFewestEtfs(pool, m);
-          setAdditions(additionsRes);
-          const keep = new Set(additionsRes.steps.map(s => s.isin));
-          const extras = cands!
-            .filter(c => keep.has(c.isin) && !universeEtfs.some(u => u.isin === c.isin))
-            .map(c => ({ isin: c.isin, monthlyEur: 0, data: c.data }));
-          setProposalResult(
-            proposeSavings([...universeEtfs, ...extras], bestand, m, mode, { keepIsins: keep }),
-          );
-          const replacementRes = suggestReplacement(bestand, cands!, m);
+        const planned = planSavingsProposal({
+          universe: uni,
+          mode,
+          model: m,
+          maxTer,
+          savings: universeEtfs,
+          portfolio: bestand,
+          catalog: cands,
+        });
+        setProposalResult(planned.proposal);
+        setAdditions(planned.additions);
+        if (useExtended && cands) {
+          const keep = new Set(planned.additions?.steps.map(s => s.isin) ?? []);
+          const replacementRes = suggestReplacement(bestand, cands, m);
           setReplacement(
             replacementRes && !keep.has(replacementRes.toIsin) ? replacementRes : null,
           );
-        } else if (useExtended) {
-          const additionsRes = suggestAdditionsSavings(universeEtfs, bestand, cands!, m, mode);
-          setAdditions(additionsRes);
-          const selected = new Set(additionsRes.steps.map(s => s.isin));
-          const extraAll = cands!
-            .filter(c => !universeEtfs.some(u => u.isin === c.isin))
-            .map(c => ({ isin: c.isin, monthlyEur: 0, data: c.data }));
-          const newOnes =
-            mode === 'bestDepot'
-              ? extraAll
-              : extraAll.filter(c => selected.has(c.isin));
-          const extendedUniverse = [...universeEtfs, ...newOnes];
-          setProposalResult(proposeSavings(extendedUniverse, bestand, m, mode));
-          const replacementRes = suggestReplacement(bestand, cands!, m);
-          setReplacement(
-            replacementRes && !selected.has(replacementRes.toIsin) ? replacementRes : null,
-          );
         } else {
-          setProposalResult(proposeSavings(universeEtfs, bestand, m, mode));
-          setAdditions(null);
           setReplacement(null);
         }
         setError(null);
@@ -387,7 +395,7 @@ export default function Home() {
         setReplacement(null);
       }
     },
-    [portfolio, candidates, universe, setError],
+    [portfolio, catalog, universe, maxTer, setError],
   );
 
   const selectModel = (m: BenchmarkModel) => {
@@ -448,11 +456,11 @@ export default function Home() {
     setUniverse(u);
     if (!changed) return;
     if (u === 'mine') {
-      applyUniverse('mine', candidates);
+      applyUniverse('mine', catalogOf(candidates, maxTer));
       return;
     }
     if (candidates !== null) {
-      applyUniverse(u, candidates);
+      applyUniverse(u, catalogOf(candidates, maxTer));
       return;
     }
     void (async () => {
@@ -464,8 +472,19 @@ export default function Home() {
       }
       // Nur anwenden, wenn der Toggle noch auf einem Katalog-Modus steht
       // (sonst hat der User zwischenzeitlich zurückgeschaltet).
-      if (usesCatalog(universeRef.current)) applyUniverse(universeRef.current, loaded);
+      if (usesCatalog(universeRef.current)) {
+        applyUniverse(universeRef.current, catalogOf(loaded, maxTer));
+      }
     })();
+  };
+
+  const selectMaxTer = (t: number | null) => {
+    const changed = t !== maxTer;
+    setMaxTer(t);
+    if (!changed) return;
+    if (usesCatalog(universe) && candidates) {
+      applyUniverse(universe, catalogOf(candidates, t));
+    }
   };
 
   /* ---- ETF hinzufügen/entfernen ---- */
@@ -508,9 +527,9 @@ export default function Home() {
         // Auto-Re-Analyse (Bug 2): nach erfolgreichem Add ohne Klick auf
         // "Analysieren" neu rechnen, damit kein Stale-Stand stehen bleibt.
         if (view === 'sparplan') {
-          computeSavings(model, savingsMode, next, candidates, universe);
+          computeSavings(model, savingsMode, next, catalogOf(candidates, maxTer), universe);
         } else if (next.some(e => e.amountEur > 0)) {
-          analyzeBestand(model, candidates, universe, next.filter(e => e.amountEur > 0));
+          analyzeBestand(model, catalogOf(candidates, maxTer), universe, next.filter(e => e.amountEur > 0));
         }
       } catch (err) {
         setError(err instanceof Error ? err.message : String(err));
@@ -518,7 +537,7 @@ export default function Home() {
         setBusy(false);
       }
     },
-    [portfolio, setPortfolio, view, model, savingsMode, candidates, universe, computeSavings, analyzeBestand, setError],
+    [portfolio, setPortfolio, view, model, savingsMode, candidates, maxTer, universe, computeSavings, analyzeBestand, setError],
   );
 
   const removeEtf = useCallback(
@@ -529,12 +548,12 @@ export default function Home() {
       // Auto-Re-Analyse (Bug 2): nach Remove ohne Klick auf "Analysieren"
       // neu rechnen. Leere Listen nullen die Ergebnis-States intern.
       if (view === 'sparplan') {
-        computeSavings(model, savingsMode, next, candidates, universe);
+        computeSavings(model, savingsMode, next, catalogOf(candidates, maxTer), universe);
       } else {
-        analyzeBestand(model, candidates, universe, next.filter(e => e.amountEur > 0));
+        analyzeBestand(model, catalogOf(candidates, maxTer), universe, next.filter(e => e.amountEur > 0));
       }
     },
-    [portfolio, setPortfolio, view, model, savingsMode, candidates, universe, computeSavings, analyzeBestand],
+    [portfolio, setPortfolio, view, model, savingsMode, candidates, maxTer, universe, computeSavings, analyzeBestand],
   );
 
   /* ---- Sparrate nachträglich ändern (inline in der Tabelle) ---- */
@@ -777,7 +796,9 @@ export default function Home() {
                   <UniverseToggle
                     universe={universe}
                     candidatesLoading={candidatesLoading}
+                    maxTer={maxTer}
                     onSelect={selectUniverse}
+                    onMaxTer={selectMaxTer}
                   />
                 </section>
                 <div className={styles.dashboard}>
@@ -971,7 +992,9 @@ export default function Home() {
                 <UniverseToggle
                   universe={universe}
                   candidatesLoading={candidatesLoading}
+                  maxTer={maxTer}
                   onSelect={selectUniverse}
+                  onMaxTer={selectMaxTer}
                 />
                 {savingsMode === 'converge' && proposalResult.mode === 'benchmark' && (
                   <p className="muted">

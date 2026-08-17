@@ -32,6 +32,7 @@ export async function PATCH(
       view?: unknown;
       savingsMode?: unknown;
       universe?: unknown;
+      maxTer?: unknown;
     };
     const db = getDb();
     if (typeof body.name === 'string') renameDepot(db, id, body.name);
@@ -53,6 +54,8 @@ export async function PATCH(
     if (body.universe === 'mine' || body.universe === 'new' || body.universe === 'few') {
       prefs.universe = body.universe;
     }
+    if (body.maxTer === null) prefs.maxTer = null;
+    if (body.maxTer === 0.2) prefs.maxTer = 0.2;
     if (Object.keys(prefs).length > 0) updatePrefs(db, id, prefs);
     if (body.activate === true) setActiveDepot(db, id);
     return NextResponse.json(getSession(db));

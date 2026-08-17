@@ -605,6 +605,26 @@ describe('proposeSavings bestDepot (Bestmögliches Depot)', () => {
   }, 30_000);
 });
 
+describe('proposeSavings maxTer', () => {
+  it('gibt teuren Bestands-ETFs 0 €, Gold bleibt', () => {
+    const GDP = 'IE000KCKFHE8';
+    const savings: SavingsEtf[] = [
+      { isin: GDP, monthlyEur: 126, data: loadEtf(GDP) },
+      { isin: PRIME, monthlyEur: 104, data: loadEtf(PRIME) },
+      { isin: GOLD, monthlyEur: 25, data: loadEtf(GOLD) },
+    ];
+    const portfolio: PortfolioEtf[] = [
+      { isin: GDP, amountEur: 100, data: loadEtf(GDP) },
+      { isin: PRIME, amountEur: 792, data: loadEtf(PRIME) },
+      { isin: GOLD, amountEur: 938, data: loadEtf(GOLD) },
+    ];
+    const res = proposeSavings(savings, portfolio, 'pillars', 'bestDepot', { maxTer: 0.2 });
+    expect(res.allocations.find(a => a.isin === GDP)!.suggestedMonthlyEur).toBe(0);
+    expect(res.allocations.find(a => a.isin === PRIME)!.suggestedMonthlyEur).toBeGreaterThan(100);
+    expect(res.allocations.find(a => a.isin === GOLD)!.suggestedMonthlyEur).toBeCloseTo(25, 6);
+  });
+});
+
 describe('proposeSavings keepIsins (geringste Menge)', () => {
   it('verteilt die Rate nur auf die wenigen ISINs, Rest 0 €', () => {
     const keep = new Set([PRIME, EMIMI]);

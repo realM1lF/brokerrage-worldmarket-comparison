@@ -39,6 +39,7 @@ const DEFAULT_PREFS: DepotPrefs = {
   view: 'bestand',
   savingsMode: 'benchmark',
   universe: 'mine',
+  maxTer: 0.2,
 };
 
 export function migrate(db: DatabaseSync): void {
@@ -50,7 +51,8 @@ export function migrate(db: DatabaseSync): void {
       model TEXT NOT NULL DEFAULT 'marketcap',
       view TEXT NOT NULL DEFAULT 'bestand',
       savings_mode TEXT NOT NULL DEFAULT 'benchmark',
-      universe TEXT NOT NULL DEFAULT 'mine'
+      universe TEXT NOT NULL DEFAULT 'mine',
+      max_ter REAL
     );
     CREATE TABLE IF NOT EXISTS holdings (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -66,6 +68,10 @@ export function migrate(db: DatabaseSync): void {
       value TEXT NOT NULL
     );
   `);
+  const cols = db.prepare('PRAGMA table_info(depots)').all() as { name: string }[];
+  if (!cols.some(c => c.name === 'max_ter')) {
+    db.exec('ALTER TABLE depots ADD COLUMN max_ter REAL DEFAULT 0.2');
+  }
 }
 
 export function seedIfEmpty(db: DatabaseSync): void {
@@ -145,10 +151,11 @@ export function updatePrefs(db: DatabaseSync, id: number, prefs: Partial<DepotPr
     view: prefs.view ?? current.view,
     savingsMode: prefs.savingsMode ?? current.savingsMode,
     universe: prefs.universe ?? current.universe,
+    maxTer: 'maxTer' in prefs ? (prefs.maxTer ?? null) : current.maxTer,
   };
   db.prepare(
-    'UPDATE depots SET model = ?, view = ?, savings_mode = ?, universe = ? WHERE id = ?',
-  ).run(next.model, next.view, next.savingsMode, next.universe, id);
+    'UPDATE depots SET model = ?, view = ?, savings_mode = ?, universe = ?, max_ter = ? WHERE id = ?',
+  ).run(next.model, next.view, next.savingsMode, next.universe, next.maxTer, id);
 }
 
 export function replaceHoldings(db: DatabaseSync, depotId: number, holdings: Holding[]): void {
@@ -189,9 +196,9 @@ export function replaceHoldings(db: DatabaseSync, depotId: number, holdings: Hol
 function insertDepot(db: DatabaseSync, name: string, prefs: DepotPrefs): Depot {
   const result = db
     .prepare(
-      'INSERT INTO depots (name, model, view, savings_mode, universe) VALUES (?, ?, ?, ?, ?)',
+      'INSERT INTO depots (name, model, view, savings_mode, universe, max_ter) VALUES (?, ?, ?, ?, ?, ?)',
     )
-    .run(name, prefs.model, prefs.view, prefs.savingsMode, prefs.universe);
+    .run(name, prefs.model, prefs.view, prefs.savingsMode, prefs.universe, prefs.maxTer);
   return {
     id: Number(result.lastInsertRowid),
     name,
@@ -241,6 +248,7 @@ function mapDepot(row: Record<string, unknown>): Depot {
     view: row.view as DepotView,
     savingsMode: row.savings_mode as SavingsMode,
     universe: row.universe as Universe,
+    maxTer: row.max_ter === null || row.max_ter === undefined ? null : Number(row.max_ter),
   };
 }
 

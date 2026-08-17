@@ -28,6 +28,7 @@ const session: DepotSession = {
       view: 'bestand',
       savingsMode: 'benchmark',
       universe: 'mine',
+      maxTer: 0.2,
     },
   ],
   activeId: 1,

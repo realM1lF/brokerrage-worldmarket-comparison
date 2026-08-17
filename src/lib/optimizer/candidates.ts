@@ -56,6 +56,49 @@ export interface ReplacementHint {
   improvement: number;
 }
 
+/** Schmerzgrenze: Vorschlag darf nichts Teureres neu besparen. */
+export const TER_CAP = 0.2;
+
+export function liveTer(c: { ter?: number | null; data?: { profile: { ter: number | null } } }): number {
+  return c.data?.profile.ter ?? c.ter ?? Number.POSITIVE_INFINITY;
+}
+
+/** Gold und andere Nicht-Aktien bleiben. maxTer null = kein Deckel. */
+export function cheapEnough(
+  item: { ter?: number | null; data?: EtfData },
+  maxTer: number | null,
+): boolean {
+  if (maxTer == null) return true;
+  if (item.data && !isEquityEtf(item.data)) return true;
+  const ter = liveTer(item);
+  if (!Number.isFinite(ter) || ter <= 0) return false;
+  return ter <= maxTer + 1e-9;
+}
+
+export function filterByMaxTer<T extends { isin: string; ter: number | null; data?: EtfData }>(
+  candidates: T[],
+  maxTer: number | null,
+): T[] {
+  if (maxTer == null) return candidates;
+  return candidates.filter(c => cheapEnough(c, maxTer));
+}
+
+/** Baukasten: teure Aktien-ETFs raus, auch wenn sie schon im Depot liegen. */
+export function proposalPool<T extends { isin: string; ter?: number | null; data: EtfData }>(
+  held: T[],
+  extras: Array<{ isin: string; ter?: number | null; data: EtfData }>,
+  maxTer: number | null,
+): Array<T | { isin: string; ter?: number | null; data: EtfData }> {
+  const cheapHeld = held.filter(h => cheapEnough({ ter: h.ter ?? h.data.profile.ter, data: h.data }, maxTer));
+  const seen = new Set(cheapHeld.map(h => h.isin));
+  return [
+    ...cheapHeld,
+    ...extras.filter(
+      e => !seen.has(e.isin) && cheapEnough({ ter: e.ter ?? e.data.profile.ter, data: e.data }, maxTer),
+    ),
+  ];
+}
+
 const MAX_STEPS = 3;
 const MIN_IMPROVEMENT = 0.005; // 0,5 pp
 const TER_FLAT_PP = 0.001; // |ΔScore| < 0,1 pp => "quasi-gleich"
@@ -133,31 +176,19 @@ export function suggestAdditionsSavings(
   candidates: CandidateWithData[],
   model: BenchmarkModel,
   mode: SavingsProposalMode,
+  maxTer: number | null = null,
 ): AdditionsResult {
+  const cheapCands = filterByMaxTer(candidates, maxTer);
   const holdings = portfolio.filter(e => e.amountEur > 0);
   if (mode === 'bestDepot' && holdings.some(e => isEquityEtf(e.data))) {
-    const pool: { isin: string; name: string; ter: number | null; data: EtfData }[] = [];
-    for (const s of savings) {
-      if (!isEquityEtf(s.data)) continue;
-      pool.push({
-        isin: s.isin,
-        name: s.data.profile.name,
-        ter: s.data.profile.ter,
-        data: s.data,
-      });
-    }
-    for (const c of candidates) {
-      if (!isEquityEtf(c.data)) continue;
-      if (pool.some(p => p.isin === c.isin)) continue;
-      pool.push({ isin: c.isin, name: c.name, ter: c.ter, data: c.data });
-    }
+    const pool = proposalPool(savings, cheapCands, maxTer);
     return suggestFewestEtfs(pool, model);
   }
 
-  const baseScore = proposeSavings(savings, portfolio, model, mode).coverageScore;
-  const byIsin = new Map(candidates.map(c => [c.isin, c]));
+  const baseScore = proposeSavings(savings, portfolio, model, mode, { maxTer }).coverageScore;
+  const byIsin = new Map(cheapCands.map(c => [c.isin, c]));
   const steps = greedySteps(
-    candidates,
+    cheapCands,
     savings.map(s => s.isin),
     baseScore,
     addedIsins => {
@@ -167,7 +198,7 @@ export function suggestAdditionsSavings(
         if (!c) return null;
         extended.push({ isin: c.isin, monthlyEur: 0, data: c.data });
       }
-      return proposeSavings(extended, portfolio, model, mode).coverageScore;
+      return proposeSavings(extended, portfolio, model, mode, { maxTer }).coverageScore;
     },
   );
   return { baseScore, steps };

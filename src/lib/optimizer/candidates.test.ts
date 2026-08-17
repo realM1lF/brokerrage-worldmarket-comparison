@@ -7,6 +7,9 @@ import type { SavingsEtf } from './savings';
 import {
   suggestAdditions,
   suggestAdditionsSavings,
+  filterByMaxTer,
+  liveTer,
+  proposalPool,
   suggestFewestEtfs,
   suggestReplacement,
   withData,
@@ -158,6 +161,25 @@ describe('suggestFewestEtfs', () => {
     const fewCount = few.steps.length;
     const addOnCount = holdings.length + addOn.steps.length;
     expect(fewCount).toBeLessThan(addOnCount);
+  });
+});
+
+describe('filterByMaxTer', () => {
+  const GDP = 'IE000KCKFHE8';
+
+  it('lässt alles über der Grenze raus, auch wenn der ETF schon im Bestand ist', () => {
+    const cheap = cand(SPDR, 'SPDR', 'allworld');
+    const pricey = cand(GDP, 'Amundi GDP-Weighted', 'allworld');
+    expect(liveTer(pricey)).toBeGreaterThan(0.2);
+    expect(filterByMaxTer([cheap, pricey], 0.2).map(c => c.isin)).toEqual([SPDR]);
+    expect(filterByMaxTer([cheap, pricey], null).map(c => c.isin)).toEqual([SPDR, GDP]);
+  });
+
+  it('proposalPool nimmt teure Bestände nicht in den Baukasten', () => {
+    const cheap = cand(SPDR, 'SPDR', 'allworld');
+    const pricey = cand(GDP, 'Amundi GDP-Weighted', 'allworld');
+    const pool = proposalPool([pricey], [cheap, pricey], 0.2);
+    expect(pool.map(c => c.isin)).toEqual([SPDR]);
   });
 });
 

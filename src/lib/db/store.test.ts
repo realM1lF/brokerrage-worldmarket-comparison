@@ -129,6 +129,18 @@ describe('Depots', () => {
     db.close();
   });
 
+  it('speichert TER-Deckel und kann ihn ausmachen', () => {
+    const db = mem();
+    seedIfEmpty(db);
+    const id = listDepots(db)[0].id;
+    expect(listDepots(db)[0].maxTer).toBe(0.2);
+    updatePrefs(db, id, { maxTer: null });
+    expect(listDepots(db)[0].maxTer).toBeNull();
+    updatePrefs(db, id, { maxTer: 0.2 });
+    expect(listDepots(db)[0].maxTer).toBe(0.2);
+    db.close();
+  });
+
   it('speichert Sparplan-Modus bestDepot', () => {
     const db = mem();
     seedIfEmpty(db);

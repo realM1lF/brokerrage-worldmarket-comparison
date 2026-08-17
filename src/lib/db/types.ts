@@ -12,6 +12,8 @@ export interface DepotPrefs {
   view: DepotView;
   savingsMode: SavingsMode;
   universe: Universe;
+  /** Obergrenze TER in Prozentpunkten (0.2 = 0,20 %). null = aus. */
+  maxTer: number | null;
 }
 
 export interface Depot extends DepotPrefs {

@@ -65,6 +65,8 @@ export function useDepotState(): {
   setSavingsMode: (m: SavingsMode) => void;
   universe: Universe;
   setUniverse: (u: Universe) => void;
+  maxTer: number | null;
+  setMaxTer: (t: number | null) => void;
   hydrated: boolean;
   ready: boolean;
   loading: boolean;
@@ -82,6 +84,7 @@ export function useDepotState(): {
   const [view, setViewState] = useState<DepotView>('bestand');
   const [savingsMode, setSavingsModeState] = useState<SavingsMode>('benchmark');
   const [universe, setUniverseState] = useState<Universe>('mine');
+  const [maxTer, setMaxTerState] = useState<number | null>(0.2);
   const [ready, setReady] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -108,6 +111,7 @@ export function useDepotState(): {
       setViewState(depot.view);
       setSavingsModeState(depot.savingsMode);
       setUniverseState(depot.universe);
+      setMaxTerState(depot.maxTer);
     }
   };
 
@@ -202,6 +206,13 @@ export function useDepotState(): {
     (u: Universe) => {
       setUniverseState(u);
       persistPrefs({ universe: u });
+    },
+    [persistPrefs],
+  );
+  const setMaxTer = useCallback(
+    (t: number | null) => {
+      setMaxTerState(t);
+      persistPrefs({ maxTer: t });
     },
     [persistPrefs],
   );
@@ -307,6 +318,8 @@ export function useDepotState(): {
     setSavingsMode,
     universe,
     setUniverse,
+    maxTer,
+    setMaxTer,
     hydrated,
     ready,
     loading: fetching,

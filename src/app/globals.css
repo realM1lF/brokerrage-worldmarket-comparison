@@ -243,6 +243,16 @@ button:disabled {
   align-items: center;
   gap: 1rem;
   margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.terCap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  user-select: none;
 }
 
 .depotRow {
