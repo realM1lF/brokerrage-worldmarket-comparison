@@ -1,5 +1,39 @@
 # Changelog
 
+## 2026-08-17 — Konvergenz-Fix + Style-Overhaul (RIn-Farben)
+
+### Solver-Konvergenz-Fix
+
+- **Stall-Kriterium:** `solveWeights` bricht jetzt auch ab, wenn sich die
+  Zielfunktion nicht mehr verbessert (`|fCur - fNew| ≤ 1e-12` relativ).
+  Fixt den „nicht konv. nach 10 000 Iter."-Status bei flachen Optima
+  (marktcap mit World+Prime All Country). Keine sichtbare Score-Änderung,
+  aber „konvergiert" statt Dauer-Iteration.
+- Test ergänzt: Flat-Convergence-Case (fast identische ETFs).
+
+### Style-Overhaul (RIn-Farbpalette, 2026-08-17)
+
+RIn-Freigabe: Farben #4d6bdd, #FF9B40, #13CC89, #FF6B4A, #7F56D9.
+Ähnlich frohe Farben für Rest (Donut, Chips, DriftBars).
+
+- `globals.css`: Neue CSS-Variablen (pos #13CC89, neg #FF6B4A, warn #FF9B40).
+  Website-Hintergrund weiß (#ffffff). Container grau (#f6f7f9) ohne Schatten.
+- `page.module.css`: `.scoreCard` (Kreis-Diagramm = CoverageGauge): weißer
+  Hintergrund + Schatten — als einzige Karte im Dashboard.
+- `CoverageGauge.tsx`: Farbschwellen (≥90% grün #13CC89, ≥70% orange
+  #FF9B40, <70% coral #FF6B4A).
+- `DriftBars.tsx`: Übergewicht coral #FF6B4A, Untergewicht blau #4d6bdd.
+- `Donut.tsx`: Neue 10-Farb-Palette, Kernfarben zuerst.
+- UI: Lade-Hinweis „Neue ETFs werden geladen …" beim ersten Katalog-Abruf.
+
+### Verifikation
+
+- `npm test` 128/128 grün (1 neuer Solver-Test), `tsc` + `lint` + `build` grün.
+- Browser-Smoke: ScoreCard weiß+Schatten ✓, andere Karten grau ✓, Body weiß ✓.
+- Committed + pushed auf `realM1lF/brokerrage-worldmarket-comparison` (master).
+
+---
+
 ## 2026-08-17 — Test-Session (3 Subagenten) + 4 Bugfixes + Gold raus aus der Optimierung
 
 Drei parallele Test-Subagenten (Daten / Rechenkern / UI) mit RIns echtem

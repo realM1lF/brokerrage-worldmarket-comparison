@@ -2,7 +2,7 @@
 
 Stand: 2026-08-17. Konzeption abgeschlossen.
 **Status: V1-Kern umgesetzt** (Datenpipeline + Rechenkern + UI, Schritte 1-5).
-**Design (Optik) noch NICHT definiert.** Funktional zuerst, Optik zuletzt.
+**Design (Optik): definiert** (RIn-Farbpalette, s. CHANGELOG 2026-08-17 Style-Overhaul).
 
 ## Ziel (korrigiert)
 
