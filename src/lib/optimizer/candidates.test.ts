@@ -7,6 +7,7 @@ import type { SavingsEtf } from './savings';
 import {
   suggestAdditions,
   suggestAdditionsSavings,
+  suggestFewestEtfs,
   suggestReplacement,
   withData,
   type CandidateWithData,
@@ -142,6 +143,21 @@ describe('suggestReplacement (Tausch-Hinweis)', () => {
       'marketcap',
     );
     expect(hint).toBeNull();
+  });
+});
+
+describe('suggestFewestEtfs', () => {
+  it('baut von leer und bleibt kürzer als Add-on auf den Bestand', () => {
+    const holdings = [etf(IWDA, 6000), etf(SPDR, 792)];
+    const cands = [cand(VWRL, 'Vanguard FTSE All-World'), cand(SPDR, 'SPDR ACWI IMI')];
+    const addOn = suggestAdditions(holdings, cands, 'marketcap');
+    const few = suggestFewestEtfs([...holdings, ...cands], 'marketcap');
+    expect(few.baseScore).toBe(0);
+    expect(few.steps.length).toBeGreaterThan(0);
+    expect(few.steps.length).toBeLessThanOrEqual(6);
+    const fewCount = few.steps.length;
+    const addOnCount = holdings.length + addOn.steps.length;
+    expect(fewCount).toBeLessThan(addOnCount);
   });
 });
 

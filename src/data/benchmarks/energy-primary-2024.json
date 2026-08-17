@@ -1,0 +1,294 @@
+{
+ "description": "Primärenergieverbrauch, Gewichte über MSCI-ACWI-IMI-Universum",
+ "source": "Our World in Data Energy dataset (primary_energy_consumption, TWh), Quelle Energy Institute Statistical Review of World Energy und EIA International Energy Data. Stand Download 2026-08-17. Jersey: keine Reihe, Gewicht 0. Guatemala/Macau/Puerto Rico: 2023.",
+ "year": 2024,
+ "unit": "twh",
+ "countryCount": 56,
+ "total": 146958.872,
+ "weights": {
+  "AE": {
+   "name": "Vereinigte Arabische Emirate",
+   "twh": 1522.037,
+   "weight": 0.010357
+  },
+  "AT": {
+   "name": "Österreich",
+   "twh": 412.337,
+   "weight": 0.002806
+  },
+  "AU": {
+   "name": "Australien",
+   "twh": 1672.114,
+   "weight": 0.011378
+  },
+  "BE": {
+   "name": "Belgien",
+   "twh": 644.116,
+   "weight": 0.004383
+  },
+  "BR": {
+   "name": "Brasilien",
+   "twh": 3919.054,
+   "weight": 0.026668
+  },
+  "CA": {
+   "name": "Kanada",
+   "twh": 3886.195,
+   "weight": 0.026444
+  },
+  "CH": {
+   "name": "Schweiz",
+   "twh": 339.266,
+   "weight": 0.002309
+  },
+  "CL": {
+   "name": "Chile",
+   "twh": 518.732,
+   "weight": 0.00353
+  },
+  "CN": {
+   "name": "China",
+   "twh": 48987.102,
+   "weight": 0.333339
+  },
+  "CO": {
+   "name": "Kolumbien",
+   "twh": 615.888,
+   "weight": 0.004191
+  },
+  "CY": {
+   "name": "Zypern",
+   "twh": 33.348,
+   "weight": 0.000227
+  },
+  "CZ": {
+   "name": "Tschechien",
+   "twh": 392.823,
+   "weight": 0.002673
+  },
+  "DE": {
+   "name": "Deutschland",
+   "twh": 3195.441,
+   "weight": 0.021744
+  },
+  "DK": {
+   "name": "Dänemark",
+   "twh": 196.253,
+   "weight": 0.001335
+  },
+  "EG": {
+   "name": "Ägypten",
+   "twh": 1125.86,
+   "weight": 0.007661
+  },
+  "ES": {
+   "name": "Spanien",
+   "twh": 1624.246,
+   "weight": 0.011052
+  },
+  "FI": {
+   "name": "Finnland",
+   "twh": 334.594,
+   "weight": 0.002277
+  },
+  "FR": {
+   "name": "Frankreich",
+   "twh": 2519.901,
+   "weight": 0.017147
+  },
+  "GB": {
+   "name": "Vereinigtes Königreich (England)",
+   "twh": 1936.96,
+   "weight": 0.01318
+  },
+  "GR": {
+   "name": "Griechenland",
+   "twh": 321.187,
+   "weight": 0.002186
+  },
+  "GT": {
+   "name": "Guatemala",
+   "twh": 90.81,
+   "weight": 0.000618,
+   "year": 2023
+  },
+  "HK": {
+   "name": "Hong Kong",
+   "twh": 272.932,
+   "weight": 0.001857
+  },
+  "HU": {
+   "name": "Ungarn",
+   "twh": 260.792,
+   "weight": 0.001775
+  },
+  "ID": {
+   "name": "Indonesien",
+   "twh": 2984.731,
+   "weight": 0.02031
+  },
+  "IE": {
+   "name": "Irland",
+   "twh": 181.792,
+   "weight": 0.001237
+  },
+  "IL": {
+   "name": "Israel",
+   "twh": 277.774,
+   "weight": 0.00189
+  },
+  "IN": {
+   "name": "Indien",
+   "twh": 11336.057,
+   "weight": 0.077138
+  },
+  "IS": {
+   "name": "Island",
+   "twh": 62.817,
+   "weight": 0.000427
+  },
+  "IT": {
+   "name": "Italien",
+   "twh": 1696.287,
+   "weight": 0.011543
+  },
+  "JE": {
+   "name": "Jersey",
+   "twh": 0,
+   "weight": 0.0,
+   "note": "keine EI/EIA-Reihe, Gewicht 0"
+  },
+  "JP": {
+   "name": "Japan",
+   "twh": 4794.816,
+   "weight": 0.032627
+  },
+  "KR": {
+   "name": "Südkorea",
+   "twh": 3616.218,
+   "weight": 0.024607
+  },
+  "KW": {
+   "name": "Kuwait",
+   "twh": 525.025,
+   "weight": 0.003573
+  },
+  "LT": {
+   "name": "Litauen",
+   "twh": 73.366,
+   "weight": 0.000499
+  },
+  "LU": {
+   "name": "Luxemburg",
+   "twh": 39.742,
+   "weight": 0.00027
+  },
+  "MO": {
+   "name": "Macau",
+   "twh": 13.525,
+   "weight": 9.2e-05,
+   "year": 2023
+  },
+  "MX": {
+   "name": "Mexiko",
+   "twh": 2310.191,
+   "weight": 0.01572
+  },
+  "MY": {
+   "name": "Malaysia",
+   "twh": 1381.98,
+   "weight": 0.009404
+  },
+  "NL": {
+   "name": "Niederlande",
+   "twh": 926.465,
+   "weight": 0.006304
+  },
+  "NO": {
+   "name": "Norwegen",
+   "twh": 555.626,
+   "weight": 0.003781
+  },
+  "NZ": {
+   "name": "Neuseeland",
+   "twh": 233.124,
+   "weight": 0.001586
+  },
+  "PE": {
+   "name": "Peru",
+   "twh": 374.393,
+   "weight": 0.002548
+  },
+  "PH": {
+   "name": "Philippinen",
+   "twh": 652.563,
+   "weight": 0.00444
+  },
+  "PL": {
+   "name": "Polen",
+   "twh": 1125.569,
+   "weight": 0.007659
+  },
+  "PR": {
+   "name": "Puerto Rico",
+   "twh": 81.984,
+   "weight": 0.000558,
+   "year": 2023
+  },
+  "PT": {
+   "name": "Portugal",
+   "twh": 270.242,
+   "weight": 0.001839
+  },
+  "QA": {
+   "name": "Katar",
+   "twh": 653.95,
+   "weight": 0.00445
+  },
+  "RO": {
+   "name": "Rumänien",
+   "twh": 355.471,
+   "weight": 0.002419
+  },
+  "SA": {
+   "name": "Saudi Arabien",
+   "twh": 3290.424,
+   "weight": 0.02239
+  },
+  "SE": {
+   "name": "Schweden",
+   "twh": 610.004,
+   "weight": 0.004151
+  },
+  "SG": {
+   "name": "Singapur",
+   "twh": 1053.921,
+   "weight": 0.007172
+  },
+  "TH": {
+   "name": "Thailand",
+   "twh": 1420.819,
+   "weight": 0.009668
+  },
+  "TR": {
+   "name": "Türkei",
+   "twh": 2093.058,
+   "weight": 0.014242
+  },
+  "TW": {
+   "name": "Taiwan",
+   "twh": 1253.847,
+   "weight": 0.008532
+  },
+  "US": {
+   "name": "Vereinigte Staaten (USA)",
+   "twh": 26528.611,
+   "weight": 0.180517
+  },
+  "ZA": {
+   "name": "Südafrika",
+   "twh": 1362.492,
+   "weight": 0.009271
+  }
+ }
+}

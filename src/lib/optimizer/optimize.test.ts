@@ -6,6 +6,7 @@ import type { BenchmarkModel } from '@/lib/benchmark';
 import type { EtfData } from '@/lib/etf/types';
 import {
   optimize,
+  optimizeSparse,
   solveWeights,
   projectSimplex,
   countryWeights,
@@ -225,6 +226,24 @@ describe('Blend-Benchmark', () => {
   });
 });
 
+describe('Säulen-Benchmark', () => {
+  it('ist in benchmarkModels() enthalten', () => {
+    expect(benchmarkModels()).toContain('pillars');
+  });
+
+  it('optimize gegen Säulen läuft durch und liefert model: pillars', () => {
+    const res = optimize([etf(SPDR, 10_000)], 'pillars');
+    expect(res.model).toBe('pillars');
+    expect(res.allocations).toHaveLength(1);
+  });
+
+  it('SPDR allein: höherer Active Share gegen Säulen als gegen Blend', () => {
+    const blend = optimize([etf(SPDR, 10_000)], 'blend');
+    const pillars = optimize([etf(SPDR, 10_000)], 'pillars');
+    expect(pillars.activeShare).toBeGreaterThan(blend.activeShare);
+  });
+});
+
 describe('Eingabe-Validierung', () => {
   it('wirft bei leerer ETF-Liste', () => {
     expect(() => optimize([], 'marketcap')).toThrow();
@@ -334,5 +353,23 @@ describe('Sparplan (savings)', () => {
     expect(() => proposeSavings([saving(IWDA, 0)], [], 'marketcap', 'benchmark')).toThrow(
       /Sparrate/,
     );
+  });
+});
+
+describe('optimizeSparse', () => {
+  it('setzt nicht gewählte Aktien-ETFs auf Ziel 0, Gold bleibt', () => {
+    const gold = etf('IE00B4ND3602', 938);
+    const world = etf(IWDA, 6000);
+    const acwi = etf(SPDR, 792);
+    const res = optimizeSparse([world, gold, acwi], new Set([SPDR]), [], 'marketcap');
+    const w = res.allocations.find(a => a.isin === IWDA)!;
+    const a = res.allocations.find(a => a.isin === SPDR)!;
+    const g = res.allocations.find(a => a.isin === gold.isin)!;
+    expect(w.targetWeight).toBe(0);
+    expect(w.deltaEur).toBeCloseTo(-6000, 0);
+    expect(a.targetWeight).toBeGreaterThan(0.8);
+    expect(g.deltaEur).toBe(0);
+    expect(g.reserve).toBe(true);
+    expect(res.currentCoverageScore).toBe(optimize([world, gold, acwi], 'marketcap').currentCoverageScore);
   });
 });

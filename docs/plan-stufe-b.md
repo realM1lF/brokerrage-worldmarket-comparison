@@ -35,18 +35,14 @@ Abbruch bei Verbesserung < 0,5 Prozentpunkte (diminishing returns).
 
 ### 4. Kandidaten-Auswahl
 
-**Kriterien:** UCITS, TER ≤ 0,4 %, physisch bevorzugt, Fondsgröße ≥ 500 M€,
-Auflage ≥ 5 Jahre, breite Abdeckung je Rolle.
+**Kriterien:** UCITS, TER ≤ 0,4 %, physisch bevorzugt, **thesaurierend (Acc)**,
+Fondsgröße ≥ 500 M€, Auflage ≥ 5 Jahre. Dist nur, wenn keine Acc-Klasse
+unter 0,4 % TER existiert. Bei fast gleichem Deckungs-Zugewinn gewinnt
+die niedrigere TER.
 
-**Katalog (5 ETFs):**
-
-| ISIN | Name | Rolle | TER |
-|---|---|---|---|
-| IE00BKM4GZ66 | iShares Core MSCI EM IMI | Schwellenländer all-cap | 0,18 % |
-| IE00BF4RFH31 | iShares MSCI World Small Cap | DM Small Cap | 0,35 % |
-| IE00B3RBWM25 | Vanguard FTSE All-World | All-World (Tausch-Kandidat) | 0,22 % |
-| IE00B3YLTY66 | SPDR MSCI ACWI IMI | All-World + Small Cap (Tausch-K.) | 0,17 % |
-| IE0003XJA0J9 | Amundi Prime All Country World | All-World (günstigster T.-K.) | 0,07 % |
+**Katalog (23 ETFs):** Ursprung 5 plus Acc-Bausteine in
+`src/data/candidates.ts`. Dist-Anteilsklassen durch Acc ersetzt
+(VWCE, VFEA, iShares Europe Acc, FTSE 100 Acc). Kanada bleibt Dist.
 
 ### 5. Kandidaten-Daten
 

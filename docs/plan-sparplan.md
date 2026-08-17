@@ -90,12 +90,17 @@ Buy-only ist automatisch erfüllt: `w ≥ 0` ist Teil der Nebenbedingungen.
 
 ## Entscheidungen (mit RIn getroffen, 2026-08-17)
 
-1. **Vorschlag-Modus: beide.** (a) benchmark-treu und (b) konvergenz-optimal
-   (Lücken füllen) als Sub-Toggle. Default: (b). (a) ist Grenzfall von (b) für
-   k→∞ bzw. leeres Portfolio — rechnerisch fast kostenlos.
+1. **Vorschlag-Modus: drei.** (a) Weltmarkt spiegeln, (b) Lücken füllen,
+   (c) Bestmögliches Depot. **Default: (a).** (b) wirkt bei großem Depot wie
+   ein Extrem-Sparplan. (c) nutzt dieselbe Monatsformel wie (a), wählt aber
+   einen Baukasten von leer (gierig, Abbruch < 0,5 pp, höchstens 6
+   Aktien-ETFs). Ungewählte Bestands-ETFs bekommen 0 €/Monat. Ohne Bestand
+   sind (b) und (c) = (a).
 2. **Ansichten: erst getrennt.** Schalter „Bestand / Sparplan" mit jeweils eigener
    Analyse. Die gemeinsame Prognose-Karte (F3, „so entwickelt sich dein Portfolio
    in 3/6/12 Monaten") kommt in Stufe 3 obendrauf.
+   **UI-Schuld (2026-08-17):** Ist-Flow und Depot-nach-1-Monat stehen in derselben
+   Balkenoptik untereinander. Korrektur: `docs/plan-ux.md`.
 3. **Sparrate: €/Monat je ETF** (wie heute bei €). Gesamt-Sparrate mit
    automatischer Aufteilung später als Komfort-Feature.
 4. **Scope:** Stufe 1+2 = Kern, Stufe 3 = Follow-up.

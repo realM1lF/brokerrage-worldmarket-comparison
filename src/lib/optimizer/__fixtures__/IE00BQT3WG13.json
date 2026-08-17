@@ -1,0 +1,108 @@
+{
+  "profile": {
+    "isin": "IE00BQT3WG13",
+    "name": "iShares MSCI China A UCITS ETF",
+    "provider": "BlackRock Asset Management (DEU) AG",
+    "index": "MSCI CHINA A Inclusion NR USD",
+    "ter": 0.4,
+    "ongoingCharges": 0.4,
+    "swapBased": false,
+    "launchDate": "2015-04-08",
+    "fundVolumeEur": 2879262845,
+    "numberOfHoldings": 418
+  },
+  "exposures": {
+    "countries": [
+      {
+        "name": "China",
+        "value": 98.7213,
+        "code": "CN"
+      },
+      {
+        "name": "Hong Kong",
+        "value": 0.98145,
+        "code": "HK"
+      }
+    ],
+    "sectors": [
+      {
+        "name": "Grundmaterialien",
+        "value": 11.38551,
+        "code": "basic_materials"
+      },
+      {
+        "name": "Zykl. Konsumgüter",
+        "value": 4.8264,
+        "code": "consumer_cyclical"
+      },
+      {
+        "name": "Finanzen",
+        "value": 18.51994,
+        "code": "financial_services"
+      },
+      {
+        "name": "Immobilien",
+        "value": 0.49368,
+        "code": "real_estate"
+      },
+      {
+        "name": "Basiskonsumgüter",
+        "value": 6.85563,
+        "code": "consumer_defense"
+      },
+      {
+        "name": "Gesundheitswesen",
+        "value": 4.57831,
+        "code": "healthcare"
+      },
+      {
+        "name": "Versorger",
+        "value": 3.21432,
+        "code": "utilities"
+      },
+      {
+        "name": "Kommunikation",
+        "value": 1.28141,
+        "code": "communication_services"
+      },
+      {
+        "name": "Industrie",
+        "value": 14.24732,
+        "code": "industrials"
+      },
+      {
+        "name": "Technologie",
+        "value": 31.09396,
+        "code": "technology"
+      },
+      {
+        "name": "Energie",
+        "value": 3.20626,
+        "code": "energy"
+      }
+    ],
+    "regions": [
+      {
+        "name": "Asien",
+        "value": 99.70275,
+        "code": "asien"
+      }
+    ],
+    "msci": [
+      {
+        "name": "Emerging Markets",
+        "value": 98.7213
+      },
+      {
+        "name": "Developed Markets",
+        "value": 0.98145
+      }
+    ],
+    "asOfDate": "2026-08-14",
+    "sums": {
+      "countries": 99.7028,
+      "sectors": 99.7027,
+      "regions": 99.7028
+    }
+  }
+}

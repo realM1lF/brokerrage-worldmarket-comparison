@@ -1,0 +1,286 @@
+{
+  "profile": {
+    "isin": "LU0322253906",
+    "name": "Xtrackers MSCI Europe Small Cap UCITS ETF",
+    "provider": "Deutsche Asset Management S.A. (ETF)",
+    "index": "MSCI Europe Small Cap NR USD",
+    "ter": 0.3,
+    "ongoingCharges": 0.3,
+    "swapBased": false,
+    "launchDate": "2008-01-17",
+    "fundVolumeEur": 3399217773,
+    "numberOfHoldings": 868
+  },
+  "exposures": {
+    "countries": [
+      {
+        "name": "Österreich",
+        "value": 2.32716,
+        "code": "AT"
+      },
+      {
+        "name": "Belgien",
+        "value": 3.38466,
+        "code": "BE"
+      },
+      {
+        "name": "Brasilien",
+        "value": 0.06957,
+        "code": "BR"
+      },
+      {
+        "name": "Schweiz",
+        "value": 9.80813,
+        "code": "CH"
+      },
+      {
+        "name": "China",
+        "value": 0.02781,
+        "code": "CN"
+      },
+      {
+        "name": "Zypern",
+        "value": 0.32246,
+        "code": "CY"
+      },
+      {
+        "name": "Tschechien",
+        "value": 0,
+        "code": "CZ"
+      },
+      {
+        "name": "Deutschland",
+        "value": 9.25794,
+        "code": "DE"
+      },
+      {
+        "name": "Dänemark",
+        "value": 4.13748,
+        "code": "DK"
+      },
+      {
+        "name": "Spanien",
+        "value": 3.58996,
+        "code": "ES"
+      },
+      {
+        "name": "Finnland",
+        "value": 2.24973,
+        "code": "FI"
+      },
+      {
+        "name": "Frankreich",
+        "value": 8.34294,
+        "code": "FR"
+      },
+      {
+        "name": "Vereinigtes Königreich (England)",
+        "value": 26.96006,
+        "code": "GB"
+      },
+      {
+        "name": "Griechenland",
+        "value": 0.30103,
+        "code": "GR"
+      },
+      {
+        "name": "Hong Kong",
+        "value": 0.00002,
+        "code": "HK"
+      },
+      {
+        "name": "Irland",
+        "value": 0.80255,
+        "code": "IE"
+      },
+      {
+        "name": "Israel",
+        "value": 0.28755,
+        "code": "IL"
+      },
+      {
+        "name": "Italien",
+        "value": 5.91509,
+        "code": "IT"
+      },
+      {
+        "name": "Jersey",
+        "value": 0.16847,
+        "code": "JE"
+      },
+      {
+        "name": "Litauen",
+        "value": 0.06833,
+        "code": "LT"
+      },
+      {
+        "name": "Luxemburg",
+        "value": 0.20986,
+        "code": "LU"
+      },
+      {
+        "name": "Mexiko",
+        "value": 0.0235,
+        "code": "MX"
+      },
+      {
+        "name": "Malta",
+        "value": 0.02945,
+        "code": "MT"
+      },
+      {
+        "name": "Niederlande",
+        "value": 3.1482,
+        "code": "NL"
+      },
+      {
+        "name": "Norwegen",
+        "value": 4.66563,
+        "code": "NO"
+      },
+      {
+        "name": "Polen",
+        "value": 0.00009,
+        "code": "PL"
+      },
+      {
+        "name": "Portugal",
+        "value": 0.45694,
+        "code": "PT"
+      },
+      {
+        "name": "Singapur",
+        "value": 0.10621,
+        "code": "SG"
+      },
+      {
+        "name": "Schweden",
+        "value": 10.70005,
+        "code": "SE"
+      },
+      {
+        "name": "Vereinigte Staaten (USA)",
+        "value": 1.09277,
+        "code": "US"
+      },
+      {
+        "name": "Südafrika",
+        "value": 0.16577,
+        "code": "ZA"
+      }
+    ],
+    "sectors": [
+      {
+        "name": "Grundmaterialien",
+        "value": 6.8473,
+        "code": "basic_materials"
+      },
+      {
+        "name": "Zykl. Konsumgüter",
+        "value": 12.31223,
+        "code": "consumer_cyclical"
+      },
+      {
+        "name": "Finanzen",
+        "value": 15.55727,
+        "code": "financial_services"
+      },
+      {
+        "name": "Immobilien",
+        "value": 8.19684,
+        "code": "real_estate"
+      },
+      {
+        "name": "Basiskonsumgüter",
+        "value": 3.45419,
+        "code": "consumer_defense"
+      },
+      {
+        "name": "Gesundheitswesen",
+        "value": 7.41446,
+        "code": "healthcare"
+      },
+      {
+        "name": "Versorger",
+        "value": 2.26192,
+        "code": "utilities"
+      },
+      {
+        "name": "Kommunikation",
+        "value": 4.27035,
+        "code": "communication_services"
+      },
+      {
+        "name": "Industrie",
+        "value": 25.94825,
+        "code": "industrials"
+      },
+      {
+        "name": "Technologie",
+        "value": 7.50357,
+        "code": "technology"
+      },
+      {
+        "name": "Energie",
+        "value": 4.64475,
+        "code": "energy"
+      }
+    ],
+    "regions": [
+      {
+        "name": "Europa",
+        "value": 96.52366,
+        "code": "europe"
+      },
+      {
+        "name": "Lateinamerika",
+        "value": 0.09307000000000001,
+        "code": "latin_america"
+      },
+      {
+        "name": "Asien",
+        "value": 0.74405,
+        "code": "asien"
+      },
+      {
+        "name": "Osteuropa",
+        "value": 0.00009,
+        "code": "europe_east"
+      },
+      {
+        "name": "Nordamerika",
+        "value": 1.09277,
+        "code": "america_north"
+      },
+      {
+        "name": "Afrika",
+        "value": 0.16577,
+        "code": "africa"
+      }
+    ],
+    "msci": [
+      {
+        "name": "Developed Markets",
+        "value": 97.23307000000003
+      },
+      {
+        "name": "Emerging Markets",
+        "value": 0.58777
+      },
+      {
+        "name": "Below-FM",
+        "value": 0.73024
+      },
+      {
+        "name": "Frontier Markets",
+        "value": 0.06833
+      }
+    ],
+    "asOfDate": "2026-06-30",
+    "sums": {
+      "countries": 98.6194,
+      "sectors": 98.4111,
+      "regions": 98.6194
+    }
+  }
+}

@@ -1,7 +1,7 @@
 'use client';
 
 import type { AdditionsResult, ReplacementHint } from '@/lib/optimizer/candidates';
-import { SimpleTooltip } from '@/components/SimpleTooltip';
+import { staircaseBaseLabel, staircaseEmptyMessage } from '@/components/staircaseCopy';
 import styles from '@/app/page.module.css';
 
 const pct = (n: number) => `${(n * 100).toFixed(1)} %`;
@@ -9,8 +9,10 @@ const ter = (t: number | null) => (t === null ? '' : ` · TER ${t.toFixed(2)} %`
 
 /**
  * Stufe B: Treppen-Karte ("Mit neuen ETFs") + optionaler Tausch-Hinweis.
- * context='bestand': Scores = Deckungs-Score nach Umschichtung.
- * context='sparplan': Scores = Deckungs-Score nach 1 Monat (p(1)).
+ * context='bestand': Treppen-Scores = Deckungs-Score nach Umschichtung.
+ * context='sparplan': Treppen-Scores = Depot nach 1 Monat Sparplan (p(1)).
+ * context='bestDepot': Treppe = Baukasten von leer, Stopp unter 0,5 pp.
+ * Der Tausch-Hinweis ist immer eine Bestands-Umschichtung (optimize), nie p(1).
  */
 export function StaircaseCard({
   additions,
@@ -19,24 +21,15 @@ export function StaircaseCard({
 }: {
   additions: AdditionsResult;
   replacement: ReplacementHint | null;
-  context: 'bestand' | 'sparplan';
+  context: 'bestand' | 'sparplan' | 'bestDepot';
 }) {
-  const scoreLabel = context === 'bestand' ? 'Deckungs-Score' : 'Deckungs-Score nach 1 Monat';
-  const tooltip =
-    context === 'bestand'
-      ? 'Jede Stufe zeigt, wie viel näher du dem Weltmarkt kommst, wenn du einen weiteren ETF in die Umschichtung einbeziehst. Die Reihenfolge ist berechnet: zuerst der ETF mit dem größten Effekt. Abgebrochen wird, wenn ein weiterer ETF weniger als 0,5 Prozentpunkte bringt.'
-      : 'Jede Stufe zeigt deinen Deckungs-Score nach einem Monat, wenn du einen weiteren ETF in deinen Sparplan aufnimmst. Die Reihenfolge ist berechnet: zuerst der ETF mit dem größten Effekt. Abgebrochen wird, wenn ein weiterer ETF weniger als 0,5 Prozentpunkte bringt.';
-
   return (
     <section className={`card ${styles.wideCard}`}>
-      <h3>
-        Mit neuen ETFs
-        <SimpleTooltip text={tooltip} />
-      </h3>
+      <h3>Wenn du einen ETF dazu nimmst</h3>
       <ol className="staircase">
         <li className="stairStep">
           <span className="stairChip base">
-            Mit deinen ETFs: <b>{pct(additions.baseScore)}</b>
+            {staircaseBaseLabel(context)} <b>{pct(additions.baseScore)}</b>
           </span>
         </li>
         {additions.steps.map(s => (
@@ -51,17 +44,28 @@ export function StaircaseCard({
           </li>
         ))}
         {additions.steps.length === 0 && (
-          <li className="muted">
-            Deine ETFs decken den Weltmarkt bereits ab — keine Ergänzung nötig.
-          </li>
+          <li className="muted">{staircaseEmptyMessage(context)}</li>
         )}
       </ol>
       {replacement && (
         <p className="replacementHint">
-          💡 Alternativ zum Neukauf: <b>{replacement.fromName}</b> gegen{' '}
-          <b>{replacement.toName}</b> tauschen → {scoreLabel} {pct(replacement.scoreAfter)}
-          {replacement.toTer !== null && ` (TER ${replacement.toTer.toFixed(2)} %)`}. Ein ETF
-          weniger, gleicher Plan.
+          {context !== 'bestand' ? (
+            <>
+              💡 Tipp zum Depot (nicht zum Sparplan): <b>{replacement.fromName}</b> gegen{' '}
+              <b>{replacement.toName}</b> tauschen, dann umschichten → Deckungs-Score{' '}
+              {pct(replacement.scoreAfter)}
+              {replacement.toTer !== null && ` (TER ${replacement.toTer.toFixed(2)} %)`}. Das
+              ändert den Bestand, nicht die Monatsrate.
+            </>
+          ) : (
+            <>
+              💡 Alternativ zum Neukauf: <b>{replacement.fromName}</b> gegen{' '}
+              <b>{replacement.toName}</b> tauschen → Deckungs-Score nach Umschichtung{' '}
+              {pct(replacement.scoreAfter)}
+              {replacement.toTer !== null && ` (TER ${replacement.toTer.toFixed(2)} %)`}. Ein ETF
+              weniger.
+            </>
+          )}
         </p>
       )}
     </section>

@@ -26,6 +26,12 @@ export interface EtfAllocation {
   currentWeight: number;
   targetWeight: number;
   deltaEur: number;
+  /** true = Short-/Inverse-ETF ohne Länder-Exposure (z.B. ShortDAX):
+   *  arbeitet gegen den Weltmarkt, nicht neutral wie Gold. */
+  againstMarket?: boolean;
+  /** true = Gold/ETC ohne Länder-Exposure: persönliche Reserve,
+   *  Ist = Ziel, zählt nicht zum Länder-Benchmark. */
+  reserve?: boolean;
 }
 
 export interface DriftEntry {
@@ -49,6 +55,10 @@ export interface OptimizeResult {
   allocations: EtfAllocation[];
   coverageScore: number;
   activeShare: number;
+  /** Anteil der Aktien-ETFs am Portfolio (0..1). Scores + Drift beziehen
+   *  sich NUR auf diesen Teil; Nicht-Aktien (Gold, Short-Instrumente)
+   *  bleiben unverändert. */
+  equityShare: number;
   /** Ist-Zustand (vor Umschichtung): wie nah ist das Portfolio HEUTE am Benchmark. */
   currentCoverageScore: number;
   currentActiveShare: number;
@@ -56,11 +66,18 @@ export interface OptimizeResult {
   iterations: number;
   converged: boolean;
   countryDrift: DriftEntry[];
+  /** Ist-Länder vs. Weltmarkt, vor Umschichtung. */
+  currentCountryDrift: DriftEntry[];
   topOverweight: DriftEntry[];
   topUnderweight: DriftEntry[];
   missingCountries: DriftEntry[];
+  currentTopOverweight: DriftEntry[];
+  currentTopUnderweight: DriftEntry[];
+  currentMissingCountries: DriftEntry[];
   sectorDrift: DriftEntry[];
   regions: RegionEntry[];
+  /** Ist-Regionen vs. Weltmarkt, vor Umschichtung. */
+  currentRegions: RegionEntry[];
 }
 
 /* ================= Länder-Vektor je ETF ================= */
@@ -278,6 +295,21 @@ export function isEquityEtf(data: EtfData): boolean {
   return false;
 }
 
+/**
+ * true, wenn der ETF gegen den Aktien-Weltmarkt arbeitet (z.B. ShortDAX):
+ * swap-basiert UND ohne Länder-Exposure. Solche Werte werden wie
+ * Nicht-Aktien behandelt (Ziel = Ist, Delta = 0), aber im UI explizit
+ * als "gegen den Weltmarkt gerichtet" markiert statt neutral wie Gold.
+ */
+export function isAgainstMarket(data: EtfData): boolean {
+  return data.profile.swapBased && !isEquityEtf(data);
+}
+
+/** Gold-ETC u. ä.: kein Aktien-Land, kein Short. Persönliche Reserve. */
+export function isReserveAsset(data: EtfData): boolean {
+  return !isEquityEtf(data) && !isAgainstMarket(data);
+}
+
 export function optimize(etfs: PortfolioEtf[], model: BenchmarkModel): OptimizeResult {
   if (etfs.length === 0) throw new Error('Keine ETFs angegeben');
   const totalEur = etfs.reduce((acc, e) => acc + e.amountEur, 0);
@@ -312,6 +344,8 @@ export function optimize(etfs: PortfolioEtf[], model: BenchmarkModel): OptimizeR
         currentWeight,
         targetWeight: currentWeight,
         deltaEur: 0,
+        againstMarket: isAgainstMarket(e.data),
+        reserve: isReserveAsset(e.data),
       };
     }
     const targetWeight = x[k] * equityShare;
@@ -352,9 +386,17 @@ export function optimize(etfs: PortfolioEtf[], model: BenchmarkModel): OptimizeR
   const drift = buildDrift(countryUniverse, portfolioCountries, benchmarkCountries, nameOfCountry)
     .sort((a, b) => b.benchmark - a.benchmark);
 
+  const currentDrift = buildDrift(countryUniverse, currentCountries, benchmarkCountries, nameOfCountry)
+    .sort((a, b) => b.benchmark - a.benchmark);
+
   const topOverweight = drift.filter(d => d.drift > 0).sort((a, b) => b.drift - a.drift);
   const topUnderweight = drift.filter(d => d.drift < 0).sort((a, b) => a.drift - b.drift);
   const missingCountries = drift.filter(
+    d => d.benchmark > MISSING_MIN && d.portfolio <= d.benchmark * MISSING_REL,
+  );
+  const currentTopOverweight = currentDrift.filter(d => d.drift > 0).sort((a, b) => b.drift - a.drift);
+  const currentTopUnderweight = currentDrift.filter(d => d.drift < 0).sort((a, b) => a.drift - b.drift);
+  const currentMissingCountries = currentDrift.filter(
     d => d.benchmark > MISSING_MIN && d.portfolio <= d.benchmark * MISSING_REL,
   );
 
@@ -384,23 +426,112 @@ export function optimize(etfs: PortfolioEtf[], model: BenchmarkModel): OptimizeR
     portfolio: portfolioRegions.get(code) ?? 0,
   }));
 
+  const currentPortfolioRegions = aggregate(equityCurrentW, equity, regionWeights);
+  const currentRegionUniverse = Array.from(
+    new Set([...benchmarkRegions.keys(), ...currentPortfolioRegions.keys()]),
+  ).sort();
+  const currentRegions: RegionEntry[] = currentRegionUniverse.map(code => ({
+    code,
+    name: code === OTHER ? 'Rest' : benchmark.regions.find(r => r.code === code)?.name ?? code,
+    benchmark: benchmarkRegions.get(code) ?? 0,
+    portfolio: currentPortfolioRegions.get(code) ?? 0,
+  }));
+
   return {
     model,
     totalEur,
     allocations,
     coverageScore,
     activeShare,
+    equityShare,
     currentCoverageScore,
     currentActiveShare,
     objectiveValue: obj,
     iterations,
     converged,
     countryDrift: drift,
+    currentCountryDrift: currentDrift,
     topOverweight,
     topUnderweight,
     missingCountries,
+    currentTopOverweight,
+    currentTopUnderweight,
+    currentMissingCountries,
     sectorDrift,
     regions,
+    currentRegions,
+  };
+}
+
+/**
+ * Umschichtung nur auf `keepIsins`. Andere Aktien-ETFs → Ziel 0.
+ * Ist-Metriken bleiben die des vollen Bestands. Gold unverändert.
+ */
+export function optimizeSparse(
+  holdings: PortfolioEtf[],
+  keepIsins: ReadonlySet<string>,
+  extras: PortfolioEtf[],
+  model: BenchmarkModel,
+): OptimizeResult {
+  const current = optimize(holdings, model);
+  const extraNew = extras.filter(
+    e => keepIsins.has(e.isin) && !holdings.some(h => h.isin === e.isin),
+  );
+  const pickEtfs = [
+    ...holdings.filter(e => isEquityEtf(e.data) && keepIsins.has(e.isin)),
+    ...extraNew,
+  ].map(e => ({ ...e, amountEur: 1000 }));
+  if (pickEtfs.length === 0) return current;
+  const target = optimize(pickEtfs, model);
+  const totalEur = current.totalEur;
+  const equityShare = current.equityShare;
+  const pickWeight = new Map(
+    target.allocations
+      .filter(a => !a.reserve && !a.againstMarket)
+      .map(a => [a.isin, a.targetWeight]),
+  );
+  const pickSum = [...pickWeight.values()].reduce((a, w) => a + w, 0) || 1;
+  const seen = new Set<string>();
+  const allocations: EtfAllocation[] = [];
+  for (const e of [...holdings, ...extraNew]) {
+    if (seen.has(e.isin)) continue;
+    seen.add(e.isin);
+    const currentWeight = totalEur > 0 ? e.amountEur / totalEur : 0;
+    if (!isEquityEtf(e.data)) {
+      allocations.push({
+        isin: e.isin,
+        name: e.data.profile.name,
+        amountEur: e.amountEur,
+        currentWeight,
+        targetWeight: currentWeight,
+        deltaEur: 0,
+        againstMarket: isAgainstMarket(e.data),
+        reserve: isReserveAsset(e.data),
+      });
+      continue;
+    }
+    const targetWeight = ((pickWeight.get(e.isin) ?? 0) / pickSum) * equityShare;
+    allocations.push({
+      isin: e.isin,
+      name: e.data.profile.name,
+      amountEur: e.amountEur,
+      currentWeight,
+      targetWeight,
+      deltaEur: (targetWeight - currentWeight) * totalEur,
+    });
+  }
+  return {
+    ...target,
+    totalEur,
+    equityShare,
+    allocations,
+    currentCoverageScore: current.currentCoverageScore,
+    currentActiveShare: current.currentActiveShare,
+    currentCountryDrift: current.currentCountryDrift,
+    currentRegions: current.currentRegions,
+    currentTopOverweight: current.currentTopOverweight,
+    currentTopUnderweight: current.currentTopUnderweight,
+    currentMissingCountries: current.currentMissingCountries,
   };
 }
 

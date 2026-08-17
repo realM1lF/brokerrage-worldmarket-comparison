@@ -2,6 +2,7 @@
 
 import type { DriftEntry } from '@/lib/optimizer/optimize';
 import { SimpleTooltip } from '@/components/SimpleTooltip';
+import { CountryName } from './CountryName';
 
 function pct(v: number): string {
   return `${(v * 100).toFixed(2)}%`;
@@ -26,7 +27,9 @@ export function TopDeltas({
         <ol className="rankList">
           {overweight.slice(0, n).map(d => (
             <li key={d.code}>
-              <span>{d.name}</span>
+              <span>
+                <CountryName code={d.code} name={d.name} />
+              </span>
               <b className="pos">+{pct(d.drift)}</b>
             </li>
           ))}
@@ -40,7 +43,9 @@ export function TopDeltas({
         <ol className="rankList">
           {underweight.slice(0, n).map(d => (
             <li key={d.code}>
-              <span>{d.name}</span>
+              <span>
+                <CountryName code={d.code} name={d.name} />
+              </span>
               <b className="neg">{pct(d.drift)}</b>
             </li>
           ))}
@@ -64,7 +69,7 @@ export function MissingCountries({ countries }: { countries: DriftEntry[] }) {
     <div className="tags">
       {countries.map(c => (
         <span className="tag" key={c.code} title={`Benchmark: ${pct(c.benchmark)}`}>
-          {c.name} <small>{pct(c.benchmark)}</small>
+          <CountryName code={c.code} name={c.name} /> <small>{pct(c.benchmark)}</small>
         </span>
       ))}
     </div>

@@ -4,6 +4,49 @@
   padding: 2rem 1.25rem;
 }
 
+/* Steuerung: Werkzeugkasten, keine Ergebniskarte */
+.toolbox {
+  margin-top: 0.75rem;
+}
+
+:global(.card).toolbox {
+  background: #f3f4f7;
+  border-color: var(--card-border);
+  box-shadow: none;
+}
+
+/* Kapitel-Bänder */
+.chapter {
+  margin-top: 2.25rem;
+  padding: 1.1rem 1rem 1.15rem;
+  background: #f3f4f7;
+  border-radius: var(--radius-card);
+  border-left: 3px solid var(--accent);
+}
+
+.chapterHead {
+  margin-bottom: 0.85rem;
+}
+
+.chapterTitle {
+  font-size: 1.15rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+.chapterLead {
+  margin: 0.35rem 0 0;
+}
+
+.chapter .dashboard {
+  margin-top: 0;
+}
+
+.chapter .dashboard > .scoreCard:only-child,
+.chapter .dashboard > .wideCard:only-child {
+  grid-column: span 12;
+}
+
 /* ---- Dashboard Grid ---- */
 
 .dashboard {
@@ -47,6 +90,11 @@
   grid-column: span 4;
 }
 
+.dashboard:not(:has(.sectorCard)) .countryCard,
+.dashboard:not(:has(.sectorCard)) .regionCard {
+  grid-column: span 6;
+}
+
 /* Row 3: Ziel-Gewichtung + Fehlende Länder */
 .allocationCard {
   grid-column: span 6;
@@ -68,6 +116,43 @@
   flex-direction: column;
   align-items: center;
   gap: 0.75rem;
+}
+
+/* ---- Zwei Gauges nebeneinander (Sparplan-Vorschlag: Depot heute + nach k Monaten) ---- */
+
+.horizonRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.horizonRow label {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.horizonRow input[type='number'] {
+  width: 4.75rem;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  background: #fff;
+  color: inherit;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.dualGauge {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .metricList {

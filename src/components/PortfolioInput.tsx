@@ -54,12 +54,14 @@ function MonthlyCell({
 export function PortfolioInput({
   portfolio,
   loading,
+  hydrated,
   onAdd,
   onRemove,
   onMonthlyChange,
 }: {
   portfolio: PortfolioEtf[];
   loading: boolean;
+  hydrated: boolean;
   onAdd: (isin: string, amountEur: number, monthlyEur?: number) => void;
   onRemove: (isin: string) => void;
   onMonthlyChange: (isin: string, monthlyEur: number | undefined) => void;
@@ -93,7 +95,7 @@ export function PortfolioInput({
           placeholder="ISIN (z.B. IE00B4L5Y983)"
           value={isin}
           onChange={e => setIsin(e.target.value)}
-          disabled={loading}
+          disabled={hydrated && loading ? true : undefined}
         />
         <input
           type="text"
@@ -101,7 +103,7 @@ export function PortfolioInput({
           placeholder="Wert in € (Bestand, optional)"
           value={amount}
           onChange={e => setAmount(e.target.value)}
-          disabled={loading}
+          disabled={hydrated && loading ? true : undefined}
         />
         <input
           type="text"
@@ -109,10 +111,10 @@ export function PortfolioInput({
           placeholder="€/Monat (Sparplan, optional)"
           value={monthly}
           onChange={e => setMonthly(e.target.value)}
-          disabled={loading}
+          disabled={hydrated && loading ? true : undefined}
         />
-        <button type="submit" disabled={loading}>
-          {loading ? 'Lädt…' : 'ETF hinzufügen'}
+        <button type="submit" disabled={hydrated && loading ? true : undefined}>
+          {hydrated && loading ? 'Lädt…' : 'ETF hinzufügen'}
         </button>
       </form>
       <p className="muted">

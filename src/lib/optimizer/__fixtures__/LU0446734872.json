@@ -1,0 +1,99 @@
+{
+  "profile": {
+    "isin": "LU0446734872",
+    "name": "UBS MSCI Canada UCITS ETF (Dist)",
+    "provider": "UBS Fund Management (Luxembourg) S.A.",
+    "index": "MSCI Canada NR CAD",
+    "ter": 0.33,
+    "ongoingCharges": 0.33,
+    "swapBased": false,
+    "launchDate": "2009-09-30",
+    "fundVolumeEur": 3358123878,
+    "numberOfHoldings": 89
+  },
+  "exposures": {
+    "countries": [
+      {
+        "name": "Kanada",
+        "value": 98.89704,
+        "code": "CA"
+      },
+      {
+        "name": "Vereinigte Staaten (USA)",
+        "value": 0.99113,
+        "code": "US"
+      }
+    ],
+    "sectors": [
+      {
+        "name": "Grundmaterialien",
+        "value": 14.59127,
+        "code": "basic_materials"
+      },
+      {
+        "name": "Zykl. Konsumgüter",
+        "value": 3.60498,
+        "code": "consumer_cyclical"
+      },
+      {
+        "name": "Finanzen",
+        "value": 40.07822,
+        "code": "financial_services"
+      },
+      {
+        "name": "Immobilien",
+        "value": 0.1841,
+        "code": "real_estate"
+      },
+      {
+        "name": "Basiskonsumgüter",
+        "value": 3.03557,
+        "code": "consumer_defense"
+      },
+      {
+        "name": "Versorger",
+        "value": 2.10175,
+        "code": "utilities"
+      },
+      {
+        "name": "Kommunikation",
+        "value": 0.78875,
+        "code": "communication_services"
+      },
+      {
+        "name": "Industrie",
+        "value": 9.00878,
+        "code": "industrials"
+      },
+      {
+        "name": "Technologie",
+        "value": 9.18108,
+        "code": "technology"
+      },
+      {
+        "name": "Energie",
+        "value": 17.31367,
+        "code": "energy"
+      }
+    ],
+    "regions": [
+      {
+        "name": "Nordamerika",
+        "value": 99.88817,
+        "code": "america_north"
+      }
+    ],
+    "msci": [
+      {
+        "name": "Developed Markets",
+        "value": 99.88817
+      }
+    ],
+    "asOfDate": "2026-08-11",
+    "sums": {
+      "countries": 99.8882,
+      "sectors": 99.8882,
+      "regions": 99.8882
+    }
+  }
+}

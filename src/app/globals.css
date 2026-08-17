@@ -195,6 +195,14 @@ button:disabled {
   font-variant-numeric: tabular-nums;
 }
 
+.sharePct {
+  display: block;
+  margin-top: 0.1rem;
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: color-mix(in srgb, var(--fg) 50%, transparent);
+}
+
 .isinSub {
   color: var(--muted);
   font-size: 0.75rem;
@@ -237,8 +245,36 @@ button:disabled {
   margin-bottom: 1rem;
 }
 
+.depotRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.depotRow select,
+.depotRow input {
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  background: #fff;
+  color: inherit;
+}
+
+.depotRow select {
+  min-width: 12rem;
+}
+
+.depotRow input {
+  flex: 1;
+  min-width: 10rem;
+}
+
 .segmented {
   display: inline-flex;
+  flex-wrap: wrap;
   border: 1px solid var(--border);
   border-radius: 8px;
   overflow: hidden;
@@ -291,6 +327,18 @@ button:disabled {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.countryName {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.countryFlag {
+  flex-shrink: 0;
+  line-height: 1;
 }
 
 .driftTrack {
@@ -451,6 +499,36 @@ button:disabled {
   background: var(--pos-soft);
   border: 1px solid var(--pos-stroke);
   color: var(--pos);
+  border-radius: 999px;
+  padding: 0.05rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+/* ---- Badge "Reserve, unverändert" (Gold-Hülle, neutral) ---- */
+
+.chipReserve {
+  display: inline-block;
+  margin-left: 0.5rem;
+  background: #eef0f4;
+  border: 1px solid #d5dae3;
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 0.05rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.chipWarn {
+  display: inline-block;
+  margin-left: 0.5rem;
+  background: var(--warn-soft);
+  border: 1px solid var(--warn-stroke);
+  color: var(--warn-text);
   border-radius: 999px;
   padding: 0.05rem 0.55rem;
   font-size: 0.72rem;

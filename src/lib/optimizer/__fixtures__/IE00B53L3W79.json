@@ -1,0 +1,134 @@
+{
+  "profile": {
+    "isin": "IE00B53L3W79",
+    "name": "iShares Core EURO STOXX 50 UCITS ETF",
+    "provider": "BlackRock Asset Management (DEU) AG",
+    "index": "Euro Stoxx 50",
+    "ter": 0.1,
+    "ongoingCharges": 0.1,
+    "swapBased": false,
+    "launchDate": "2010-01-26",
+    "fundVolumeEur": 7980232478,
+    "numberOfHoldings": 58
+  },
+  "exposures": {
+    "countries": [
+      {
+        "name": "Belgien",
+        "value": 1.54357,
+        "code": "BE"
+      },
+      {
+        "name": "Deutschland",
+        "value": 29.49629,
+        "code": "DE"
+      },
+      {
+        "name": "Spanien",
+        "value": 11.40657,
+        "code": "ES"
+      },
+      {
+        "name": "Frankreich",
+        "value": 29.24919,
+        "code": "FR"
+      },
+      {
+        "name": "Italien",
+        "value": 7.80515,
+        "code": "IT"
+      },
+      {
+        "name": "Niederlande",
+        "value": 16.73345,
+        "code": "NL"
+      },
+      {
+        "name": "Schweden",
+        "value": 1.29828,
+        "code": "SE"
+      },
+      {
+        "name": "Vereinigte Staaten (USA)",
+        "value": 1.92772,
+        "code": "US"
+      }
+    ],
+    "sectors": [
+      {
+        "name": "Grundmaterialien",
+        "value": 3.34354,
+        "code": "basic_materials"
+      },
+      {
+        "name": "Zykl. Konsumgüter",
+        "value": 9.17583,
+        "code": "consumer_cyclical"
+      },
+      {
+        "name": "Finanzen",
+        "value": 27.55643,
+        "code": "financial_services"
+      },
+      {
+        "name": "Basiskonsumgüter",
+        "value": 5.11052,
+        "code": "consumer_defense"
+      },
+      {
+        "name": "Gesundheitswesen",
+        "value": 4.99327,
+        "code": "healthcare"
+      },
+      {
+        "name": "Versorger",
+        "value": 4.3957,
+        "code": "utilities"
+      },
+      {
+        "name": "Kommunikation",
+        "value": 2.17341,
+        "code": "communication_services"
+      },
+      {
+        "name": "Industrie",
+        "value": 22.16768,
+        "code": "industrials"
+      },
+      {
+        "name": "Technologie",
+        "value": 15.71729,
+        "code": "technology"
+      },
+      {
+        "name": "Energie",
+        "value": 4.82654,
+        "code": "energy"
+      }
+    ],
+    "regions": [
+      {
+        "name": "Europa",
+        "value": 97.5325,
+        "code": "europe"
+      },
+      {
+        "name": "Nordamerika",
+        "value": 1.92772,
+        "code": "america_north"
+      }
+    ],
+    "msci": [
+      {
+        "name": "Developed Markets",
+        "value": 99.46021999999999
+      }
+    ],
+    "asOfDate": "2026-08-14",
+    "sums": {
+      "countries": 99.4602,
+      "sectors": 99.4602,
+      "regions": 99.4602
+    }
+  }
+}

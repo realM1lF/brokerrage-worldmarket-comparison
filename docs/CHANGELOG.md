@@ -1,5 +1,199 @@
 # Changelog
 
+## 2026-08-17 — Katalog: Acc statt Dist, TER als Preis-Leistung
+
+Neue Vorschläge sind thesaurierend. Dist-Anteilsklassen raus, wo es Acc gibt
+(VWCE statt VWRL, VFEA, iShares Europe Acc, FTSE 100 Acc). Kanada bleibt Dist:
+keine Acc unter 0,4 % TER. Bei fast gleichem Score-Zugewinn (< 0,05 pp)
+nimmt der Baukasten die niedrigere TER.
+
+### Verifikation
+
+- `npm test` (kein Dist im Katalog außer Kanada, Acc-Fixtures, bestehende Treppe).
+
+## 2026-08-17 — Bestmögliches Depot: GDP-Weighted im Live-Katalog
+
+Mein Depot blieb bei ~91 %, das Testdepot bei ~96 %: GDP-Weighted war nur
+im Bestand des Testdepots, nicht in der geladenen Kandidatenliste
+(HTTP-Cache von `/api/candidates`). Fallback auf Optimizer-Fixtures,
+`Cache-Control: no-store`, Bestmögliches Depot sieht den ganzen Katalog.
+
+### Verifikation
+
+- `npm test` (Fixture-Fallback GDP-Weighted, bestehende bestDepot-Tests).
+
+## 2026-08-17 — Bestmögliches Depot: Baukasten von leer
+
+„Bestmögliches Depot“ hat den vollen Bestands-Mix als Spalten genommen und
+L2 hat Restgewicht auf World/Stoxx/EM verteilt. Der Kauf-Score blieb unter
+einem kurzen Mix (Testdepot mit GDP-Weighted: 96,9 %, Mein Depot: 91,1 %).
+
+Jetzt: gierig von leer, Abbruch unter 0,5 pp, höchstens 6 Aktien-ETFs.
+Ungewählte Bestands-ETFs bekommen 0 €/Monat. Gold bleibt. Treppe startet
+bei 0. Amundi GDP-Weighted ist Katalog-Ausnahme (zu neu/klein), sonst
+bleibt der Baukasten unter 90 %.
+
+### Verifikation
+
+- `npm test` (Säulen-Käufe > 95 % mit GDP-Weighted, Treppe ≠ Bestands-Add-on,
+  Gold fix, Katalog 26, Prefs, TypeScript).
+
+## 2026-08-17 — Sparplan-Modus: Bestmögliches Depot
+
+Dritte Option neben Weltmarkt spiegeln und Lücken füllen. Gilt für alle
+Benchmarks (Marktkap, BIP, PPP, Blend, Säulen).
+
+Monatsgewichte = Weltmarkt, so gut es die ETFs können (gleiche Formel wie
+spiegeln). Neue ETFs kommen über die Bestands-Treppe: sie müssen das
+umgeschichtete Depot um ≥ 0,5 Prozentpunkte heben, nicht das Depot nach
+einem Monat Sparplan. Ohne Bestand fällt der Modus auf spiegeln zurück.
+
+### Verifikation
+
+- `npm test` (bestDepot-Gewichte = optimize()-Ziel, Gold fix, Treppe =
+  Bestand-Treppe bei Säulen, Prefs, TypeScript).
+
+## 2026-08-17 — Kandidaten-Katalog: +20 ETFs
+
+Rechner hat mehr Auswahl. 20 physische UCITS dazu (TER ≤ 0,4 %, ≥ 500 M€,
+≥ 5 Jahre). Schwerpunkt: Länder, die Blend/Säulen/BIP brauchen (China,
+Indien, Japan, Pazifik, Kanada, Europa), plus ein paar EM- und World-Alternativen.
+
+Nicht drin: S&P 500, Swap-ETFs, ESG-Kanada, USD-hedged EMU, zu neue/zu kleine
+Fonds (u.a. Amundi GDP-Weighted).
+
+### Verifikation
+
+- `npm test` (Katalog 25 ISINs + Fixtures, Treppe auf den ursprünglichen 5
+  eingefroren).
+
+## 2026-08-17 — Säulen-Benchmark neben Blend
+
+Vier Länder-Säulen, live gemischt, Toggle `Säulen`. These: Weltmarkt ist mehr
+als Börse plus BIP. Gewichte nach Investierbarkeit (5-Punkte-Raster), nicht gleich.
+
+- Formel je Land: `0.50·MC + 0.25·GDP + 0.15·Energie + 0.10·Erwerb 15–64`.
+- Quellen: bestehende MC/GDP, UN WPP 2024 via OWID (2023), Energy Institute/EIA
+  via OWID (2024). Jersey-Energie = 0.
+- Konsum nicht drin (SNA-Doppel mit BIP). CWON-Kapital nicht drin (2020, Lücken TW/HK).
+- US 41,9 %, China 13,6 %, Indien 5,6 % (Blend: 45,7 / 10,6 / 2,6).
+- Methodik Abschnitt 3. Sektor-Drift ausgeblendet wie bei GDP/PPP/Blend.
+
+### Verifikation
+
+- `npm test` (Säulen Land-für-Land gegen Quell-Maps, Optimizer, bestehende Modelle).
+
+## 2026-08-17 — UX: Kapitel heute → tun → danach
+
+Seite erzählt von oben nach unten. Optik (Palette, Karten, Gauge) unverändert.
+
+- Steuerung oben: Depot, Tabelle, Bestand|Sparplan, Benchmark, Analysieren.
+  „Mit neuen ETFs“ und Sparplan-Modus sitzen im Kapitel 2 (Vorschlag).
+- Bestand: 1 Depot heute (Ist-Länder), 2 Umschichten, 3 danach.
+- Sparplan: 1 Käufe diesen Monat, 2 Aufteilung inkl. Drift der vorgeschlagenen
+  Käufe, 3 Depot-Score-Paar plus Mini-Hinweis. Keine große Länderkarte
+  „nach 1 Monat“ mehr neben den Kauf-Ländern.
+- Regionen-Weltmarkt = Summe der Länder des aktiven Benchmarks. Blend-Nordamerika
+  ≈ USA+Kanada (~48 %), nicht Marktkap 65,9 %.
+
+### Verifikation
+
+- `npm test` (Benchmark-Regionen, Ist-Drift, bestehender Kern).
+- Browser: Testdepot, Bestand + Sparplan, Marktkap + Blend, Donut-Kopf = Modell.
+
+## 2026-08-17 — UX-Plan: Kapitel statt Collage
+
+Kein Code. Spezifikation in `docs/plan-ux.md`. Nächste Session setzt um:
+heute → tun → danach, Regionen aus Ländern bei Blend, Sparplan-Drift nicht
+mehr neben Depot-Drift derselben Optik.
+
+## 2026-08-17 — Sparplan-Default: Weltmarkt spiegeln
+
+Neuer Depot-Default ist `benchmark` (Weltmarkt spiegeln), nicht mehr
+`converge` (Lücken füllen). Lücken-Modus bleibt als Toggle.
+
+### Verifikation
+
+- Store-Tests: Seed + neues Depot haben `savingsMode: 'benchmark'`.
+
+## 2026-08-17 — Depots in SQLite statt localStorage
+
+Bestände lagen als volles ETF-JSON im localStorage. Quota-Fehler wurden
+still verschluckt, neue ETFs waren nach Reload oft weg.
+
+- SQLite-Datei `data/finance.db` (`node:sqlite`), API `/api/depots`.
+- Mehrere Depots: anlegen, wechseln, löschen (letztes bleibt).
+- Holdings nur ISIN + € + Sparrate. Exposure kommt weiter von `/api/etf`.
+- Seed: Depot „Mein Depot“ mit den sechs RIn-Positionen (World, Gold,
+  Prime AC, Xtrackers EM, Stoxx 600, EM IMI).
+
+### Verifikation
+
+- `npm test` 165 passed / 30 skipped, `tsc` + `lint` + `build` grün.
+
+## 2026-08-17 — Sparplan-Texte: drei Meter getrennt
+
+Rechnung unverändert. UI hat Ist-Käufe, Depot nach 1 Monat und
+Umschichtungs-Tipp durcheinanderbeschriftet.
+
+- Ist-Analyse: „Beste Monats-Mischung“ = nur €/Monat, Depot zählt nicht.
+- Vorschlag: „Depot nach 1 Monat“ = Bestand + Käufe, nicht die Monats-Mischung.
+- Treppe Sparplan: Leertext nennt Monatsrate vs. Bestand, nicht „bereits abgedeckt“.
+- Tausch-Hinweis Sparplan: „Tipp zum Depot (nicht zum Sparplan)“, Score = Umschichtung.
+
+### Verifikation
+
+- `npm test` 152 passed / 30 skipped (3 Copy-Tests), `tsc` + `lint` + `build` grün.
+
+---
+
+## 2026-08-17 — Gold als Reserve in der UI
+
+Rechnung unverändert (Ist = Ziel, Delta 0). Gold ist persönliche Reserve
+neben den Ländern, kein Weltmarkt-Gewicht.
+
+- Flag `reserve` auf Allokationen (`isReserveAsset`: kein Aktien-Land, kein Short).
+- Chip „Reserve, unverändert“ in Tabelle, Ist→Ziel-Chart, Sparplan-Kaufliste.
+- Score-Hinweis: Reserve neben den Ländern, Score nur Aktien.
+
+### Verifikation
+
+- Tests: Gold `reserve: true`, Aktien nicht, ShortDAX-ähnlich nicht; Sparplan-Gold
+  in allen Modellen/Modi. `npm test` 149 passed / 30 skipped, `tsc` + `lint` + `build` grün.
+
+---
+
+## 2026-08-17 — Blend 50/50 live + Captions + Sektor-Drift-Fix
+
+### Blend-Formel
+
+- **Neu:** `w = 0.50·Marktkap + 0.50·GDP nominal`. PPP raus aus dem Blend
+  (eigener Toggle bleibt). US 42.9 % → **45.7 %**. These: Hälfte Börse,
+  Hälfte Wirtschaft zu Markt-Wechselkursen (MSCI/IWF).
+- **Live gerechnet** in `buildBlend()` aus den zwei Quell-Maps. Statisches
+  `acwi-imi-blend.json` gelöscht — MC/GDP-Update zieht Blend automatisch nach.
+
+### UI
+
+- Caption + Stand unter dem Benchmark-Toggle (Proxy-Hinweis, ACWI-Universum
+  vs. Welt-BIP, Stichtags-Mix).
+- Label `Blend (MC+GDP)`.
+- **Sektor-Drift ausgeblendet** bei GDP/PPP/Blend (Marktkap-Surrogat log).
+  Regionen-Donut bleibt (Portfolio-Aufteilung, kein Sektor-Benchmark).
+  Länder + Region spannen 6+6, wenn die Sektor-Karte fehlt.
+
+### Docs
+
+- `methodology.md`: Abschnitt 1.8 GDP/PPP, Blend auf 50/50 + Quellen (MSCI, IWF).
+- `plan.md`: Welt-BIP-Tabelle als solche markiert; Blend-Stand 50/50.
+
+### Verifikation
+
+- Tests: Blend-Formel Land für Land, US ≠ alte 50/25/25-Mischung, Captions, asOf.
+- `npm test` 148 passed / 30 skipped (Live-Gate), `tsc` + `lint` + `build` grün.
+
+---
+
 ## 2026-08-17 — Konvergenz-Fix + Style-Overhaul (RIn-Farben)
 
 ### Solver-Konvergenz-Fix
@@ -334,3 +528,118 @@ Erste Umsetzungssession. Schritte 1-5 des Go-Befehls abgeschlossen.
 3. Design/Optik (bewusst zuletzt).
 4. Stufe B: fehlende ETFs vorschlagen.
 5. Benchmark-Aktualisierung automatisieren (Skript statt manuell).
+
+---
+
+## 2026-08-17 (Abend-Fixes): 7 verifizierte Bugs behoben
+
+Review-Session vom Abend: 7 Bugs aus dem Alltags-Test mit RIns Portfolio
+(6 ETFs, 9 030 €, 255 €/Monat). Alle Fixes mit kleinstem korrektem Diff,
+bestehende 128 Tests bleiben grün, 18 neue Tests (Hooks, L1/L2-Mismatch).
+
+### Bug 1: Universe-Toggle Stale-State (Schwer)
+
+- **Hook `useUniverseCandidates` (`src/lib/hooks/`):** Kandidaten werden
+  beim Mount geladen, wenn `universe='new'` aus localStorage kommt. Fehler
+  → Toggle fällt auf `'mine'` zurück. Promise-Reuse für parallele Aufrufe
+  (Doppel-Klick, StrictMode). `page.tsx` auf Hook umgestellt.
+- **Vorher:** universe='new' persistiert, Kandidaten null → "Analysieren"
+  rechnete ohne Kandidaten, Toggle zeigte trotzdem "Mit neuen ETFs" aktiv.
+- **Jetzt:** UI zeigt nie "Mit neuen ETFs" ohne geladene Kandidaten. Nach
+  Reload wird automatisch geladen, bei Fehler Toggle zurück auf "Nur meine
+  ETFs".
+
+### Bug 2: Auto-Re-Analyse nach addEtf/removeEtf
+
+- `addEtf` + `removeEtf` in `page.tsx`: nach erfolgreichem Add/Remove
+  automatisch `analyzeBestand` bzw. `computeSavings` triggern (mit
+  guards: korrekter View, Bestand/Flow vorhanden). Kein manueller Klick
+  auf "Analysieren" mehr nötig.
+
+### Bug 3: Hydration-Race in useLocalStorageState
+
+- `userWrote`- + `firstReadDone`-Refs: schreibt der User vor dem ersten
+  localStorage-Read (z.B. schnelles Add nach Page-Load), gewinnt der
+  Write. Der Hydration-Read wird dann übersprungen. Cross-Tab-Reads
+  (`'storage'`-Event) nach dem ersten Read bleiben unberührt.
+
+### Bug 4: Short/Inverse-Markierung + Nicht-Aktien-Anteil
+
+- **`isAgainstMarket(data)` in optimize.ts:** swapBased + keine
+  Länder-Exposure → `againstMarket: true` in EtfAllocation.
+  RebalancingTable + AllocationChart + buyList zeigen Badge "gegen den
+  Weltmarkt gerichtet" (orange Warn-Chip).
+- **`equityShare` in OptimizeResult + SavingsProposalResult:** UI zeigt
+  Hinweis unter Score-Gauges, wenn der Score nur den Aktien-Anteil misst
+  ("90 % deines Depots" etc.).
+
+### Bug 5: "Bestand heute"-Gauge im Sparplan-View
+
+- `computeSavings` berechnet `bestandScore = optimize(bestand, m).currentCoverageScore`.
+  Proposal-Scorecard zeigt zwei Gauges nebeneinander: "Deckungs-Score nach
+  1 Monat" + "Bestand heute" (faire Vergleichsbasis — nicht nur Flow wie
+  "Sparplan heute").
+
+### Bug 6: L1/L2-Mismatch
+
+- **analyzeSavings:** `coverageScore`/`activeShare` werden auf die bessere
+  der beiden Lösungen gehoben (`Math.max(Ist, L2-optimal)`), damit
+  "Optimaler Sparplan" nie unter "Sparplan heute" liegt.
+- **proposeSavings:** `coverageScore` = bessere der beiden p(1)-Scores
+  (Vorschlag vs. aktueller Flow), analog.
+- Grid-Scan-Befund (Europe 600=20 + IWDA=200) als Test verankert.
+- Betrifft 50/3124 Flow-Kombis, max. 0,16 pp.
+
+### Bug 7: Sektor-/Regionen-Benchmark-Herkunft kennzeichnen
+
+- `Benchmark`-Interface: `sectorsFromMarketcap: boolean`; true für
+  GDP/PPP/Blend (nutzen Marktkap-Sektordaten).
+- UI: Sektor-Drift- + Regionen-Karten zeigen Hinweis "Der Sektor- und
+  Regionen-Benchmark dieses Modells stammt aus Marktkapitalisierungs-Daten".
+
+### Verifikation
+
+- `npm test` 146/146 grün (128 bestehend + 18 neu: 7 useLocalStorageState,
+  7 useUniverseCandidates, 4 L1/L2-Mismatch); 30 Live-Tests skipped.
+- `npx tsc --noEmit` grün, `npm run lint` sauber.
+- Browser-Smoke: Reload mit universe='new' → Kandidaten laden + Treppe ✓,
+  Add → Auto-Reanalyse ✓, Remove → Auto-Reanalyse ✓, Sparplan-View →
+  "Bestand heute"-Gauge ✓.
+- Keine Commits (wie immer ohne Aufforderung).
+
+---
+
+## 2026-08-17 (Abend): Review-Session, verifizierte Bugs/Fixes
+
+Verifikation: Alle Berechnungen (Ist 82.6%, Optimal 84.9%, Nach-1-Monat 78.1%,
+Deltas, Drifts, Allokationen) gegen extraETF-Cache + acwi-imi-blend.json
+nachgerechnet, alles korrekt.
+
+Offene Bugs (zu fixen, priorisiert):
+
+1. **Universe-Toggle Stale-State:** `finance.universe.v1='new'` persistiert im
+   localStorage. Nach Reload sind `candidates` null (kein Auto-Fetch), Klick auf
+   "Analysieren" rechnet dann OHNE Kandidaten (`useExtended=false`), aber der
+   Toggle zeigt "Mit neuen ETFs" aktiv. Folge: keine StaircaseCard, identische
+   Ergebnisse wie "Nur meine ETFs". Fix: Kandidaten beim Mount laden, wenn
+   universe='new', oder Toggle auf 'mine' zurücksetzen wenn candidates null.
+2. **Kein Auto-Re-Analyse nach Add/Remove:** `addEtf`/`removeEtf` triggern kein
+   `analyze()`. User muss manuell klicken, alte Analyse bleibt stehen. Fix: nach
+   erfolgreichem Add/Remove automatisch analysieren.
+3. **Hydration-Race:** `useLocalStorageState` startet mit initial, liest
+   localStorage erst im Effect. Schnelles Add nach Page-Load wird vom
+   Hydration-Read überschrieben (ETF verschwindet). Fix: isHydrated-Flag.
+4. **Short/Inverse-ETFs (ShortDAX):** swapBased + leere Exposure werden wie Gold
+   als Nicht-Aktien behandelt (Ziel=Ist). Fachlich falsch: Short-Instrumente
+   arbeiten GEGEN den Weltmarkt. Fix: Markierung "gegen den Weltmarkt gerichtet"
+   statt neutral. Gleiches gilt für Nicht-Aktien-Anteil im Score (UI-Hinweis).
+5. **"Nach 1 Monat" < "Sparplan heute":** kein Rechenfehler, aber UI-Falle.
+   "Nach 1 Monat" = ganzes Portfolio (Bestand+Flow), "Sparplan heute" = nur Flow.
+   Fix: "Bestand heute"-Gauge ergänzen als faire Vergleichsbasis.
+6. **L1/L2-Mismatch:** Solver minimiert L2 (quadratisch), Anzeige-Score ist L1
+   (Active Share). In 50/3124 Flow-Kombis ist "Optimaler Sparplan" minimal
+   schlechter als Ist (max 0.16pp). Fix: nach Solve Ist- vs. Optimal-Lösung in
+   Anzeige-Metrik vergleichen, bessere zeigen.
+7. **Sektor-/Regionen-Benchmark bei GDP/PPP/Blend = Marktkap-Daten**
+   (lib/benchmark/index.ts buildGdp/buildBlend). Bewusste Design-Entscheidung,
+   aber im UI nicht gekennzeichnet. Fix: Tooltip/Hinweis oder eigene Sektor-BMs.

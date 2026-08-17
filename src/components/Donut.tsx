@@ -13,6 +13,30 @@ const PALETTE = [
   '#f59e0b',
 ];
 
+/** Feste Reihenfolge = gleiche Farbe in jedem Donut, auch wenn eine Region fehlt. */
+const REGION_ORDER = [
+  'africa',
+  'america_north',
+  'asien',
+  'australasia',
+  'europe',
+  'europe_east',
+  'latin_america',
+];
+
+const OTHER_COLOR = '#36454F';
+const OTHER_IDS = new Set(['_OTHER', 'Other', 'other']);
+
+/** Farbe fest an die Region-ID, nicht an den Listenplatz. */
+export function donutColor(id: string): string {
+  if (OTHER_IDS.has(id)) return OTHER_COLOR;
+  const known = REGION_ORDER.indexOf(id);
+  if (known >= 0) return PALETTE[known % PALETTE.length];
+  let h = 0;
+  for (const c of id) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  return PALETTE[h % PALETTE.length];
+}
+
 export interface DonutSegment {
   id: string;
   label: string;
@@ -62,7 +86,7 @@ export function Donut({
               cy={90}
               r={r}
               fill="none"
-              stroke={PALETTE[i % PALETTE.length]}
+              stroke={donutColor(seg.id)}
               strokeWidth={22}
               strokeDasharray={`${len} ${circumference - len}`}
               strokeDashoffset={-offsets[i]}
@@ -90,7 +114,7 @@ export function Donut({
         })}
       </svg>
       <ul className="donutLegend">
-        {segments.map((seg, i) => {
+        {segments.map(seg => {
           const isSel = selectedId === seg.id;
           return (
             <li
@@ -112,7 +136,7 @@ export function Donut({
                   : undefined
               }
             >
-              <span className="dot" style={{ background: PALETTE[i % PALETTE.length] }} />
+              <span className="dot" style={{ background: donutColor(seg.id) }} />
               {seg.label} <b>{(seg.value * 100).toFixed(1)}%</b>
             </li>
           );

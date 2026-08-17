@@ -23,6 +23,11 @@
 # local env files
 .env*.local
 
+# SQLite (Depots, lokal)
+/data/*.db
+/data/*.db-wal
+/data/*.db-shm
+
 # netlify (local blobs cache, deploy artifacts)
 .netlify/
 

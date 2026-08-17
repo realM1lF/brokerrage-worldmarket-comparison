@@ -22,7 +22,10 @@ export function AllocationChart({ allocations }: { allocations: EtfAllocation[] 
     <div className="driftList">
       {sorted.map(a => (
         <div className="driftRow" key={a.isin}>
-          <div className="driftLabel">{a.name}</div>
+          <div className="driftLabel">{a.name}
+            {a.againstMarket && <small className="chipWarn">gegen den Weltmarkt gerichtet</small>}
+            {a.reserve && <small className="chipReserve">Reserve, unverändert</small>}
+          </div>
           <div className="driftTrack">
             <div className="driftAxis" />
             <div

@@ -1,0 +1,237 @@
+{
+  "profile": {
+    "isin": "IE00B945VV12",
+    "name": "Vanguard FTSE Developed Europe UCITS ETF (Dist)",
+    "provider": "Vanguard Group (Ireland) Limited",
+    "index": "FTSE Developed Europe TR EUR",
+    "ter": 0.1,
+    "ongoingCharges": 0.1,
+    "swapBased": false,
+    "launchDate": "2013-05-21",
+    "fundVolumeEur": 7369003827,
+    "numberOfHoldings": 514
+  },
+  "exposures": {
+    "countries": [
+      {
+        "name": "Österreich",
+        "value": 0.58862,
+        "code": "AT"
+      },
+      {
+        "name": "Belgien",
+        "value": 1.44698,
+        "code": "BE"
+      },
+      {
+        "name": "Schweiz",
+        "value": 15.33515,
+        "code": "CH"
+      },
+      {
+        "name": "Tschechien",
+        "value": 0.0148,
+        "code": "CZ"
+      },
+      {
+        "name": "Deutschland",
+        "value": 13.08067,
+        "code": "DE"
+      },
+      {
+        "name": "Dänemark",
+        "value": 2.5186,
+        "code": "DK"
+      },
+      {
+        "name": "Spanien",
+        "value": 5.95568,
+        "code": "ES"
+      },
+      {
+        "name": "Finnland",
+        "value": 1.42434,
+        "code": "FI"
+      },
+      {
+        "name": "Frankreich",
+        "value": 13.46892,
+        "code": "FR"
+      },
+      {
+        "name": "Vereinigtes Königreich (England)",
+        "value": 21.09878,
+        "code": "GB"
+      },
+      {
+        "name": "Griechenland",
+        "value": 0.03571,
+        "code": "GR"
+      },
+      {
+        "name": "Hong Kong",
+        "value": 0.23157,
+        "code": "HK"
+      },
+      {
+        "name": "Irland",
+        "value": 0.5563,
+        "code": "IE"
+      },
+      {
+        "name": "Italien",
+        "value": 5.02031,
+        "code": "IT"
+      },
+      {
+        "name": "Luxemburg",
+        "value": 0.06207,
+        "code": "LU"
+      },
+      {
+        "name": "Mexiko",
+        "value": 0.04663,
+        "code": "MX"
+      },
+      {
+        "name": "Niederlande",
+        "value": 9.89672,
+        "code": "NL"
+      },
+      {
+        "name": "Norwegen",
+        "value": 0.90775,
+        "code": "NO"
+      },
+      {
+        "name": "Polen",
+        "value": 0.769,
+        "code": "PL"
+      },
+      {
+        "name": "Portugal",
+        "value": 0.27348,
+        "code": "PT"
+      },
+      {
+        "name": "Singapur",
+        "value": 0.32531,
+        "code": "SG"
+      },
+      {
+        "name": "Schweden",
+        "value": 5.38215,
+        "code": "SE"
+      },
+      {
+        "name": "Vereinigte Staaten (USA)",
+        "value": 1.31265,
+        "code": "US"
+      }
+    ],
+    "sectors": [
+      {
+        "name": "Grundmaterialien",
+        "value": 5.26291,
+        "code": "basic_materials"
+      },
+      {
+        "name": "Zykl. Konsumgüter",
+        "value": 6.64502,
+        "code": "consumer_cyclical"
+      },
+      {
+        "name": "Finanzen",
+        "value": 24.34492,
+        "code": "financial_services"
+      },
+      {
+        "name": "Immobilien",
+        "value": 1.02797,
+        "code": "real_estate"
+      },
+      {
+        "name": "Basiskonsumgüter",
+        "value": 8.13251,
+        "code": "consumer_defense"
+      },
+      {
+        "name": "Gesundheitswesen",
+        "value": 12.91128,
+        "code": "healthcare"
+      },
+      {
+        "name": "Versorger",
+        "value": 4.7146,
+        "code": "utilities"
+      },
+      {
+        "name": "Kommunikation",
+        "value": 2.61158,
+        "code": "communication_services"
+      },
+      {
+        "name": "Industrie",
+        "value": 19.2848,
+        "code": "industrials"
+      },
+      {
+        "name": "Technologie",
+        "value": 9.81798,
+        "code": "technology"
+      },
+      {
+        "name": "Energie",
+        "value": 4.40067,
+        "code": "energy"
+      }
+    ],
+    "regions": [
+      {
+        "name": "Europa",
+        "value": 97.05223,
+        "code": "europe"
+      },
+      {
+        "name": "Osteuropa",
+        "value": 0.7838,
+        "code": "europe_east"
+      },
+      {
+        "name": "Asien",
+        "value": 0.55688,
+        "code": "asien"
+      },
+      {
+        "name": "Lateinamerika",
+        "value": 0.04663,
+        "code": "latin_america"
+      },
+      {
+        "name": "Nordamerika",
+        "value": 1.31265,
+        "code": "america_north"
+      }
+    ],
+    "msci": [
+      {
+        "name": "Developed Markets",
+        "value": 98.82398
+      },
+      {
+        "name": "Emerging Markets",
+        "value": 0.86614
+      },
+      {
+        "name": "Below-FM",
+        "value": 0.06207
+      }
+    ],
+    "asOfDate": "2026-06-30",
+    "sums": {
+      "countries": 99.7522,
+      "sectors": 99.1542,
+      "regions": 99.7522
+    }
+  }
+}

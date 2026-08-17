@@ -1,7 +1,11 @@
 'use client';
 
+import { CountryName } from './CountryName';
+
 export interface DriftDatum {
   label: string;
+  /** ISO-Land, wenn die Zeile ein Land ist. */
+  code?: string;
   /** Portfolio-Anteil 0..1 */
   portfolio: number;
   /** Benchmark-Anteil 0..1 */
@@ -34,7 +38,9 @@ export function DriftBars({ data, unit = '%' }: { data: DriftDatum[]; unit?: str
         const pctWidth = Math.abs(drift) / maxAbs;
         return (
           <div className="driftRow" key={d.label}>
-            <div className="driftLabel">{d.label}</div>
+            <div className="driftLabel">
+              <CountryName code={d.code} name={d.label} />
+            </div>
             <div className="driftTrack">
               <div className="driftAxis" />
               {over ? (
@@ -46,7 +52,9 @@ export function DriftBars({ data, unit = '%' }: { data: DriftDatum[]; unit?: str
                 />
               )}
               <span className="barTip">
-                <b>{d.label}</b>
+                <b>
+                  <CountryName code={d.code} name={d.label} />
+                </b>
                 <span>
                   Dein Portfolio: {pct(d.portfolio)}
                   <br />

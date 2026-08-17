@@ -1,0 +1,287 @@
+{
+  "profile": {
+    "isin": "IE00BFY0GT14",
+    "name": "State Street SPDR MSCI World UCITS ETF (Acc)",
+    "provider": "State Street Global Advisors",
+    "index": "MSCI World",
+    "ter": 0.12,
+    "ongoingCharges": 0.12,
+    "swapBased": false,
+    "launchDate": "2019-02-28",
+    "fundVolumeEur": 21167647266,
+    "numberOfHoldings": 1274
+  },
+  "exposures": {
+    "countries": [
+      {
+        "name": "Australien",
+        "value": 1.64672,
+        "code": "AU"
+      },
+      {
+        "name": "Österreich",
+        "value": 0.08542,
+        "code": "AT"
+      },
+      {
+        "name": "Belgien",
+        "value": 0.22266,
+        "code": "BE"
+      },
+      {
+        "name": "Brasilien",
+        "value": 0.09199,
+        "code": "BR"
+      },
+      {
+        "name": "Kanada",
+        "value": 3.41872,
+        "code": "CA"
+      },
+      {
+        "name": "Schweiz",
+        "value": 2.64467,
+        "code": "CH"
+      },
+      {
+        "name": "China",
+        "value": 0.10861,
+        "code": "CN"
+      },
+      {
+        "name": "Tschechien",
+        "value": 0.0038,
+        "code": "CZ"
+      },
+      {
+        "name": "Deutschland",
+        "value": 2.1702,
+        "code": "DE"
+      },
+      {
+        "name": "Dänemark",
+        "value": 0.41343,
+        "code": "DK"
+      },
+      {
+        "name": "Spanien",
+        "value": 0.95489,
+        "code": "ES"
+      },
+      {
+        "name": "Finnland",
+        "value": 0.20378,
+        "code": "FI"
+      },
+      {
+        "name": "Frankreich",
+        "value": 2.18328,
+        "code": "FR"
+      },
+      {
+        "name": "Vereinigtes Königreich (England)",
+        "value": 3.43186,
+        "code": "GB"
+      },
+      {
+        "name": "Guatemala",
+        "value": 0.00559,
+        "code": "GT"
+      },
+      {
+        "name": "Hong Kong",
+        "value": 0.44622,
+        "code": "HK"
+      },
+      {
+        "name": "Irland",
+        "value": 0.13428,
+        "code": "IE"
+      },
+      {
+        "name": "Israel",
+        "value": 0.25063,
+        "code": "IL"
+      },
+      {
+        "name": "Italien",
+        "value": 0.77276,
+        "code": "IT"
+      },
+      {
+        "name": "Japan",
+        "value": 5.74354,
+        "code": "JP"
+      },
+      {
+        "name": "Luxemburg",
+        "value": 0.01424,
+        "code": "LU"
+      },
+      {
+        "name": "Macau",
+        "value": 0.00381,
+        "code": "MO"
+      },
+      {
+        "name": "Mexiko",
+        "value": 0.05345,
+        "code": "MX"
+      },
+      {
+        "name": "Malaysia",
+        "value": 0.00995,
+        "code": "MY"
+      },
+      {
+        "name": "Niederlande",
+        "value": 1.46751,
+        "code": "NL"
+      },
+      {
+        "name": "Norwegen",
+        "value": 0.15858,
+        "code": "NO"
+      },
+      {
+        "name": "Neuseeland",
+        "value": 0.04878,
+        "code": "NZ"
+      },
+      {
+        "name": "Polen",
+        "value": 0.00518,
+        "code": "PL"
+      },
+      {
+        "name": "Portugal",
+        "value": 0.0425,
+        "code": "PT"
+      },
+      {
+        "name": "Singapur",
+        "value": 0.49273,
+        "code": "SG"
+      },
+      {
+        "name": "Schweden",
+        "value": 0.83307,
+        "code": "SE"
+      },
+      {
+        "name": "Vereinigte Staaten (USA)",
+        "value": 71.89491,
+        "code": "US"
+      }
+    ],
+    "sectors": [
+      {
+        "name": "Grundmaterialien",
+        "value": 3.07794,
+        "code": "basic_materials"
+      },
+      {
+        "name": "Zykl. Konsumgüter",
+        "value": 8.91815,
+        "code": "consumer_cyclical"
+      },
+      {
+        "name": "Finanzen",
+        "value": 16.59098,
+        "code": "financial_services"
+      },
+      {
+        "name": "Immobilien",
+        "value": 1.75189,
+        "code": "real_estate"
+      },
+      {
+        "name": "Basiskonsumgüter",
+        "value": 5.02941,
+        "code": "consumer_defense"
+      },
+      {
+        "name": "Gesundheitswesen",
+        "value": 9.16313,
+        "code": "healthcare"
+      },
+      {
+        "name": "Versorger",
+        "value": 2.48357,
+        "code": "utilities"
+      },
+      {
+        "name": "Kommunikation",
+        "value": 8.21385,
+        "code": "communication_services"
+      },
+      {
+        "name": "Industrie",
+        "value": 11.14279,
+        "code": "industrials"
+      },
+      {
+        "name": "Technologie",
+        "value": 29.55738,
+        "code": "technology"
+      },
+      {
+        "name": "Energie",
+        "value": 4.02789,
+        "code": "energy"
+      }
+    ],
+    "regions": [
+      {
+        "name": "Pazifik",
+        "value": 1.6955,
+        "code": "australasia"
+      },
+      {
+        "name": "Europa",
+        "value": 15.73313,
+        "code": "europe"
+      },
+      {
+        "name": "Lateinamerika",
+        "value": 0.15103,
+        "code": "latin_america"
+      },
+      {
+        "name": "Nordamerika",
+        "value": 75.31362999999999,
+        "code": "america_north"
+      },
+      {
+        "name": "Asien",
+        "value": 7.05549,
+        "code": "asien"
+      },
+      {
+        "name": "Osteuropa",
+        "value": 0.00898,
+        "code": "europe_east"
+      }
+    ],
+    "msci": [
+      {
+        "name": "Developed Markets",
+        "value": 99.66114
+      },
+      {
+        "name": "Emerging Markets",
+        "value": 0.27298000000000006
+      },
+      {
+        "name": "Below-FM",
+        "value": 0.02364
+      }
+    ],
+    "asOfDate": "2026-07-31",
+    "sums": {
+      "countries": 99.9578,
+      "sectors": 99.957,
+      "regions": 99.9578
+    }
+  }
+}

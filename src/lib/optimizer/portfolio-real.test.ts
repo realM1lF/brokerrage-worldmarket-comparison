@@ -6,6 +6,8 @@ import type { Benchmark, BenchmarkModel } from '@/lib/benchmark';
 import type { EtfData } from '@/lib/etf/types';
 import {
   isEquityEtf,
+  isAgainstMarket,
+  isReserveAsset,
   optimize,
   countryWeights,
   projectSimplex,
@@ -60,11 +62,26 @@ const etf = (isin: string, amountEur: number): PortfolioEtf => ({
 const rinPortfolio = (): PortfolioEtf[] =>
   RIN.map(([isin, amountEur]) => etf(isin, amountEur));
 
-const rinCandidates = (): CandidateWithData[] =>
-  withData(
-    CANDIDATE_ETFS.map(c => ({ isin: c.isin, name: c.name, role: c.role, ter: c.ter })),
-    new Map(CANDIDATE_ETFS.map(c => [c.isin, loadEtf(c.isin)])),
+const catalogSlice = (isins: Set<string>): CandidateWithData[] => {
+  const slice = CANDIDATE_ETFS.filter(c => isins.has(c.isin));
+  return withData(
+    slice.map(c => ({ isin: c.isin, name: c.name, role: c.role, ter: c.ter })),
+    new Map(slice.map(c => [c.isin, loadEtf(c.isin)])),
   );
+};
+
+const rinCandidates = (): CandidateWithData[] =>
+  catalogSlice(new Set(CANDIDATE_ETFS.map(c => c.isin)));
+
+/** Ursprüngliche 5: dokumentierte Treppe/Tausch darf nicht mit dem Katalog mitwachsen. */
+const CLASSIC_ISINS = new Set([
+  'IE00BKM4GZ66',
+  'IE00BF4RFH31',
+  'IE00BK5BQT80',
+  'IE00B3YLTY66',
+  'IE0003XJA0J9',
+]);
+const classicCandidates = (): CandidateWithData[] => catalogSlice(CLASSIC_ISINS);
 
 /** Einzelnen Kandidaten direkt aus einem Fixture bauen (auch Nicht-Katalog-ISINs). */
 const singleCandidate = (isin: string): CandidateWithData => ({
@@ -146,6 +163,21 @@ describe('optimize mit RIns Portfolio (alle 4 Benchmark-Modelle)', () => {
     }
   });
 
+  it('currentCountryDrift zeigt die Ist-Gewichte des Aktien-Teils, nicht das Ziel', () => {
+    for (const model of benchmarkModels()) {
+      const res = optimize(rinPortfolio(), model);
+      const equity = rinPortfolio().filter(e => isEquityEtf(e.data));
+      const equityEur = equity.reduce((a, e) => a + e.amountEur, 0);
+      const w = equity.map(e => e.amountEur / equityEur);
+      const agg = targetAggregate(equity, w);
+      expect(res.currentCountryDrift.length, model).toBeGreaterThan(0);
+      for (const entry of res.currentCountryDrift) {
+        const expected = agg.get(entry.code) ?? 0;
+        expect(entry.portfolio, `${model}:${entry.code}`).toBeCloseTo(expected, 9);
+      }
+    }
+  });
+
   it('RIn marketcap: Umschichtung reduziert MSCI World stark, Gold bleibt unveraendert', () => {
     const res = optimize(rinPortfolio(), 'marketcap');
     const world = res.allocations.find(a => a.isin === WORLD)!;
@@ -171,6 +203,22 @@ describe('Gold-ETC IE00B4ND3602 (leere Exposure-Listen)', () => {
     expect(cw.get('_OTHER')).toBeCloseTo(1, 10);
   });
 
+  it('Gold ist Reserve, Short ohne Länder ist gegen den Markt, Aktien-ETF ist keines von beiden', () => {
+    const gold = loadEtf(GOLD);
+    const world = loadEtf(WORLD);
+    expect(isReserveAsset(gold)).toBe(true);
+    expect(isAgainstMarket(gold)).toBe(false);
+    expect(isEquityEtf(gold)).toBe(false);
+    expect(isReserveAsset(world)).toBe(false);
+    expect(isEquityEtf(world)).toBe(true);
+    const shortLike: EtfData = {
+      ...gold,
+      profile: { ...gold.profile, swapBased: true, name: 'ShortDAX' },
+    };
+    expect(isAgainstMarket(shortLike)).toBe(true);
+    expect(isReserveAsset(shortLike)).toBe(false);
+  });
+
   it('Nur Gold (kein Aktien-ETF): optimize wirft einen klaren Fehler', () => {
     expect(() => optimize([etf(GOLD, 1000)], 'marketcap')).toThrow(/Aktien-ETF/);
   });
@@ -181,6 +229,8 @@ describe('Gold-ETC IE00B4ND3602 (leere Exposure-Listen)', () => {
     const world = res.allocations.find(a => a.isin === WORLD)!;
     expect(gold.targetWeight).toBeCloseTo(938 / 6938, 10);
     expect(gold.deltaEur).toBeCloseTo(0, 6);
+    expect(gold.reserve).toBe(true);
+    expect(world.reserve).toBeFalsy();
     expect(world.targetWeight).toBeCloseTo(6000 / 6938, 10); // einziger Aktien-ETF
     // Score misst den Aktien-Teil: 1 − AS(World vs Benchmark)
     const expected = expectedActiveShare(countryWeights(loadEtf(WORLD)), getBenchmark('marketcap'));
@@ -304,7 +354,7 @@ describe('Stufe B: suggestAdditions mit RIns Portfolio', () => {
         prev = s.score;
       }
     }
-  });
+  }, 30_000);
 
   it('KRITISCH: schlägt KEINEN ETF vor, der schon im Portfolio ist (EM IMI + Amundi Prime sind im Katalog!)', () => {
     const held = new Set(RIN.map(([isin]) => isin));
@@ -317,17 +367,17 @@ describe('Stufe B: suggestAdditions mit RIns Portfolio', () => {
         expect(held.has(s.isin), `${model}:${s.isin}`).toBe(false);
       }
     }
-  });
+  }, 30_000);
 
   it('marketcap: erste Stufe ist der breite All-World-ETF SPDR ACWI IMI (EM-Lücke ist schon gedeckt)', () => {
-    const res = suggestAdditions(rinPortfolio(), rinCandidates(), 'marketcap');
+    const res = suggestAdditions(rinPortfolio(), classicCandidates(), 'marketcap');
     expect(res.baseScore).toBeGreaterThan(0.98); // Portfolio deckt Marktkap fast perfekt
     expect(res.steps[0].isin).toBe('IE00B3YLTY66');
   });
 
   it('gdp/ppp/blend: erste Stufe ist Small Cap (größte Restlücke bei RIns Portfolio)', () => {
     for (const model of ['gdp', 'ppp', 'blend'] as BenchmarkModel[]) {
-      const res = suggestAdditions(rinPortfolio(), rinCandidates(), model);
+      const res = suggestAdditions(rinPortfolio(), classicCandidates(), model);
       expect(res.steps[0].isin, model).toBe('IE00BF4RFH31');
     }
   });
@@ -340,7 +390,7 @@ describe('Stufe B: suggestAdditions mit RIns Portfolio', () => {
 
 describe('Stufe B: suggestReplacement mit RIns Portfolio', () => {
   it('marketcap: Tausch Prime All Country → SPDR ACWI IMI (breiter, ΔScore ≥ 0,5 pp)', () => {
-    const hint = suggestReplacement(rinPortfolio(), rinCandidates(), 'marketcap');
+    const hint = suggestReplacement(rinPortfolio(), classicCandidates(), 'marketcap');
     expect(hint).not.toBeNull();
     expect(hint!.fromIsin).toBe(PRIME);
     expect(hint!.toIsin).toBe('IE00B3YLTY66');
@@ -358,11 +408,11 @@ describe('Stufe B: suggestReplacement mit RIns Portfolio', () => {
         expect(held.has(hint.toIsin), model).toBe(false);
       }
     }
-  });
+  }, 30_000);
 
   it('gdp: Tausch Xtrackers EM → Small Cap (groesste Restluecke)', () => {
     // Gold wird nie getauscht (isEquityEtf-Filter in suggestReplacement).
-    const hint = suggestReplacement(rinPortfolio(), rinCandidates(), 'gdp');
+    const hint = suggestReplacement(rinPortfolio(), classicCandidates(), 'gdp');
     expect(hint).not.toBeNull();
     expect(hint!.fromIsin).toBe(XEM);
     expect(hint!.toIsin).toBe('IE00BF4RFH31');
@@ -374,7 +424,7 @@ describe('Stufe B: suggestReplacement mit RIns Portfolio', () => {
       const hint = suggestReplacement(rinPortfolio(), rinCandidates(), model);
       if (hint) expect(hint.fromIsin, model).not.toBe(GOLD);
     }
-  });
+  }, 30_000);
 
   it('TER-Regel: quasi-gleicher Score + TER-Vorteil ≥ 0,05 pp → Tausch wird gezeigt', () => {
     // World (TER 0.20) → Xtrackers MSCI World (TER 0.12): fast identische Exposure

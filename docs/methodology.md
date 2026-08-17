@@ -10,7 +10,8 @@ Der Weg über den SPDR-ETF als Index-Proxy ist ein pragmatischer Shortcut mit me
 kleinen Verzerrungen. Details und Größenordnungen unten.
 
 Abschnitt 1 behandelt die Marktkapitalisierungs-Benchmark (`src/data/benchmarks/acwi-imi-marktkap.json`).
-GDP/PPP-Modelle folgen in eigenen Abschnitten (nicht Gegenstand dieser Prüfung).
+Abschnitt 1.8 GDP/PPP, Abschnitt 2 den Blend (50 % Marktkap + 50 % BIP nominal),
+Abschnitt 3 das Säulen-Modell (vier Maße mit Investierbarkeits-Abschlag).
 
 ---
 
@@ -190,30 +191,48 @@ oder Kunden-Nutzung: MSCI-Factsheet oder Lizenzdaten nötig.
 
 ---
 
+## 1.8 GDP- und PPP-Modelle
+
+Zwei reine Wirtschafts-Benchmarks, unabhängig vom Blend.
+
+- **GDP (BIP nominal):** World Bank `NY.GDP.MKTP.CD`, Jahr 2023, Taiwan via IMF WEO.
+  Gewichte über das 56-Länder-ACWI-IMI-Universum, nicht über das Welt-BIP.
+  US deshalb **28.6 %**, nicht die oft zitierten **25.9 %** (Welt-Anteil).
+  Russland, Venezuela usw. fehlen — ihr BIP wird nicht umverteilt.
+- **GDP PPP:** World Bank `NY.GDP.MKTP.PP.CD`, gleiches Universum, Taiwan via IMF.
+  US **17.7 %**, China **22.6 %** (Kaufkraft zieht Schwellenländer hoch).
+
+Beide haben **keine eigenen Sektor-/Regionengewichte**. Die UI zeigt deshalb keine
+Sektor-Drift (die würde gegen Marktkap lügen). Länder-Optimierung nutzt die
+jeweilige `countryMap`.
+
+---
+
 ## 2. Blend-Benchmark
 
-Der Blend-Benchmark („Weltmarkt nach unserer Ansicht") mischt drei Gewichtungsschemata
-zu einem Kompromiss zwischen investierbarer Realität (Marktkapitalisierung) und
-Wirtschaftskraft (BIP):
+Der Blend-Benchmark („Weltmarkt nach unserer Ansicht") mischt **zwei** Schemata:
+investierbare Börse und Wirtschaftskraft zu Markt-Wechselkursen.
 
-**w_i = 0.50 · w_mc,i + 0.25 · w_gdp_nom,i + 0.25 · w_gdp_ppp,i**
+**w_i = 0.50 · w_mc,i + 0.50 · w_gdp_nom,i**
 
-Gewichte α = 0.50 / β = 0.25 / γ = 0.25, Begründung:
+Gewichte α = β = 0.50, Begründung:
 
 - **Marktkapitalisierung (50 %)** ist das einzige direkt investierbare Abbild des
   Weltmarkts — ein GDP-gewichtetes Portfolio lässt sich real nicht 1:1 kaufen. Sie
-  bleibt deshalb der Anker.
-- **GDP nominal + PPP (je 25 %)** bilden zusammen 50 % „Wirtschafts-Fußabdruck".
-  Nominal misst die Marktleistung zu Wechselkursen, PPP kaufkraftbereinigt. Zusammen
-  dämpfen sie die Verzerrung, die ein reines Marktkap-Portfolio durch hohe Bewertungen
-  (v. a. US-Technologie) mitbringt.
-- **Warum nicht ⅓-⅓-⅓:** Der empirische Befund „Growth Trap" (Dimson/Marsh/Staunton,
-  *Triumph of the Optimists*): Länder-BIP-Wachstum und Aktienrenditen sind
-  länderübergreifend negativ korreliert. Ein gleichrangiges Abweichen vom Marktportfolio
-  hin zu GDP-Gewichten wäre historisch renditeschädlich gewesen. Deshalb bleibt Marktkap
-  bei 50 % statt gleichrangig bei 33 %.
+  bleibt der Anker. MSCI GDP Weighted und Dimensional argumentieren jeweils nur
+  für *eine* Seite; der Blend ist bewusst der Kompromiss.
+- **BIP nominal (50 %)** ist das Wirtschaftsmaß, das zu Finanzströmen passt
+  (IWF: Marktwechselkurse bei Finanzflüssen; MSCI GDP Weighted: nominales BIP in USD).
+  PPP bleibt ein eigener Toggle, nicht Teil des Blend — Nominal und PPP sind dasselbe
+  BIP mit zwei Umrechnungen, keine unabhängigen Infos.
+- **Warum nicht ⅓-⅓-⅓ und warum nicht PPP im Blend:** Dimson/Marsh/Staunton
+  (*Triumph of the Optimists*): Länder-BIP-Wachstum und Aktienrenditen sind
+  länderübergreifend oft negativ korreliert. PPP würde Schwellenländer extra
+  hochziehen, ohne dass das historisch höhere Renditen verspricht. Marktkap bleibt
+  bei 50 %, nicht bei 33 %.
 
-Beispiel USA: Marktkap 62.7 % · GDP nominal 28.6 % · GDP PPP 17.7 % → **Blend 42.9 %**.
+Beispiel USA: Marktkap 62.7 % · GDP nominal 28.6 % → **Blend 45.7 %**.
+China: 2.3 % · 18.8 % → **10.5 %**.
 
 ### 2.1 Etablierte Ansätze (Einordnung)
 
@@ -221,33 +240,98 @@ Beispiel USA: Marktkap 62.7 % · GDP nominal 28.6 % · GDP PPP 17.7 % → **Blen
   Fundamentaldaten (Umsatz, Dividenden, Buchwert, Cashflow) statt Marktkap — Vorläufer
   der Idee, Marktpreise aus der Gewichtung zu entfernen. Der Blend ist verwandt, nutzt
   aber BIP statt Unternehmens-Fundamentaldaten.
-- **MSCI GDP Weighted Indices:** offizielle Indexfamilie, gewichtet nach BIP-Anteilen.
+- **MSCI GDP Weighted Indices:** offizielle Indexfamilie, Länder nach *nominalem* BIP,
+  Titel innerhalb des Landes weiter Marktkap.
+- **FTSE All-World GDP Adjusted (2026):** analog, IMF-WEO-BIP in USD.
 - **Dimson/Marsh/Staunton:** Langfrist-Daten (1900–heute), Quelle des Growth-Trap-Befunds.
+- **IWF (PPP vs. Marktkurse):** Marktwechselkurse bei Finanzströmen; PPP für
+  Lebensstandard / reale Güterkörbe.
 
 ### 2.2 Ehrliche Limits
 
 - **Stichtags-Mix:** Marktkap-Anteil Stand 2026-07-31, GDP-Anteile Stand 2023. Zwei
-  unterschiedliche Zeitpunkte fließen in eine Kennzahl.
+  unterschiedliche Zeitpunkte fließen in eine Kennzahl. Die UI zeigt beide Daten.
 - **GDP-Nenner:** Die GDP-Gewichte sind über das 56-Länder-ACWI-IMI-Universum
   normalisiert, nicht über das Welt-BIP. Deshalb liegt US nominal hier bei 28.6 % statt
   der oft zitierten 25.9 % (Welt-BIP-Anteil). Folge: Länder außerhalb des
   ACWI-IMI-Universums (z. B. Russland, Venezuela) fehlen komplett — ihr BIP wird nicht
   auf die übrigen Länder umverteilt.
-- **Sektoren/Regionen nicht geblendet:** Der Blend mischt nur die Ländergewichte.
-  Sektor- und Regionen-Drift werden weiterhin gegen das Marktkap-Modell gerechnet, weil
-  die GDP-Daten nur Länder liefern. Wer Sektorgewichte nach GDP bräuchte, müsste eine
-  neue Quelle erschließen.
+- **Sektoren nicht geblendet, Regionen schon:** Der Blend mischt die Ländergewichte.
+  GDP liefert keine Sektoren. Die UI blendet die Sektor-Drift bei GDP/PPP/Blend aus
+  (Marktkap-Surrogat würde z. B. US-Tech weiter bei ~Marktkap zeigen, obwohl Blend
+  die USA auf ~46 % drückt). Regionen-Weltmarkt ist die Summe der Ländergewichte
+  des aktiven Modells (Blend-Nordamerika ≈ USA + Kanada, nicht Marktkap 65,9 %).
 - **Kein „richtig":** Der Blend ist eine Meinung („Weltmarkt nach unserer Ansicht"),
-  keine empirisch optimale Gewichtung. 50/25/25 ist begründet, aber nicht eindeutig
-  ableitbar.
+  keine empirisch optimale Gewichtung. 50/50 ist die saubere Übersetzung von
+  „Hälfte Börse, Hälfte Wirtschaft".
 
 ### 2.3 Technische Umsetzung
 
-- `src/data/benchmarks/acwi-imi-blend.json`: 56 Länder, statisch generiert
-  (deterministisches Skript), Summe exakt 1.0, `asOf` = „MC 2026-07-31 / GDP 2023".
-- `src/lib/benchmark/index.ts`: `BenchmarkModel` um `'blend'` erweitert,
-  `getBenchmark('blend')` + `benchmarkModels()` ergänzt.
-- Sektor-/Regions-Maps werden vom Marktkap-Modell übernommen (siehe 2.2).
+- Live in `src/lib/benchmark/index.ts` (`buildBlend`): kein statisches JSON.
+  Formel je Land `0.50·MC + 0.50·GDP_nom`. Tests prüfen Land für Land gegen die
+  Quell-Maps — MC- oder GDP-Update zieht Blend automatisch nach.
+- `getBenchmark('blend')`, Label `Blend (MC+GDP)`, `asOf` = „MC 2026-07-31 / GDP 2023".
+- Sektor-Maps intern vom Marktkap-Modell. Regionen je Modell aus dessen Ländern
+  (`COUNTRY_TO_REGION`). UI zeigt keine Sektor-Drift bei GDP/PPP/Blend/Säulen.
+
+---
+
+## 3. Säulen-Benchmark
+
+Zweiter eigener Weltmarkt neben dem Blend. These: die Welt ist nicht nur
+Börse plus BIP. Vier Größen, jedes Land zuerst auf das 56er-ACWI-IMI-Universum
+normiert, dann gewichtet nach Investierbarkeit (5-Punkte-Raster).
+
+**w_i = 0.50·w_mc,i + 0.25·w_gdp,i + 0.15·w_en,i + 0.10·w_pop,i**
+
+| Säule | α | Was sie misst | Quelle | Stichtag |
+|---|---|---|---|---|
+| Listed Equity (MC) | 50 % | investierbare Free-Float-Börse | SPDR ACWI IMI, wie Abschnitt 1 | 2026-07-31 |
+| BIP nominal | 25 % | Dollar-Output | World Bank NY.GDP.MKTP.CD, wie 1.8 | 2023 |
+| Primärenergie | 15 % | physischer Durchsatz, FX-frei | OWID / Energy Institute Statistical Review + EIA, TWh | 2024 (GT/MO/PR: 2023) |
+| Erwerbsbevölkerung 15–64 | 10 % | Arbeitseinsatz, kein Claim | OWID, UN WPP 2024 Medium; 15–64 = 15–24 + 25–64 | 2023 (letztes Schätzjahr) |
+
+α in 5-Prozent-Schritten. Literatur schätzt α nicht (RAFI mittelt grob gleich,
+IWF-Quote in 5-Punkte-Schritten, Black-Litterman mixt Renditen nicht Größen).
+Deshalb Raster, kein Optimizer.
+
+- **MC 50 %:** einziger kaufbarer Claim, Bayes-Prior. Indexanbieter liefern 100 % MC
+  *oder* 100 % BIP, nicht 30 % MC. Dimensional bleibt bei MC. Haircut-Logik:
+  alles andere ist View und wird geschrumpft.
+- **BIP 25 %:** MSCI/FTSE-Standard für Ländergröße. Halber Blend-Anteil, weil
+  Energie denselben Wirtschaftsraum zusätzlich trägt.
+- **Energie 15 %:** RAFI-Länderfaktor #4 (Arnott/Hsu/Li/Shepherd 2010: GDP,
+  Bevölkerung, Energie, √Fläche). China ~33 % dieser Säule, USA ~18 %.
+  Nicht 20 %, weil partiell kollinear mit BIP. Fläche durch CWON Natural Capital
+  ersetzt gedacht, aber CWON 2020 fehlt TW/HK.
+- **Erwerb 10 %:** Arbeit, Haircut wegen Growth Trap (Ritter 2005, DMS).
+  15–64 (World Bank/ILO), nicht Total, nicht Humankapital (CWON kapitalisiert
+  denselben Lohnstrom). Indien und China je ~27 % dieser Säule.
+
+**Bewusst nicht:** PPP (Doppel mit Nominal). Konsum und GNI (SNA-Umschichtung
+von BIP, OECD-Korrelation Konsum/BIP > 0,90). Humankapital, Labor Force,
+Total-Bevölkerung (Doppel mit Erwerb). Anleihen (Bums Problem, Japan-Bias).
+CWON Produced/Natural Capital (Stichtag 2020, Lücken TW/HK). Equal Weight,
+Risiko-Parität.
+
+Beispiel USA: **41,9 %** (Blend 45,7 %, Marktkap 62,7 %, GDP 28,6 %).
+China: **13,6 %** (Blend 10,6 %). Indien: **5,6 %** (Blend 2,6 %).
+
+### 3.1 Bekannte Unsauberkeiten
+
+- **Stichtags-Mix:** vier Datenstände in einer Zahl. UI zeigt alle.
+- **Universum, nicht Welt:** wie GDP/Blend, nur ACWI-IMI-Länder.
+- **Jersey-Energie = 0:** keine EI/EIA-Reihe, analog GDP-Jersey.
+- **Energie vs. BIP:** nicht orthogonal. Deshalb Energie 15 %, nicht 25 %.
+- **Sektoren nicht gemischt:** wie Blend. UI blendet Sektor-Drift aus.
+
+### 3.2 Technische Umsetzung
+
+- Live in `src/lib/benchmark/index.ts` (`buildPillars`, `PILLAR_WEIGHTS`).
+  Tests prüfen Land für Land gegen MC-, GDP-, Energie- und Erwerbs-Maps.
+- `getBenchmark('pillars')`, Label `Säulen`,
+  `asOf` = „MC 2026-07-31 / GDP 2023 / EN 2024 / POP 2023".
+- Toggle in der UI neben Blend.
 
 ---
 
@@ -278,6 +362,39 @@ Beispiel USA: Marktkap 62.7 % · GDP nominal 28.6 % · GDP PPP 17.7 % → **Blen
   vs. Aktienrendite negativ korreliert)
 - MSCI: *Real Indexes / GDP Weighted Indices* — <https://www.msci.com/real-indexes>
   (abgerufen 2026-08-17)
-- Projektdateien: `src/data/benchmarks/acwi-imi-blend.json`,
+- MSCI Research: *Economic Weighting* (nominales BIP in USD) —
+  <https://www.msci.com/research-and-insights/blog-post/economic-weighting-an-alternative-approach-to-country-allocation>
+  (abgerufen 2026-08-17)
+- IWF: *Purchasing Power Parity: Weights Matter* — Marktwechselkurse bei Finanzströmen —
+  <https://www.imf.org/en/publications/fandd/issues/series/back-to-basics/purchasing-power-parity-ppp>
+  (abgerufen 2026-08-17)
+- Projektdateien: `src/lib/benchmark/index.ts` (`buildBlend`, live),
   `gdp-nominal-2023.json` (World Bank NY.GDP.MKTP.CD, Taiwan IMF WEO 04/2024),
   `gdp-ppp-2023.json` (World Bank NY.GDP.MKTP.PP.CD, Taiwan IMF WEO 04/2024)
+
+### Säulen (Abschnitt 3)
+
+- Arnott, Hsu, Li, Shepherd: *Valuation-Indifferent Weighting for Bonds*, JPM 36(3),
+  2010 — Länder-RAFI: GDP, Bevölkerung, Energie, √Fläche —
+  <https://www.top1000funds.com/wp-content/uploads/2011/06/Valuation-indifferent-weighting-for-bonds.pdf>
+- Ritter: *Economic Growth and Equity Returns*, Pacific-Basin Finance Journal 13(5),
+  2005 — Growth Trap, Korrelation Rendite vs. BIP-pro-Kopf negativ —
+  <https://site.warrington.ufl.edu/ritter/files/2015/04/Economic-growth-and-equity-returns-2005.pdf>
+- Dimensional: *Unintended Consequences of GDP-Weighted Portfolios* (2025) —
+  Investierbarkeit, China 3 % MC vs. ~19 % GDP —
+  <https://www.dimensional.com/au-en/insights/unintended-consequences-of-gdp-weighted-portfolios>
+- UN DESA Population Division: *World Population Prospects 2024* — Medium-Variante,
+  Kalenderjahr 2023 als letztes Schätzjahr. Über OWID „Population by age group"
+  (15–64 = Ages 15–24 + Ages 25–64), alle 56 Codes inkl. Taiwan und Jersey —
+  <https://ourworldindata.org/grapher/population-by-age-group> (abgerufen 2026-08-17)
+- Energy Institute: *Statistical Review of World Energy* plus EIA International
+  Energy Data, über OWID `primary_energy_consumption` (TWh) —
+  <https://github.com/owid/energy-data> (abgerufen 2026-08-17)
+- World Bank: *Changing Wealth of Nations 2024* — produced/human/natural capital
+  geprüft, nicht verwendet (Stichtag 2020, Lücken TW/HK) —
+  <https://www.worldbank.org/en/publication/the-changing-wealth-of-nations>
+- Doeswijk, Lam, Swinkels: *The Global Multi-Asset Market Portfolio* (FAJ 2014 /
+  RAPS 2020) — Assetklassen-Mix, keine Ländergewichte. Nur als Abgrenzung:
+  unser Modell bleibt Länder-Säulen, kein Multi-Asset-Marktportfolio.
+- Projektdateien: `src/lib/benchmark/index.ts` (`buildPillars`, live),
+  `working-age-2023.json`, `energy-primary-2024.json`

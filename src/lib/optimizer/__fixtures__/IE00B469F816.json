@@ -1,0 +1,267 @@
+{
+  "profile": {
+    "isin": "IE00B469F816",
+    "name": "State Street SPDR MSCI Emerging Markets UCITS ETF",
+    "provider": "State Street Global Advisors",
+    "index": "MSCI Emerging Markets",
+    "ter": 0.18,
+    "ongoingCharges": 0.18,
+    "swapBased": false,
+    "launchDate": "2011-05-13",
+    "fundVolumeEur": 2129645616,
+    "numberOfHoldings": 1187
+  },
+  "exposures": {
+    "countries": [
+      {
+        "name": "Vereinigte Arabische Emirate",
+        "value": 1.19204,
+        "code": "AE"
+      },
+      {
+        "name": "Brasilien",
+        "value": 4.0434,
+        "code": "BR"
+      },
+      {
+        "name": "Chile",
+        "value": 0.40115,
+        "code": "CL"
+      },
+      {
+        "name": "China",
+        "value": 20.47813,
+        "code": "CN"
+      },
+      {
+        "name": "Kolumbien",
+        "value": 0.13926,
+        "code": "CO"
+      },
+      {
+        "name": "Tschechien",
+        "value": 0.13975,
+        "code": "CZ"
+      },
+      {
+        "name": "Ägypten",
+        "value": 0.0483,
+        "code": "EG"
+      },
+      {
+        "name": "Griechenland",
+        "value": 0.531,
+        "code": "GR"
+      },
+      {
+        "name": "Hong Kong",
+        "value": 0.69766,
+        "code": "HK"
+      },
+      {
+        "name": "Ungarn",
+        "value": 0.3528,
+        "code": "HU"
+      },
+      {
+        "name": "Indonesien",
+        "value": 0.50334,
+        "code": "ID"
+      },
+      {
+        "name": "Indien",
+        "value": 11.6885,
+        "code": "IN"
+      },
+      {
+        "name": "Südkorea",
+        "value": 20.36797,
+        "code": "KR"
+      },
+      {
+        "name": "Kuwait",
+        "value": 0.46462,
+        "code": "KW"
+      },
+      {
+        "name": "Luxemburg",
+        "value": 0.01962,
+        "code": "LU"
+      },
+      {
+        "name": "Mexiko",
+        "value": 1.75396,
+        "code": "MX"
+      },
+      {
+        "name": "Malaysia",
+        "value": 0.97972,
+        "code": "MY"
+      },
+      {
+        "name": "Niederlande",
+        "value": 0.03274,
+        "code": "NL"
+      },
+      {
+        "name": "Peru",
+        "value": 0.26998,
+        "code": "PE"
+      },
+      {
+        "name": "Philippinen",
+        "value": 0.28674,
+        "code": "PH"
+      },
+      {
+        "name": "Polen",
+        "value": 1.12912,
+        "code": "PL"
+      },
+      {
+        "name": "Katar",
+        "value": 0.57176,
+        "code": "QA"
+      },
+      {
+        "name": "Saudi Arabien",
+        "value": 2.49717,
+        "code": "SA"
+      },
+      {
+        "name": "Thailand",
+        "value": 0.97952,
+        "code": "TH"
+      },
+      {
+        "name": "Türkei",
+        "value": 0.35276,
+        "code": "TR"
+      },
+      {
+        "name": "Taiwan",
+        "value": 26.42631,
+        "code": "TW"
+      },
+      {
+        "name": "Vereinigte Staaten (USA)",
+        "value": 1.00129,
+        "code": "US"
+      },
+      {
+        "name": "Südafrika",
+        "value": 2.62792,
+        "code": "ZA"
+      }
+    ],
+    "sectors": [
+      {
+        "name": "Grundmaterialien",
+        "value": 5.76097,
+        "code": "basic_materials"
+      },
+      {
+        "name": "Zykl. Konsumgüter",
+        "value": 8.649,
+        "code": "consumer_cyclical"
+      },
+      {
+        "name": "Finanzen",
+        "value": 19.83151,
+        "code": "financial_services"
+      },
+      {
+        "name": "Immobilien",
+        "value": 0.90603,
+        "code": "real_estate"
+      },
+      {
+        "name": "Basiskonsumgüter",
+        "value": 2.732,
+        "code": "consumer_defense"
+      },
+      {
+        "name": "Gesundheitswesen",
+        "value": 2.72853,
+        "code": "healthcare"
+      },
+      {
+        "name": "Versorger",
+        "value": 1.86309,
+        "code": "utilities"
+      },
+      {
+        "name": "Kommunikation",
+        "value": 6.57464,
+        "code": "communication_services"
+      },
+      {
+        "name": "Industrie",
+        "value": 6.08742,
+        "code": "industrials"
+      },
+      {
+        "name": "Technologie",
+        "value": 41.24193,
+        "code": "technology"
+      },
+      {
+        "name": "Energie",
+        "value": 3.56865,
+        "code": "energy"
+      }
+    ],
+    "regions": [
+      {
+        "name": "Asien",
+        "value": 87.48624,
+        "code": "asien"
+      },
+      {
+        "name": "Lateinamerika",
+        "value": 6.607750000000001,
+        "code": "latin_america"
+      },
+      {
+        "name": "Osteuropa",
+        "value": 1.62167,
+        "code": "europe_east"
+      },
+      {
+        "name": "Afrika",
+        "value": 2.67622,
+        "code": "africa"
+      },
+      {
+        "name": "Europa",
+        "value": 0.58336,
+        "code": "europe"
+      },
+      {
+        "name": "Nordamerika",
+        "value": 1.00129,
+        "code": "america_north"
+      }
+    ],
+    "msci": [
+      {
+        "name": "Emerging Markets",
+        "value": 98.22522
+      },
+      {
+        "name": "Developed Markets",
+        "value": 1.73169
+      },
+      {
+        "name": "Below-FM",
+        "value": 0.01962
+      }
+    ],
+    "asOfDate": "2026-07-31",
+    "sums": {
+      "countries": 99.9765,
+      "sectors": 99.9438,
+      "regions": 99.9765
+    }
+  }
+}

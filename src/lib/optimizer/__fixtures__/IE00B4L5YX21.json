@@ -1,0 +1,99 @@
+{
+  "profile": {
+    "isin": "IE00B4L5YX21",
+    "name": "iShares Core MSCI Japan IMI UCITS ETF (Acc)",
+    "provider": "BlackRock Asset Management (DEU) AG",
+    "index": "MSCI Japan IMI NR USD",
+    "ter": 0.12,
+    "ongoingCharges": 0.12,
+    "swapBased": false,
+    "launchDate": "2009-09-25",
+    "fundVolumeEur": 9008026948,
+    "numberOfHoldings": 967
+  },
+  "exposures": {
+    "countries": [
+      {
+        "name": "Japan",
+        "value": 99.63037,
+        "code": "JP"
+      }
+    ],
+    "sectors": [
+      {
+        "name": "Grundmaterialien",
+        "value": 4.23222,
+        "code": "basic_materials"
+      },
+      {
+        "name": "Zykl. Konsumgüter",
+        "value": 12.26769,
+        "code": "consumer_cyclical"
+      },
+      {
+        "name": "Finanzen",
+        "value": 17.29505,
+        "code": "financial_services"
+      },
+      {
+        "name": "Immobilien",
+        "value": 2.82603,
+        "code": "real_estate"
+      },
+      {
+        "name": "Basiskonsumgüter",
+        "value": 4.11749,
+        "code": "consumer_defense"
+      },
+      {
+        "name": "Gesundheitswesen",
+        "value": 5.36781,
+        "code": "healthcare"
+      },
+      {
+        "name": "Versorger",
+        "value": 1.1122,
+        "code": "utilities"
+      },
+      {
+        "name": "Kommunikation",
+        "value": 7.76603,
+        "code": "communication_services"
+      },
+      {
+        "name": "Industrie",
+        "value": 23.85658,
+        "code": "industrials"
+      },
+      {
+        "name": "Technologie",
+        "value": 19.95789,
+        "code": "technology"
+      },
+      {
+        "name": "Energie",
+        "value": 0.83139,
+        "code": "energy"
+      }
+    ],
+    "regions": [
+      {
+        "name": "Asien",
+        "value": 99.63037,
+        "code": "asien"
+      }
+    ],
+    "msci": [
+      {
+        "name": "Developed Markets",
+        "value": 99.63037
+      }
+    ],
+    "asOfDate": "2026-08-14",
+    "sums": {
+      "countries": 99.6304,
+      "sectors": 99.6304,
+      "regions": 99.6304
+    }
+  }
+}

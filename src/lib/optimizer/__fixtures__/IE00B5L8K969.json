@@ -1,0 +1,153 @@
+{
+  "profile": {
+    "isin": "IE00B5L8K969",
+    "name": "iShares MSCI EM Asia UCITS ETF USD (Acc)",
+    "provider": "BlackRock Asset Management (DEU) AG",
+    "index": "MSCI EM Asia",
+    "ter": 0.2,
+    "ongoingCharges": 0.2,
+    "swapBased": false,
+    "launchDate": "2010-08-06",
+    "fundVolumeEur": 8509485984,
+    "numberOfHoldings": 589
+  },
+  "exposures": {
+    "countries": [
+      {
+        "name": "China",
+        "value": 23.49332,
+        "code": "CN"
+      },
+      {
+        "name": "Hong Kong",
+        "value": 0.74178,
+        "code": "HK"
+      },
+      {
+        "name": "Indonesien",
+        "value": 0.58897,
+        "code": "ID"
+      },
+      {
+        "name": "Indien",
+        "value": 13.70693,
+        "code": "IN"
+      },
+      {
+        "name": "Südkorea",
+        "value": 25.06252,
+        "code": "KR"
+      },
+      {
+        "name": "Malaysia",
+        "value": 1.1081,
+        "code": "MY"
+      },
+      {
+        "name": "Philippinen",
+        "value": 0.34661,
+        "code": "PH"
+      },
+      {
+        "name": "Thailand",
+        "value": 1.17325,
+        "code": "TH"
+      },
+      {
+        "name": "Taiwan",
+        "value": 32.50899,
+        "code": "TW"
+      },
+      {
+        "name": "Vereinigte Staaten (USA)",
+        "value": 0.64591,
+        "code": "US"
+      }
+    ],
+    "sectors": [
+      {
+        "name": "Grundmaterialien",
+        "value": 3.44577,
+        "code": "basic_materials"
+      },
+      {
+        "name": "Zykl. Konsumgüter",
+        "value": 9.20096,
+        "code": "consumer_cyclical"
+      },
+      {
+        "name": "Finanzen",
+        "value": 14.25902,
+        "code": "financial_services"
+      },
+      {
+        "name": "Immobilien",
+        "value": 0.66843,
+        "code": "real_estate"
+      },
+      {
+        "name": "Basiskonsumgüter",
+        "value": 2.05522,
+        "code": "consumer_defense"
+      },
+      {
+        "name": "Gesundheitswesen",
+        "value": 3.14524,
+        "code": "healthcare"
+      },
+      {
+        "name": "Versorger",
+        "value": 1.20581,
+        "code": "utilities"
+      },
+      {
+        "name": "Kommunikation",
+        "value": 6.25639,
+        "code": "communication_services"
+      },
+      {
+        "name": "Industrie",
+        "value": 6.32558,
+        "code": "industrials"
+      },
+      {
+        "name": "Technologie",
+        "value": 50.40681,
+        "code": "technology"
+      },
+      {
+        "name": "Energie",
+        "value": 2.40715,
+        "code": "energy"
+      }
+    ],
+    "regions": [
+      {
+        "name": "Asien",
+        "value": 98.73046999999998,
+        "code": "asien"
+      },
+      {
+        "name": "Nordamerika",
+        "value": 0.64591,
+        "code": "america_north"
+      }
+    ],
+    "msci": [
+      {
+        "name": "Emerging Markets",
+        "value": 97.98868999999999
+      },
+      {
+        "name": "Developed Markets",
+        "value": 1.38769
+      }
+    ],
+    "asOfDate": "2026-08-14",
+    "sums": {
+      "countries": 99.3764,
+      "sectors": 99.3764,
+      "regions": 99.3764
+    }
+  }
+}

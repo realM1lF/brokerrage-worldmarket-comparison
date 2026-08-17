@@ -180,15 +180,22 @@ Kein Deploy vor V1-Funktion.
 ⚠ **Inkonsistenz:** „Marktkap. (gelistet)" = Full Market Cap, nicht Free-Float.
 Default (MSCI ACWI IMI) nutzt Free-Float, US ≈ 62-64%. Tabelle als Benchmark-Quelle
 unbrauchbar. Freifloat-Gewichte kommen aus dem Daten-Spike (MSCI-Factsheet oder Proxy-ETF).
+**Zweite Inkonsistenz:** Nominal/PPP hier = **Welt-BIP**. Unser GDP-Modell normalisiert
+über das ACWI-IMI-Universum → US nominal **28.6 %**, nicht 25.9 %. Methodik: `docs/methodology.md`.
 
 ## Offen
 
-1. Design/Optik (bewusst offen, zuletzt)
+1. Design/Optik: Palette bleibt. Gruppierung und Lesereihenfolge: `docs/plan-ux.md`
 2. **Datenquelle-Entscheidung:** extraETF-Genehmigung anfragen (Mail-Entwurf: docs/anfrage-extraetf.md) vs. Lizenzdaten
 3. Benchmark-Quelle finalisieren: GELÖST — SPDR ACWI IMI via extraETF, statisch abgelegt
 4. ToS-Ergebnis (geprüft): extraETF UND BlackRock: privat okay, kommerziell nur mit Genehmigung. Keine freie öffentliche API für markenübergreifende Ländergewichte.
 5. ETF-Preise (€-Umschichtung): separate Quelle (Yahoo/yfinance) — V1 arbeitet mit €-Input
-6. Sparplan-Analyse + Sparplan-Vorschlag: Konzept in `docs/plan-sparplan.md`, Design-Entscheidungen offen
+6. Sparplan-Analyse + Sparplan-Vorschlag: Konzept in `docs/plan-sparplan.md`.
+   **UX-Klarheit (geplant):** `docs/plan-ux.md`. Rechnung bleibt, Layout
+   erzählt eine Geschichte (heute → tun → danach). Regionen bei Blend
+   nicht mehr aus Marktkap leihen. Umsetzung eigene Session.
+7. extraETF-Live-Suche und erweiterter Kandidaten-Katalog: warten auf
+   schriftliche extraETF-Antwort.
 
 ## Umsetzungsstand (2026-08-17)
 
@@ -203,7 +210,7 @@ Finanzfluss-Styling. Details: `docs/CHANGELOG.md`.
   China/Brasilien/Mexiko (extraETF-Klassifizierung).
 - **Benchmark:** 4 Modelle statisch (`src/data/benchmarks/`). Marktkap = SPDR ACWI IMI (skaliert),
   GDP/PPP = World Bank 2023 über ACWI-IMI-Universum, Taiwan via IMF,
-  Blend = 50/25/25 (Marktkap/GDP nom/GDP PPP). Methodik: `docs/methodology.md`.
+  Blend = 50/50 (Marktkap / GDP nom, live, ohne PPP). Methodik: `docs/methodology.md`.
 - **Rechenkern:** `src/lib/optimizer/optimize.ts` — PGD auf Simplex, Grid-Search-validiert.
   Restposten als `_OTHER` bestraft. Ist-/Ziel-Scores getrennt.
   `src/lib/optimizer/savings.ts` — Sparplan-Analyse (Ist) + Vorschlag
@@ -216,9 +223,9 @@ Finanzfluss-Styling. Details: `docs/CHANGELOG.md`.
   „neuer ETF"-Badges, Tausch-Hinweis. Finanzfluss-inspiriertes Styling (Outfit-Font
   self-hosted, Navy/Indigo-Palette, Soft-Shadow-Karten).
 - **Tests:** 44 grün (Vitest). `npm test`.
-- **Nächste Schritte:** Stufe 3 (Konvergenz-Prognose „Monate bis Ziel"),
-  Anteile-Input (Kursquelle), Benchmark-Auto-Update, extraETF-Genehmigung,
-  Design-Feinschliff nach RIn-Abnahme.
+- **Nächste Schritte:** **UX-Klarheit** (`docs/plan-ux.md`) vor neuen
+  Features. Danach: Stufe 3 (Konvergenz-Prognose „Monate bis Ziel"),
+  Anteile-Input (Kursquelle), Benchmark-Auto-Update, extraETF-Genehmigung.
 
 ### Ausführen
 
@@ -245,7 +252,7 @@ aktuellen Stand gemeinsam anschauen — RIn bringt Punkte mit.
 2. Was existiert:
    - V1-Kern: extraETF-Pipeline (privat nutzbar), Optimizer (PGD auf Simplex),
      Ist-/Ziel-Scores getrennt.
-   - 4 Benchmarks: Marktkap (SPDR ACWI IMI), GDP, PPP, Blend (50/25/25) — Toggle in UI.
+   - 4 Benchmarks: Marktkap (SPDR ACWI IMI), GDP, PPP, Blend (50/50 MC+GDP nom) — Toggle in UI.
    - Dashboard-UI: Bestand- + Sparplan-View, Laien-Tooltips, Live-Reanalyse,
      Donut-Drilldown, sortierbare Tabelle, inline editierbare Sparraten.
    - Sparplan Stufe 1+2 fertig: Ist-Analyse (Flow) + Vorschlag

@@ -1,0 +1,182 @@
+{
+  "profile": {
+    "isin": "IE00B9F5YL18",
+    "name": "Vanguard FTSE Developed Asia Pacific ex Japan UCITS ETF (Dist)",
+    "provider": "Vanguard Group (Ireland) Limited",
+    "index": "FTSE Developed AP Ex JPN NR USD",
+    "ter": 0.15,
+    "ongoingCharges": 0.15,
+    "swapBased": false,
+    "launchDate": "2013-05-21",
+    "fundVolumeEur": 3254601970,
+    "numberOfHoldings": 377
+  },
+  "exposures": {
+    "countries": [
+      {
+        "name": "Australien",
+        "value": 29.03406,
+        "code": "AU"
+      },
+      {
+        "name": "China",
+        "value": 1.20197,
+        "code": "CN"
+      },
+      {
+        "name": "Vereinigtes Königreich (England)",
+        "value": 0.26644,
+        "code": "GB"
+      },
+      {
+        "name": "Hong Kong",
+        "value": 6.3143,
+        "code": "HK"
+      },
+      {
+        "name": "Indonesien",
+        "value": 0.02473,
+        "code": "ID"
+      },
+      {
+        "name": "Italien",
+        "value": 0.04663,
+        "code": "IT"
+      },
+      {
+        "name": "Kambodscha",
+        "value": 0.00954,
+        "code": "KH"
+      },
+      {
+        "name": "Südkorea",
+        "value": 54.76877,
+        "code": "KR"
+      },
+      {
+        "name": "Macau",
+        "value": 0.09902,
+        "code": "MO"
+      },
+      {
+        "name": "Neuseeland",
+        "value": 0.87724,
+        "code": "NZ"
+      },
+      {
+        "name": "Singapur",
+        "value": 6.77821,
+        "code": "SG"
+      },
+      {
+        "name": "Thailand",
+        "value": 0.04292,
+        "code": "TH"
+      },
+      {
+        "name": "Vereinigte Staaten (USA)",
+        "value": 0.47467,
+        "code": "US"
+      }
+    ],
+    "sectors": [
+      {
+        "name": "Grundmaterialien",
+        "value": 8.2628,
+        "code": "basic_materials"
+      },
+      {
+        "name": "Zykl. Konsumgüter",
+        "value": 4.64353,
+        "code": "consumer_cyclical"
+      },
+      {
+        "name": "Finanzen",
+        "value": 21.06674,
+        "code": "financial_services"
+      },
+      {
+        "name": "Immobilien",
+        "value": 3.97409,
+        "code": "real_estate"
+      },
+      {
+        "name": "Basiskonsumgüter",
+        "value": 2.13396,
+        "code": "consumer_defense"
+      },
+      {
+        "name": "Gesundheitswesen",
+        "value": 2.71423,
+        "code": "healthcare"
+      },
+      {
+        "name": "Versorger",
+        "value": 1.56764,
+        "code": "utilities"
+      },
+      {
+        "name": "Kommunikation",
+        "value": 1.86158,
+        "code": "communication_services"
+      },
+      {
+        "name": "Industrie",
+        "value": 9.50734,
+        "code": "industrials"
+      },
+      {
+        "name": "Technologie",
+        "value": 42.64018,
+        "code": "technology"
+      },
+      {
+        "name": "Energie",
+        "value": 1.56641,
+        "code": "energy"
+      }
+    ],
+    "regions": [
+      {
+        "name": "Pazifik",
+        "value": 29.9113,
+        "code": "australasia"
+      },
+      {
+        "name": "Asien",
+        "value": 69.23946,
+        "code": "asien"
+      },
+      {
+        "name": "Europa",
+        "value": 0.31307,
+        "code": "europe"
+      },
+      {
+        "name": "Nordamerika",
+        "value": 0.47467,
+        "code": "america_north"
+      }
+    ],
+    "msci": [
+      {
+        "name": "Developed Markets",
+        "value": 43.79155000000001
+      },
+      {
+        "name": "Emerging Markets",
+        "value": 56.03839000000001
+      },
+      {
+        "name": "Below-FM",
+        "value": 0.10855999999999999
+      }
+    ],
+    "asOfDate": "2026-06-30",
+    "sums": {
+      "countries": 99.9385,
+      "sectors": 99.9385,
+      "regions": 99.9385
+    }
+  }
+}

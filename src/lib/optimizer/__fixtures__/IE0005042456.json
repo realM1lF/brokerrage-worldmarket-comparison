@@ -1,0 +1,313 @@
+{
+  "profile": {
+    "isin": "IE0005042456",
+    "name": "iShares Core FTSE 100 UCITS ETF (Dist)",
+    "provider": "BlackRock Asset Management (DEU) AG",
+    "index": "FTSE 100",
+    "ter": 0.07,
+    "ongoingCharges": 0.07,
+    "swapBased": false,
+    "launchDate": "2000-04-27",
+    "fundVolumeEur": 16063685196,
+    "numberOfHoldings": 113
+  },
+  "exposures": {
+    "countries": [
+      {
+        "name": "Vereinigte Arabische Emirate",
+        "value": 0.00049,
+        "code": "AE"
+      },
+      {
+        "name": "Österreich",
+        "value": 0.00103,
+        "code": "AT"
+      },
+      {
+        "name": "Belgien",
+        "value": 0.00103,
+        "code": "BE"
+      },
+      {
+        "name": "Brasilien",
+        "value": 0.03807,
+        "code": "BR"
+      },
+      {
+        "name": "Kanada",
+        "value": 0.02358,
+        "code": "CA"
+      },
+      {
+        "name": "Schweiz",
+        "value": 2.46884,
+        "code": "CH"
+      },
+      {
+        "name": "China",
+        "value": 0.04692,
+        "code": "CN"
+      },
+      {
+        "name": "Deutschland",
+        "value": 0.01544,
+        "code": "DE"
+      },
+      {
+        "name": "Dänemark",
+        "value": 0.0005,
+        "code": "DK"
+      },
+      {
+        "name": "Spanien",
+        "value": 0.00281,
+        "code": "ES"
+      },
+      {
+        "name": "Finnland",
+        "value": 0.00189,
+        "code": "FI"
+      },
+      {
+        "name": "Frankreich",
+        "value": 0.01853,
+        "code": "FR"
+      },
+      {
+        "name": "Vereinigtes Königreich (England)",
+        "value": 92.47084,
+        "code": "GB"
+      },
+      {
+        "name": "Griechenland",
+        "value": 0.15263,
+        "code": "GR"
+      },
+      {
+        "name": "Hong Kong",
+        "value": 1.04873,
+        "code": "HK"
+      },
+      {
+        "name": "Ungarn",
+        "value": 0.00024,
+        "code": "HU"
+      },
+      {
+        "name": "Indonesien",
+        "value": 0.00114,
+        "code": "ID"
+      },
+      {
+        "name": "Indien",
+        "value": 0.0039,
+        "code": "IN"
+      },
+      {
+        "name": "Irland",
+        "value": 0.00323,
+        "code": "IE"
+      },
+      {
+        "name": "Israel",
+        "value": 0.00143,
+        "code": "IL"
+      },
+      {
+        "name": "Italien",
+        "value": 0.00434,
+        "code": "IT"
+      },
+      {
+        "name": "Japan",
+        "value": 0.04774,
+        "code": "JP"
+      },
+      {
+        "name": "Südkorea",
+        "value": 0.03099,
+        "code": "KR"
+      },
+      {
+        "name": "Mexiko",
+        "value": 0.20073,
+        "code": "MX"
+      },
+      {
+        "name": "Malaysia",
+        "value": 0.00016,
+        "code": "MY"
+      },
+      {
+        "name": "Niederlande",
+        "value": 0.03375,
+        "code": "NL"
+      },
+      {
+        "name": "Norwegen",
+        "value": 0.00081,
+        "code": "NO"
+      },
+      {
+        "name": "Peru",
+        "value": 0.00029,
+        "code": "PE"
+      },
+      {
+        "name": "Philippinen",
+        "value": 0.00014,
+        "code": "PH"
+      },
+      {
+        "name": "Polen",
+        "value": 0.00037,
+        "code": "PL"
+      },
+      {
+        "name": "Saudi Arabien",
+        "value": 0.00015,
+        "code": "SA"
+      },
+      {
+        "name": "Singapur",
+        "value": 0.01217,
+        "code": "SG"
+      },
+      {
+        "name": "Schweden",
+        "value": 0.00698,
+        "code": "SE"
+      },
+      {
+        "name": "Thailand",
+        "value": 0.00134,
+        "code": "TH"
+      },
+      {
+        "name": "Türkei",
+        "value": 0.00032,
+        "code": "TR"
+      },
+      {
+        "name": "Taiwan",
+        "value": 0.08751,
+        "code": "TW"
+      },
+      {
+        "name": "Vereinigte Staaten (USA)",
+        "value": 0.86058,
+        "code": "US"
+      },
+      {
+        "name": "Südafrika",
+        "value": 0.0006,
+        "code": "ZA"
+      }
+    ],
+    "sectors": [
+      {
+        "name": "Grundmaterialien",
+        "value": 7.57555,
+        "code": "basic_materials"
+      },
+      {
+        "name": "Zykl. Konsumgüter",
+        "value": 4.81926,
+        "code": "consumer_cyclical"
+      },
+      {
+        "name": "Finanzen",
+        "value": 25.87621,
+        "code": "financial_services"
+      },
+      {
+        "name": "Immobilien",
+        "value": 0.99938,
+        "code": "real_estate"
+      },
+      {
+        "name": "Basiskonsumgüter",
+        "value": 13.91831,
+        "code": "consumer_defense"
+      },
+      {
+        "name": "Gesundheitswesen",
+        "value": 12.99634,
+        "code": "healthcare"
+      },
+      {
+        "name": "Versorger",
+        "value": 4.78319,
+        "code": "utilities"
+      },
+      {
+        "name": "Kommunikation",
+        "value": 2.23838,
+        "code": "communication_services"
+      },
+      {
+        "name": "Industrie",
+        "value": 13.43183,
+        "code": "industrials"
+      },
+      {
+        "name": "Technologie",
+        "value": 0.89148,
+        "code": "technology"
+      },
+      {
+        "name": "Energie",
+        "value": 10.05939,
+        "code": "energy"
+      }
+    ],
+    "regions": [
+      {
+        "name": "Asien",
+        "value": 1.2831299999999999,
+        "code": "asien"
+      },
+      {
+        "name": "Europa",
+        "value": 95.18265,
+        "code": "europe"
+      },
+      {
+        "name": "Lateinamerika",
+        "value": 0.23909,
+        "code": "latin_america"
+      },
+      {
+        "name": "Nordamerika",
+        "value": 0.8841600000000001,
+        "code": "america_north"
+      },
+      {
+        "name": "Osteuropa",
+        "value": 0.00061,
+        "code": "europe_east"
+      },
+      {
+        "name": "Afrika",
+        "value": 0.0006,
+        "code": "africa"
+      }
+    ],
+    "msci": [
+      {
+        "name": "Emerging Markets",
+        "value": 0.5659899999999999
+      },
+      {
+        "name": "Developed Markets",
+        "value": 97.02425
+      }
+    ],
+    "asOfDate": "2026-07-09",
+    "sums": {
+      "countries": 97.5902,
+      "sectors": 97.5893,
+      "regions": 97.5902
+    }
+  }
+}

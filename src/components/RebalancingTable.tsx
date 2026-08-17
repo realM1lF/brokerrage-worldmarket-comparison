@@ -7,6 +7,10 @@ function eur(n: number): string {
   return n.toLocaleString('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
 }
 
+function sharePct(v: number): string {
+  return `${(v * 100).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} %`;
+}
+
 type SortKey = 'name' | 'amount' | 'target' | 'delta';
 type SortDir = 'asc' | 'desc';
 
@@ -21,11 +25,14 @@ export function RebalancingTable({
   allocations,
   totalEur,
   newIsins,
+  showSharePct = false,
 }: {
   allocations: EtfAllocation[];
   totalEur: number;
   /** ISINs of newly added ETFs — rows get a "neuer ETF" badge. */
   newIsins?: string[];
+  /** Ist- und Ziel-Anteil der Rate/des Bestands unter den €-Beträgen. */
+  showSharePct?: boolean;
 }) {
   const [sortKey, setSortKey] = useState<SortKey>('delta');
   const [sortDir, setSortDir] = useState<SortDir>('desc');
@@ -83,9 +90,17 @@ export function RebalancingTable({
             <td>
               {a.name}
               {newIsins?.includes(a.isin) && <small className="chipNew">neuer ETF</small>}
+              {a.againstMarket && <small className="chipWarn">gegen den Weltmarkt gerichtet</small>}
+              {a.reserve && <small className="chipReserve">Reserve, unverändert</small>}
             </td>
-            <td className="num">{eur(a.amountEur)}</td>
-            <td className="num">{eur(a.targetWeight * totalEur)}</td>
+            <td className="num">
+              {eur(a.amountEur)}
+              {showSharePct && <small className="sharePct">{sharePct(a.currentWeight)}</small>}
+            </td>
+            <td className="num">
+              {eur(a.targetWeight * totalEur)}
+              {showSharePct && <small className="sharePct">{sharePct(a.targetWeight)}</small>}
+            </td>
             <td className={`num ${a.deltaEur >= 0 ? 'pos' : 'neg'}`}>
               {a.deltaEur >= 0 ? '+' : ''}
               {eur(a.deltaEur)}

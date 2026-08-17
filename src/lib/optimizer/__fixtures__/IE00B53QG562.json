@@ -1,0 +1,207 @@
+{
+  "profile": {
+    "isin": "IE00B53QG562",
+    "name": "iShares Core MSCI EMU UCITS ETF",
+    "provider": "BlackRock Asset Management (DEU) AG",
+    "index": "MSCI EMU",
+    "ter": 0.12,
+    "ongoingCharges": 0.12,
+    "swapBased": false,
+    "launchDate": "2010-01-12",
+    "fundVolumeEur": 8065225078,
+    "numberOfHoldings": 230
+  },
+  "exposures": {
+    "countries": [
+      {
+        "name": "Österreich",
+        "value": 1.04844,
+        "code": "AT"
+      },
+      {
+        "name": "Belgien",
+        "value": 2.33072,
+        "code": "BE"
+      },
+      {
+        "name": "Schweiz",
+        "value": 0.21534,
+        "code": "CH"
+      },
+      {
+        "name": "Tschechien",
+        "value": 0.04194,
+        "code": "CZ"
+      },
+      {
+        "name": "Deutschland",
+        "value": 25.04106,
+        "code": "DE"
+      },
+      {
+        "name": "Spanien",
+        "value": 10.91788,
+        "code": "ES"
+      },
+      {
+        "name": "Finnland",
+        "value": 2.45332,
+        "code": "FI"
+      },
+      {
+        "name": "Frankreich",
+        "value": 24.75278,
+        "code": "FR"
+      },
+      {
+        "name": "Vereinigtes Königreich (England)",
+        "value": 0.35076,
+        "code": "GB"
+      },
+      {
+        "name": "Irland",
+        "value": 1.15276,
+        "code": "IE"
+      },
+      {
+        "name": "Italien",
+        "value": 8.75124,
+        "code": "IT"
+      },
+      {
+        "name": "Luxemburg",
+        "value": 0.11702,
+        "code": "LU"
+      },
+      {
+        "name": "Niederlande",
+        "value": 17.61464,
+        "code": "NL"
+      },
+      {
+        "name": "Polen",
+        "value": 0.0557,
+        "code": "PL"
+      },
+      {
+        "name": "Portugal",
+        "value": 0.51561,
+        "code": "PT"
+      },
+      {
+        "name": "Singapur",
+        "value": 0.42293,
+        "code": "SG"
+      },
+      {
+        "name": "Schweden",
+        "value": 0.76785,
+        "code": "SE"
+      },
+      {
+        "name": "Vereinigte Staaten (USA)",
+        "value": 3.00395,
+        "code": "US"
+      }
+    ],
+    "sectors": [
+      {
+        "name": "Grundmaterialien",
+        "value": 3.90095,
+        "code": "basic_materials"
+      },
+      {
+        "name": "Zykl. Konsumgüter",
+        "value": 7.52074,
+        "code": "consumer_cyclical"
+      },
+      {
+        "name": "Finanzen",
+        "value": 26.10115,
+        "code": "financial_services"
+      },
+      {
+        "name": "Immobilien",
+        "value": 0.77116,
+        "code": "real_estate"
+      },
+      {
+        "name": "Basiskonsumgüter",
+        "value": 5.21275,
+        "code": "consumer_defense"
+      },
+      {
+        "name": "Gesundheitswesen",
+        "value": 5.53781,
+        "code": "healthcare"
+      },
+      {
+        "name": "Versorger",
+        "value": 6.00631,
+        "code": "utilities"
+      },
+      {
+        "name": "Kommunikation",
+        "value": 3.96151,
+        "code": "communication_services"
+      },
+      {
+        "name": "Industrie",
+        "value": 20.65995,
+        "code": "industrials"
+      },
+      {
+        "name": "Technologie",
+        "value": 16.12225,
+        "code": "technology"
+      },
+      {
+        "name": "Energie",
+        "value": 3.75936,
+        "code": "energy"
+      }
+    ],
+    "regions": [
+      {
+        "name": "Europa",
+        "value": 96.02941999999999,
+        "code": "europe"
+      },
+      {
+        "name": "Osteuropa",
+        "value": 0.09764,
+        "code": "europe_east"
+      },
+      {
+        "name": "Asien",
+        "value": 0.42293,
+        "code": "asien"
+      },
+      {
+        "name": "Nordamerika",
+        "value": 3.00395,
+        "code": "america_north"
+      }
+    ],
+    "msci": [
+      {
+        "name": "Developed Markets",
+        "value": 99.33927999999999
+      },
+      {
+        "name": "Emerging Markets",
+        "value": 0.09764
+      },
+      {
+        "name": "Below-FM",
+        "value": 0.11702
+      }
+    ],
+    "asOfDate": "2026-08-14",
+    "sums": {
+      "countries": 99.5539,
+      "sectors": 99.5539,
+      "regions": 99.5539
+    }
+  }
+}

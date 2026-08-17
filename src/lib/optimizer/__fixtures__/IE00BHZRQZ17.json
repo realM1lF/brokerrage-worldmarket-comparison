@@ -1,0 +1,99 @@
+{
+  "profile": {
+    "isin": "IE00BHZRQZ17",
+    "name": "Franklin FTSE India UCITS ETF",
+    "provider": "Franklin Templeton International Services S.à r.l.",
+    "index": "FTSE India 30/18 Capped",
+    "ter": 0.19,
+    "ongoingCharges": 0.19,
+    "swapBased": false,
+    "launchDate": "2019-06-25",
+    "fundVolumeEur": 2231613585,
+    "numberOfHoldings": 284
+  },
+  "exposures": {
+    "countries": [
+      {
+        "name": "Indien",
+        "value": 98.55206,
+        "code": "IN"
+      }
+    ],
+    "sectors": [
+      {
+        "name": "Grundmaterialien",
+        "value": 8.83181,
+        "code": "basic_materials"
+      },
+      {
+        "name": "Zykl. Konsumgüter",
+        "value": 12.89099,
+        "code": "consumer_cyclical"
+      },
+      {
+        "name": "Finanzen",
+        "value": 26.97991,
+        "code": "financial_services"
+      },
+      {
+        "name": "Immobilien",
+        "value": 1.40973,
+        "code": "real_estate"
+      },
+      {
+        "name": "Basiskonsumgüter",
+        "value": 5.18431,
+        "code": "consumer_defense"
+      },
+      {
+        "name": "Gesundheitswesen",
+        "value": 7.15317,
+        "code": "healthcare"
+      },
+      {
+        "name": "Versorger",
+        "value": 4.66331,
+        "code": "utilities"
+      },
+      {
+        "name": "Kommunikation",
+        "value": 4.59284,
+        "code": "communication_services"
+      },
+      {
+        "name": "Industrie",
+        "value": 10.05905,
+        "code": "industrials"
+      },
+      {
+        "name": "Technologie",
+        "value": 8.46393,
+        "code": "technology"
+      },
+      {
+        "name": "Energie",
+        "value": 8.3117,
+        "code": "energy"
+      }
+    ],
+    "regions": [
+      {
+        "name": "Asien",
+        "value": 98.55206,
+        "code": "asien"
+      }
+    ],
+    "msci": [
+      {
+        "name": "Emerging Markets",
+        "value": 98.55206
+      }
+    ],
+    "asOfDate": "2026-08-13",
+    "sums": {
+      "countries": 98.5521,
+      "sectors": 98.5408,
+      "regions": 98.5521
+    }
+  }
+}

@@ -1,0 +1,291 @@
+{
+  "profile": {
+    "isin": "IE00B3VVMM84",
+    "name": "Vanguard FTSE Emerging Markets UCITS ETF (Dist)",
+    "provider": "Vanguard Group (Ireland) Limited",
+    "index": "FTSE Emerging",
+    "ter": 0.17,
+    "ongoingCharges": 0.17,
+    "swapBased": false,
+    "launchDate": "2012-05-22",
+    "fundVolumeEur": 5703238468,
+    "numberOfHoldings": 2307
+  },
+  "exposures": {
+    "countries": [
+      {
+        "name": "Vereinigte Arabische Emirate",
+        "value": 1.61216,
+        "code": "AE"
+      },
+      {
+        "name": "Belgien",
+        "value": 0.04266,
+        "code": "BE"
+      },
+      {
+        "name": "Brasilien",
+        "value": 4.1801,
+        "code": "BR"
+      },
+      {
+        "name": "Chile",
+        "value": 0.682,
+        "code": "CL"
+      },
+      {
+        "name": "China",
+        "value": 25.27612,
+        "code": "CN"
+      },
+      {
+        "name": "Kolumbien",
+        "value": 0.14447,
+        "code": "CO"
+      },
+      {
+        "name": "Zypern",
+        "value": 0.03573,
+        "code": "CY"
+      },
+      {
+        "name": "Tschechien",
+        "value": 0.13866,
+        "code": "CZ"
+      },
+      {
+        "name": "Ägypten",
+        "value": 0.07786,
+        "code": "EG"
+      },
+      {
+        "name": "Griechenland",
+        "value": 0.74153,
+        "code": "GR"
+      },
+      {
+        "name": "Hong Kong",
+        "value": 0.50548,
+        "code": "HK"
+      },
+      {
+        "name": "Ungarn",
+        "value": 0.44755,
+        "code": "HU"
+      },
+      {
+        "name": "Indonesien",
+        "value": 0.64453,
+        "code": "ID"
+      },
+      {
+        "name": "Indien",
+        "value": 16.01937,
+        "code": "IN"
+      },
+      {
+        "name": "Island",
+        "value": 0.06267,
+        "code": "IS"
+      },
+      {
+        "name": "Italien",
+        "value": 0.0638,
+        "code": "IT"
+      },
+      {
+        "name": "Kuwait",
+        "value": 0.64965,
+        "code": "KW"
+      },
+      {
+        "name": "Luxemburg",
+        "value": 0.03531,
+        "code": "LU"
+      },
+      {
+        "name": "Mexiko",
+        "value": 2.24472,
+        "code": "MX"
+      },
+      {
+        "name": "Malaysia",
+        "value": 1.5326,
+        "code": "MY"
+      },
+      {
+        "name": "Philippinen",
+        "value": 0.41906,
+        "code": "PH"
+      },
+      {
+        "name": "Katar",
+        "value": 0.64444,
+        "code": "QA"
+      },
+      {
+        "name": "Rumänien",
+        "value": 0.18955,
+        "code": "RO"
+      },
+      {
+        "name": "Russland",
+        "value": 0,
+        "code": "RU"
+      },
+      {
+        "name": "Saudi Arabien",
+        "value": 3.205,
+        "code": "SA"
+      },
+      {
+        "name": "Singapur",
+        "value": 0.01512,
+        "code": "SG"
+      },
+      {
+        "name": "Thailand",
+        "value": 1.5154,
+        "code": "TH"
+      },
+      {
+        "name": "Türkei",
+        "value": 1.02591,
+        "code": "TR"
+      },
+      {
+        "name": "Taiwan",
+        "value": 33.46364,
+        "code": "TW"
+      },
+      {
+        "name": "Vereinigte Staaten (USA)",
+        "value": 0.99916,
+        "code": "US"
+      },
+      {
+        "name": "Britische Jungferninseln",
+        "value": 0,
+        "code": "VG"
+      },
+      {
+        "name": "Südafrika",
+        "value": 3.24372,
+        "code": "ZA"
+      }
+    ],
+    "sectors": [
+      {
+        "name": "Grundmaterialien",
+        "value": 6.9352,
+        "code": "basic_materials"
+      },
+      {
+        "name": "Zykl. Konsumgüter",
+        "value": 9.16142,
+        "code": "consumer_cyclical"
+      },
+      {
+        "name": "Finanzen",
+        "value": 20.6461,
+        "code": "financial_services"
+      },
+      {
+        "name": "Immobilien",
+        "value": 1.58975,
+        "code": "real_estate"
+      },
+      {
+        "name": "Basiskonsumgüter",
+        "value": 3.32764,
+        "code": "consumer_defense"
+      },
+      {
+        "name": "Gesundheitswesen",
+        "value": 3.29511,
+        "code": "healthcare"
+      },
+      {
+        "name": "Versorger",
+        "value": 2.85735,
+        "code": "utilities"
+      },
+      {
+        "name": "Kommunikation",
+        "value": 7.09107,
+        "code": "communication_services"
+      },
+      {
+        "name": "Industrie",
+        "value": 6.86663,
+        "code": "industrials"
+      },
+      {
+        "name": "Technologie",
+        "value": 34.01742,
+        "code": "technology"
+      },
+      {
+        "name": "Energie",
+        "value": 4.06554,
+        "code": "energy"
+      }
+    ],
+    "regions": [
+      {
+        "name": "Asien",
+        "value": 86.56421,
+        "code": "asien"
+      },
+      {
+        "name": "Europa",
+        "value": 0.94597,
+        "code": "europe"
+      },
+      {
+        "name": "Lateinamerika",
+        "value": 7.251290000000001,
+        "code": "latin_america"
+      },
+      {
+        "name": "Osteuropa",
+        "value": 0.77576,
+        "code": "europe_east"
+      },
+      {
+        "name": "Afrika",
+        "value": 3.32158,
+        "code": "africa"
+      },
+      {
+        "name": "Nordamerika",
+        "value": 0.99916,
+        "code": "america_north"
+      }
+    ],
+    "msci": [
+      {
+        "name": "Emerging Markets",
+        "value": 97.90849
+      },
+      {
+        "name": "Developed Markets",
+        "value": 1.62622
+      },
+      {
+        "name": "Below-FM",
+        "value": 0.07103999999999999
+      },
+      {
+        "name": "Frontier Markets",
+        "value": 0.25222
+      }
+    ],
+    "asOfDate": "2026-06-30",
+    "sums": {
+      "countries": 99.858,
+      "sectors": 99.8532,
+      "regions": 99.858
+    }
+  }
+}

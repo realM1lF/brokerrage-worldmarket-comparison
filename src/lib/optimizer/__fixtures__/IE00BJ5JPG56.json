@@ -1,0 +1,118 @@
+{
+  "profile": {
+    "isin": "IE00BJ5JPG56",
+    "name": "iShares MSCI China UCITS ETF (Acc)",
+    "provider": "BlackRock Asset Management (DEU) AG",
+    "index": "MSCI China NR USD",
+    "ter": 0.28,
+    "ongoingCharges": 0.28,
+    "swapBased": false,
+    "launchDate": "2019-06-20",
+    "fundVolumeEur": 2742163795,
+    "numberOfHoldings": 586
+  },
+  "exposures": {
+    "countries": [
+      {
+        "name": "China",
+        "value": 95.06052,
+        "code": "CN"
+      },
+      {
+        "name": "Hong Kong",
+        "value": 2.99321,
+        "code": "HK"
+      },
+      {
+        "name": "Vereinigte Staaten (USA)",
+        "value": 1.37284,
+        "code": "US"
+      }
+    ],
+    "sectors": [
+      {
+        "name": "Grundmaterialien",
+        "value": 5.40467,
+        "code": "basic_materials"
+      },
+      {
+        "name": "Zykl. Konsumgüter",
+        "value": 24.6733,
+        "code": "consumer_cyclical"
+      },
+      {
+        "name": "Finanzen",
+        "value": 18.99983,
+        "code": "financial_services"
+      },
+      {
+        "name": "Immobilien",
+        "value": 1.55301,
+        "code": "real_estate"
+      },
+      {
+        "name": "Basiskonsumgüter",
+        "value": 3.06907,
+        "code": "consumer_defense"
+      },
+      {
+        "name": "Gesundheitswesen",
+        "value": 5.8729,
+        "code": "healthcare"
+      },
+      {
+        "name": "Versorger",
+        "value": 1.57272,
+        "code": "utilities"
+      },
+      {
+        "name": "Kommunikation",
+        "value": 18.32597,
+        "code": "communication_services"
+      },
+      {
+        "name": "Industrie",
+        "value": 4.97259,
+        "code": "industrials"
+      },
+      {
+        "name": "Technologie",
+        "value": 11.49599,
+        "code": "technology"
+      },
+      {
+        "name": "Energie",
+        "value": 3.48652,
+        "code": "energy"
+      }
+    ],
+    "regions": [
+      {
+        "name": "Asien",
+        "value": 98.05373,
+        "code": "asien"
+      },
+      {
+        "name": "Nordamerika",
+        "value": 1.37284,
+        "code": "america_north"
+      }
+    ],
+    "msci": [
+      {
+        "name": "Emerging Markets",
+        "value": 95.06052
+      },
+      {
+        "name": "Developed Markets",
+        "value": 4.3660499999999995
+      }
+    ],
+    "asOfDate": "2026-08-14",
+    "sums": {
+      "countries": 99.4266,
+      "sectors": 99.4266,
+      "regions": 99.4266
+    }
+  }
+}

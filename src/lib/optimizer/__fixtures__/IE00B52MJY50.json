@@ -1,0 +1,157 @@
+{
+  "profile": {
+    "isin": "IE00B52MJY50",
+    "name": "iShares Core MSCI Pacific ex-Japan UCITS ETF",
+    "provider": "BlackRock Asset Management (DEU) AG",
+    "index": "MSCI Pacific (ex Japan)",
+    "ter": 0.2,
+    "ongoingCharges": 0.2,
+    "swapBased": false,
+    "launchDate": "2010-01-12",
+    "fundVolumeEur": 4174880553,
+    "numberOfHoldings": 116
+  },
+  "exposures": {
+    "countries": [
+      {
+        "name": "Australien",
+        "value": 63.35158,
+        "code": "AU"
+      },
+      {
+        "name": "China",
+        "value": 1.02544,
+        "code": "CN"
+      },
+      {
+        "name": "Vereinigtes Königreich (England)",
+        "value": 0.64601,
+        "code": "GB"
+      },
+      {
+        "name": "Hong Kong",
+        "value": 14.2121,
+        "code": "HK"
+      },
+      {
+        "name": "Italien",
+        "value": 0.4043,
+        "code": "IT"
+      },
+      {
+        "name": "Macau",
+        "value": 0.18712,
+        "code": "MO"
+      },
+      {
+        "name": "Malaysia",
+        "value": 0.36572,
+        "code": "MY"
+      },
+      {
+        "name": "Neuseeland",
+        "value": 1.7521,
+        "code": "NZ"
+      },
+      {
+        "name": "Singapur",
+        "value": 17.64158,
+        "code": "SG"
+      }
+    ],
+    "sectors": [
+      {
+        "name": "Grundmaterialien",
+        "value": 15.45869,
+        "code": "basic_materials"
+      },
+      {
+        "name": "Zykl. Konsumgüter",
+        "value": 6.98388,
+        "code": "consumer_cyclical"
+      },
+      {
+        "name": "Finanzen",
+        "value": 45.20445,
+        "code": "financial_services"
+      },
+      {
+        "name": "Immobilien",
+        "value": 6.93012,
+        "code": "real_estate"
+      },
+      {
+        "name": "Basiskonsumgüter",
+        "value": 2.97545,
+        "code": "consumer_defense"
+      },
+      {
+        "name": "Gesundheitswesen",
+        "value": 3.97993,
+        "code": "healthcare"
+      },
+      {
+        "name": "Versorger",
+        "value": 3.38905,
+        "code": "utilities"
+      },
+      {
+        "name": "Kommunikation",
+        "value": 2.50887,
+        "code": "communication_services"
+      },
+      {
+        "name": "Industrie",
+        "value": 8.48529,
+        "code": "industrials"
+      },
+      {
+        "name": "Technologie",
+        "value": 1.01447,
+        "code": "technology"
+      },
+      {
+        "name": "Energie",
+        "value": 2.65574,
+        "code": "energy"
+      }
+    ],
+    "regions": [
+      {
+        "name": "Pazifik",
+        "value": 65.10368,
+        "code": "australasia"
+      },
+      {
+        "name": "Asien",
+        "value": 33.431960000000004,
+        "code": "asien"
+      },
+      {
+        "name": "Europa",
+        "value": 1.05031,
+        "code": "europe"
+      }
+    ],
+    "msci": [
+      {
+        "name": "Developed Markets",
+        "value": 98.00767
+      },
+      {
+        "name": "Emerging Markets",
+        "value": 1.39116
+      },
+      {
+        "name": "Below-FM",
+        "value": 0.18712
+      }
+    ],
+    "asOfDate": "2026-08-14",
+    "sums": {
+      "countries": 99.586,
+      "sectors": 99.5859,
+      "regions": 99.586
+    }
+  }
+}

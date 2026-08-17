@@ -4,9 +4,9 @@ import path from 'node:path';
 import { getBenchmark, benchmarkModels } from '@/lib/benchmark';
 import type { BenchmarkModel } from '@/lib/benchmark';
 import type { EtfData } from '@/lib/etf/types';
-import { isEquityEtf, countryWeights, optimize, type PortfolioEtf } from './optimize';
-import { analyzeSavings, proposeSavings, type SavingsEtf } from './savings';
-import { suggestAdditionsSavings, withData } from './candidates';
+import { isEquityEtf, countryWeights, regionWeights, optimize, type PortfolioEtf } from './optimize';
+import { analyzeSavings, proposeSavings, projectDepotAfterMonths, horizonToMonths, type SavingsEtf } from './savings';
+import { suggestAdditions, suggestAdditionsSavings, withData } from './candidates';
 import { CANDIDATE_ETFS } from '@/data/candidates';
 
 /* =====================================================================
@@ -177,6 +177,40 @@ describe('proposeSavings benchmark-Modus mit RIns Bestand (alle 4 Modelle)', () 
     expect(us.portfolio).toBeLessThan(0.61);
   });
 
+  it('flowCoverageScore = nur vorgeschlagene Käufe vs. Weltmarkt, nicht Depot nach 1 Monat', () => {
+    const res = proposeSavings(RIN_SAVINGS, RIN_PORTFOLIO, 'blend', 'benchmark');
+    const flow = new Map<string, number>();
+    res.allocations.forEach(a => {
+      if (a.suggestedMonthlyEur <= 0 || !isEquityEtf(loadEtf(a.isin))) return;
+      const w = a.suggestedMonthlyEur / M_EQ;
+      for (const [code, cw] of countryWeights(loadEtf(a.isin)))
+        flow.set(code, (flow.get(code) ?? 0) + w * cw);
+    });
+    expect(res.flowCoverageScore).toBeCloseTo(1 - handActiveShare(flow, 'blend'), 5);
+    expect(res.flowCoverageScore).not.toBeCloseTo(res.coverageScore, 2);
+  });
+
+  it('flowRegions = Regionen nur der vorgeschlagenen Käufe', () => {
+    const res = proposeSavings(RIN_SAVINGS, RIN_PORTFOLIO, 'blend', 'benchmark');
+    const today = analyzeSavings(RIN_SAVINGS, 'blend');
+    const expected = new Map<string, number>();
+    res.allocations.forEach(a => {
+      if (a.suggestedMonthlyEur <= 0 || !isEquityEtf(loadEtf(a.isin))) return;
+      const w = a.suggestedMonthlyEur / M_EQ;
+      for (const [code, rw] of regionWeights(loadEtf(a.isin)))
+        expected.set(code, (expected.get(code) ?? 0) + w * rw);
+    });
+    expect(res.flowRegions.length).toBeGreaterThan(0);
+    for (const [code, w] of expected) {
+      const entry = res.flowRegions.find(r => r.code === code);
+      expect(entry, code).toBeDefined();
+      expect(entry!.portfolio, code).toBeCloseTo(w, 4);
+    }
+    const naProposed = res.flowRegions.find(r => r.code === 'america_north')!.portfolio;
+    const naToday = today.regions.find(r => r.code === 'america_north')!.portfolio;
+    expect(naProposed).not.toBeCloseTo(naToday, 3);
+  });
+
   it('kann ETFs mit aktueller Sparrate 0 empfehlen (Xtrackers EM)', () => {
     const res = proposeSavings(RIN_SAVINGS, RIN_PORTFOLIO, 'gdp', 'benchmark');
     const xem = res.allocations.find(a => a.isin === XEM)!;
@@ -186,12 +220,13 @@ describe('proposeSavings benchmark-Modus mit RIns Bestand (alle 4 Modelle)', () 
 
   it('Gold bleibt im Sparplan-Vorschlag unveraendert (25 €/Monat, Delta 0)', () => {
     for (const model of benchmarkModels()) {
-      for (const mode of ['benchmark', 'converge'] as const) {
+      for (const mode of ['benchmark', 'converge', 'bestDepot'] as const) {
         const res = proposeSavings(RIN_SAVINGS, RIN_PORTFOLIO, model, mode);
         const gold = res.allocations.find(a => a.isin === GOLD)!;
         expect(gold.suggestedMonthlyEur, `${model}/${mode}`).toBeCloseTo(25, 6);
         expect(gold.deltaEur, `${model}/${mode}`).toBeCloseTo(0, 6);
         expect(gold.suggestedWeight, `${model}/${mode}`).toBeCloseTo(25 / M, 8);
+        expect(gold.reserve, `${model}/${mode}`).toBe(true);
       }
     }
   });
@@ -291,12 +326,122 @@ describe('proposeSavings: Grenzfälle', () => {
   });
 });
 
-describe('suggestAdditionsSavings mit RIns Sparplan (alle 4 Modelle)', () => {
-  const candidates = () =>
-    withData(
-      CANDIDATE_ETFS.map(c => ({ isin: c.isin, name: c.name, role: c.role, ter: c.ter })),
-      new Map(CANDIDATE_ETFS.map(c => [c.isin, loadEtf(c.isin)])),
+/** p(1) der AKTUELLEN Aufteilung (Ist-Flow), unabhängig nachgerechnet. */
+function currentP1(
+  savings: SavingsEtf[],
+  portfolio: PortfolioEtf[],
+  model: BenchmarkModel,
+): Map<string, number> {
+  const bm = getBenchmark(model);
+  const equity = savings.filter(s => isEquityEtf(s.data));
+  const M = equity.reduce((a, s) => a + s.monthlyEur, 0);
+  const equityPortfolio = portfolio.filter(e => isEquityEtf(e.data));
+  const V = equityPortfolio.reduce((a, e) => a + e.amountEur, 0);
+  const universe = new Set<string>(bm.countryMap.keys());
+  for (const s of equity) for (const code of countryWeights(s.data).keys()) universe.add(code);
+  for (const e of equityPortfolio) for (const code of countryWeights(e.data).keys()) universe.add(code);
+
+  const w0 = new Map<string, number>();
+  for (const e of equityPortfolio) {
+    const w = e.amountEur / V;
+    for (const [code, cw] of countryWeights(e.data)) w0.set(code, (w0.get(code) ?? 0) + w * cw);
+  }
+  const flow = new Map<string, number>();
+  for (const s of equity) {
+    const w = s.monthlyEur / M;
+    for (const [code, cw] of countryWeights(s.data)) flow.set(code, (flow.get(code) ?? 0) + w * cw);
+  }
+  const out = new Map<string, number>();
+  for (const code of universe) {
+    out.set(
+      code,
+      V > 0
+        ? (V * (w0.get(code) ?? 0) + M * (flow.get(code) ?? 0)) / (V + M)
+        : (flow.get(code) ?? 0),
     );
+  }
+  return out;
+}
+
+describe('L1/L2-Mismatch (Bug 6, 2026-08-17)', () => {
+  it('analyzeSavings: "Optimaler Sparplan" liegt nie UNTER "Sparplan heute" (Anzeige-Metrik L1)', () => {
+    for (const model of benchmarkModels()) {
+      const res = analyzeSavings(RIN_SAVINGS, model);
+      expect(res.coverageScore, model).toBeGreaterThanOrEqual(
+        res.currentCoverageScore - 1e-12,
+      );
+      expect(res.coverageScore, model).toBeCloseTo(1 - res.activeShare, 10);
+    }
+  });
+
+  it('Grid-Scan-Befund Europe 600=20 + IWDA=200: L2-Optimum war in L1 schlechter als Ist — Fix zeigt Ist', () => {
+    // Befund aus dem 3124er Grid-Scan: in mindestens einem Modell ist die
+    // L2-optimale Lösung in der L1-Anzeige-Metrik minimal schlechter als
+    // die Ist-Aufteilung (cur 87,67 % vs. opt 87,51 %). Der Fix hebt die
+    // angezeigte Metrik auf die bessere der beiden Lösungen.
+    const savings: SavingsEtf[] = [
+      { isin: STOXX, monthlyEur: 20, data: loadEtf(STOXX) },
+      { isin: WORLD, monthlyEur: 200, data: loadEtf(WORLD) },
+    ];
+    const asStock = savings.map(s => ({ isin: s.isin, amountEur: s.monthlyEur, data: s.data }));
+    let mismatchFound = false;
+    for (const model of benchmarkModels()) {
+      const raw = optimize(asStock, model); // L2-optimale Lösung, roh
+      const res = analyzeSavings(savings, model);
+      if (raw.coverageScore < raw.currentCoverageScore) mismatchFound = true;
+      // Mit Fix: angezeigte Metrik >= Ist-Metrik (nie "kaputt" aussehen).
+      expect(res.coverageScore, model).toBeGreaterThanOrEqual(
+        res.currentCoverageScore - 1e-12,
+      );
+    }
+    // Regressions-Nachweis: der dokumentierte Mismatch-Fall existiert
+    // weiterhin in den Fixtures (sonst ist dieser Test wirkungslos).
+    expect(mismatchFound).toBe(true);
+  });
+
+  it('proposeSavings: p(1)-Score liegt nie unter dem Ist-Flow-p(1)-Score (Anzeige-Metrik L1)', () => {
+    for (const model of benchmarkModels()) {
+      for (const mode of ['benchmark', 'converge'] as const) {
+        const res = proposeSavings(RIN_SAVINGS, RIN_PORTFOLIO, model, mode);
+        const curAs = handActiveShare(currentP1(RIN_SAVINGS, RIN_PORTFOLIO, model), model);
+        expect(res.coverageScore, `${model}/${mode}`).toBeGreaterThanOrEqual(
+          1 - curAs - 1e-9,
+        );
+      }
+    }
+  });
+
+  it('proposeSavings ohne Bestand: p(1)-Score = bessere der beiden Flow-Lösungen', () => {
+    // V=0 → p(1) = Flow. Auch hier gilt: angezeigte Metrik >= Ist-Flow-Metrik.
+    const savings: SavingsEtf[] = [
+      { isin: STOXX, monthlyEur: 20, data: loadEtf(STOXX) },
+      { isin: WORLD, monthlyEur: 200, data: loadEtf(WORLD) },
+    ];
+    for (const model of benchmarkModels()) {
+      const res = proposeSavings(savings, [], model, 'benchmark');
+      const curAs = handActiveShare(currentP1(savings, [], model), model);
+      expect(res.coverageScore, model).toBeGreaterThanOrEqual(1 - curAs - 1e-9);
+    }
+  });
+});
+
+describe('suggestAdditionsSavings mit RIns Sparplan (alle 4 Modelle)', () => {
+  const catalogSlice = (isins: Set<string>) => {
+    const slice = CANDIDATE_ETFS.filter(c => isins.has(c.isin));
+    return withData(
+      slice.map(c => ({ isin: c.isin, name: c.name, role: c.role, ter: c.ter })),
+      new Map(slice.map(c => [c.isin, loadEtf(c.isin)])),
+    );
+  };
+  const candidates = () => catalogSlice(new Set(CANDIDATE_ETFS.map(c => c.isin)));
+  const CLASSIC_ISINS = new Set([
+    'IE00BKM4GZ66',
+    'IE00BF4RFH31',
+    'IE00BK5BQT80',
+    'IE00B3YLTY66',
+    'IE0003XJA0J9',
+  ]);
+  const classicCandidates = () => catalogSlice(CLASSIC_ISINS);
 
   it('KRITISCH: schlägt KEINEN ETF vor, der schon bespart wird (EM IMI + Amundi Prime im Katalog)', () => {
     const held = new Set(RIN_SAVINGS.map(s => s.isin));
@@ -326,20 +471,181 @@ describe('suggestAdditionsSavings mit RIns Sparplan (alle 4 Modelle)', () => {
   });
 
   it('OHNE Bestand, benchmark-Modus: erste Stufe ist SPDR ACWI IMI (marketcap)', () => {
-    const res = suggestAdditionsSavings(RIN_SAVINGS, [], candidates(), 'marketcap', 'benchmark');
+    const res = suggestAdditionsSavings(RIN_SAVINGS, [], classicCandidates(), 'marketcap', 'benchmark');
     expect(res.steps.length).toBeGreaterThan(0);
     expect(res.steps[0].isin).toBe('IE00B3YLTY66');
   });
 
   it('MIT Bestand, converge-Modus: Treppe bleibt bei RIns Zahlen leer (Monatsrate zu klein)', () => {
-    // 255 €/Monat auf 9 030 € Bestand bewegen p(1) nur max. ~2.7 % → kein
-    // Kandidat erreicht +0.5 pp. Dokumentiert als erwartetes Verhalten.
+    // Mit den ursprünglichen 5: 255 €/Monat auf 9 030 € Bestand bewegen p(1)
+    // nur max. ~2.7 % → kein Kandidat erreicht +0.5 pp.
+    // Der erweiterte Katalog kann die Lücke füllen (z.B. China A bei GDP).
     for (const model of benchmarkModels()) {
-      const res = suggestAdditionsSavings(RIN_SAVINGS, RIN_PORTFOLIO, candidates(), model, 'converge');
+      const res = suggestAdditionsSavings(RIN_SAVINGS, RIN_PORTFOLIO, classicCandidates(), model, 'converge');
       expect(res.steps, model).toEqual([]);
       // Basis-Score valide (Aktien-Teil, variiert je Modell)
       expect(res.baseScore, model).toBeGreaterThan(0.4);
       expect(res.baseScore, model).toBeLessThan(0.96);
     }
   });
+});
+
+describe('projectDepotAfterMonths (p(k) = (V·w0 + k·M·s) / (V + k·M))', () => {
+  it('horizonToMonths: Jahre × 12, negativ → 0, Cap 50 Jahre', () => {
+    expect(horizonToMonths(1, 'months')).toBe(1);
+    expect(horizonToMonths(2, 'years')).toBe(24);
+    expect(horizonToMonths(-3, 'months')).toBe(0);
+    expect(horizonToMonths(100, 'years')).toBe(600);
+  });
+
+  it('k = 1 trifft die Handformel für p(1), US wie bisher ~59,6 %', () => {
+    const res = proposeSavings(RIN_SAVINGS, RIN_PORTFOLIO, 'marketcap', 'benchmark');
+    const proj = projectDepotAfterMonths(res, 1);
+    const flow = new Map<string, number>();
+    res.allocations.forEach(a => {
+      if (a.suggestedMonthlyEur <= 0 || !isEquityEtf(loadEtf(a.isin))) return;
+      const w = a.suggestedMonthlyEur / M_EQ;
+      for (const [code, cw] of countryWeights(loadEtf(a.isin)))
+        flow.set(code, (flow.get(code) ?? 0) + w * cw);
+    });
+    const w0 = bestandCountries();
+    const p1 = new Map<string, number>();
+    const keys = new Set([...w0.keys(), ...flow.keys()]);
+    for (const code of keys) {
+      p1.set(code, (V_EQ * (w0.get(code) ?? 0) + M_EQ * (flow.get(code) ?? 0)) / (V_EQ + M_EQ));
+    }
+    const us = proj.countryDrift.find(c => c.code === 'US')!;
+    expect(us.portfolio).toBeCloseTo(p1.get('US')!, 5);
+    expect(proj.coverageScore).toBeCloseTo(1 - handActiveShare(p1, 'marketcap'), 5);
+  });
+
+  it('2 Jahre = 24 Monate', () => {
+    const res = proposeSavings(RIN_SAVINGS, RIN_PORTFOLIO, 'blend', 'benchmark');
+    const years = projectDepotAfterMonths(res, horizonToMonths(2, 'years'));
+    const months = projectDepotAfterMonths(res, 24);
+    expect(years.coverageScore).toBeCloseTo(months.coverageScore, 12);
+    expect(years.months).toBe(24);
+  });
+
+  it('k = 0 ist das Depot heute, k groß nähert sich den Käufen', () => {
+    const res = proposeSavings(RIN_SAVINGS, RIN_PORTFOLIO, 'blend', 'benchmark');
+    const now = projectDepotAfterMonths(res, 0);
+    const far = projectDepotAfterMonths(res, 600);
+    const w0 = bestandCountries();
+    expect(now.coverageScore).toBeCloseTo(1 - handActiveShare(w0, 'blend'), 5);
+    expect(far.coverageScore).toBeCloseTo(res.flowCoverageScore, 2);
+    expect(Math.abs(far.coverageScore - res.flowCoverageScore)).toBeLessThan(
+      Math.abs(projectDepotAfterMonths(res, 1).coverageScore - res.flowCoverageScore),
+    );
+  });
+});
+
+describe('proposeSavings bestDepot (Bestmögliches Depot)', () => {
+  it('Modus bleibt bestDepot, in allen Benchmarks, Gold unverändert, Summe ≈ 255 €', () => {
+    for (const model of benchmarkModels()) {
+      const res = proposeSavings(RIN_SAVINGS, RIN_PORTFOLIO, model, 'bestDepot');
+      expect(res.mode, model).toBe('bestDepot');
+      const euro = res.allocations.reduce((a, x) => a + x.suggestedMonthlyEur, 0);
+      const w = res.allocations.reduce((a, x) => a + x.suggestedWeight, 0);
+      expect(euro, model).toBeCloseTo(M, 0);
+      expect(w, model).toBeCloseTo(1, 8);
+      const gold = res.allocations.find(a => a.isin === GOLD)!;
+      expect(gold.suggestedMonthlyEur, model).toBeCloseTo(25, 6);
+      expect(gold.deltaEur, model).toBeCloseTo(0, 6);
+    }
+  });
+
+  it('OHNE Bestand fällt bestDepot auf Weltmarkt spiegeln zurück', () => {
+    const best = proposeSavings(RIN_SAVINGS, [], 'pillars', 'bestDepot');
+    const bench = proposeSavings(RIN_SAVINGS, [], 'pillars', 'benchmark');
+    expect(best.mode).toBe('benchmark');
+    expect(best.allocations.map(a => a.suggestedMonthlyEur)).toEqual(
+      bench.allocations.map(a => a.suggestedMonthlyEur),
+    );
+  });
+
+  it('setzt mindestens einen Bestands-Aktien-ETF auf 0 € (alle Benchmarks)', () => {
+    const equityHeld = [WORLD, PRIME, XEM, STOXX, EMIMI];
+    for (const model of benchmarkModels()) {
+      const res = proposeSavings(RIN_SAVINGS, RIN_PORTFOLIO, model, 'bestDepot');
+      const paid = res.allocations.filter(
+        a => isEquityEtf(loadEtf(a.isin)) && a.suggestedMonthlyEur > 1,
+      );
+      expect(paid.length, model).toBeGreaterThan(0);
+      expect(paid.length, model).toBeLessThanOrEqual(6);
+      const zeroed = equityHeld.filter(isin => {
+        const row = res.allocations.find(a => a.isin === isin);
+        return !row || row.suggestedMonthlyEur <= 1;
+      });
+      expect(zeroed.length, model).toBeGreaterThan(0);
+    }
+  });
+
+  it('mit Katalog: Säulen-Käufe über 95 %, GDP-Weighted im Mix', () => {
+    const cands = withData(
+      CANDIDATE_ETFS.map(c => ({ isin: c.isin, name: c.name, role: c.role, ter: c.ter })),
+      new Map(CANDIDATE_ETFS.map(c => [c.isin, loadEtf(c.isin)])),
+    );
+    const extra = cands
+      .filter(c => !RIN_SAVINGS.some(s => s.isin === c.isin))
+      .map(c => ({ isin: c.isin, monthlyEur: 0, data: c.data }));
+    const all = [...RIN_SAVINGS, ...extra];
+    const holdingsOnly = proposeSavings(RIN_SAVINGS, RIN_PORTFOLIO, 'pillars', 'benchmark');
+    const best = proposeSavings(all, RIN_PORTFOLIO, 'pillars', 'bestDepot');
+    expect(best.mode).toBe('bestDepot');
+    expect(best.flowCoverageScore).toBeGreaterThan(0.95);
+    expect(best.flowCoverageScore).toBeGreaterThan(holdingsOnly.flowCoverageScore + 0.03);
+    const gdp = best.allocations.find(a => a.isin === 'IE000KCKFHE8');
+    expect(gdp).toBeDefined();
+    expect(gdp!.suggestedMonthlyEur).toBeGreaterThan(1);
+    const paidNew = best.allocations.filter(
+      a => extra.some(e => e.isin === a.isin) && a.suggestedMonthlyEur > 1,
+    );
+    expect(paidNew.length).toBeGreaterThan(0);
+  }, 30_000);
+});
+
+describe('proposeSavings keepIsins (geringste Menge)', () => {
+  it('verteilt die Rate nur auf die wenigen ISINs, Rest 0 €', () => {
+    const keep = new Set([PRIME, EMIMI]);
+    const res = proposeSavings(RIN_SAVINGS, RIN_PORTFOLIO, 'blend', 'benchmark', {
+      keepIsins: keep,
+    });
+    const paid = res.allocations.filter(
+      a => isEquityEtf(loadEtf(a.isin)) && a.suggestedMonthlyEur > 0.5,
+    );
+    expect(paid.map(a => a.isin).sort()).toEqual([EMIMI, PRIME].sort());
+    const world = res.allocations.find(a => a.isin === WORLD)!;
+    expect(world.suggestedMonthlyEur).toBe(0);
+    const gold = res.allocations.find(a => a.isin === GOLD)!;
+    expect(gold.suggestedMonthlyEur).toBeCloseTo(25, 6);
+  });
+});
+
+describe('suggestAdditionsSavings bestDepot', () => {
+  const candidates = () =>
+    withData(
+      CANDIDATE_ETFS.map(c => ({ isin: c.isin, name: c.name, role: c.role, ter: c.ter })),
+      new Map(CANDIDATE_ETFS.map(c => [c.isin, loadEtf(c.isin)])),
+    );
+
+  it('Treppe baut den Baukasten von vorn, nicht als Add-on auf alle Bestands-ETFs', () => {
+    const cands = candidates();
+    const depotAddOn = suggestAdditions(RIN_PORTFOLIO, cands, 'pillars').steps.map(s => s.isin);
+    const savingsSteps = suggestAdditionsSavings(
+      RIN_SAVINGS,
+      RIN_PORTFOLIO,
+      cands,
+      'pillars',
+      'bestDepot',
+    ).steps.map(s => s.isin);
+    expect(savingsSteps.length).toBeGreaterThan(0);
+    expect(savingsSteps.length).toBeLessThanOrEqual(6);
+    expect(savingsSteps).not.toEqual(depotAddOn);
+    expect(savingsSteps).toContain('IE000KCKFHE8');
+    expect(
+      suggestAdditionsSavings(RIN_SAVINGS, RIN_PORTFOLIO, cands, 'pillars', 'bestDepot')
+        .baseScore,
+    ).toBe(0);
+  }, 30_000);
 });

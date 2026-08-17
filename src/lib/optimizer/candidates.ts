@@ -2,7 +2,7 @@ import type { BenchmarkModel } from '@/lib/benchmark';
 import type { EtfData } from '@/lib/etf/types';
 import { isEquityEtf, optimize } from './optimize';
 import type { PortfolioEtf } from './optimize';
-import { proposeSavings } from './savings';
+import { pickBestDepotEtfs, proposeSavings } from './savings';
 import type { SavingsEtf, SavingsProposalMode } from './savings';
 
 /**
@@ -16,9 +16,10 @@ import type { SavingsEtf, SavingsProposalMode } from './savings';
  *   quasi-gleichem Score (Δ < 0,1 pp) mit TER-Vorteil ≥ 0,05 pp.
  *
  * Score = Deckungs-Score der OPTIMALEN Allokation (Bestand: optimize(),
- * Sparplan: proposeSavings(), dort p(1)). Kandidaten gehen mit 0 € /
- * 0 €/Monat ein — der Optimierer entscheidet selbst, wie viel er in sie
- * umschichtet.
+ * Sparplan: proposeSavings() p(1); Modus bestDepot: Baukasten von leer,
+ * pickBestDepotEtfs() bis Δ < 0,5 pp, höchstens 6 Aktien-ETFs). Kandidaten
+ * gehen mit 0 € / 0 €/Monat ein — der Optimierer entscheidet selbst, wie
+ * viel er in sie umschichtet.
  */
 
 export interface CandidateWithData {
@@ -133,6 +134,26 @@ export function suggestAdditionsSavings(
   model: BenchmarkModel,
   mode: SavingsProposalMode,
 ): AdditionsResult {
+  const holdings = portfolio.filter(e => e.amountEur > 0);
+  if (mode === 'bestDepot' && holdings.some(e => isEquityEtf(e.data))) {
+    const pool: { isin: string; name: string; ter: number | null; data: EtfData }[] = [];
+    for (const s of savings) {
+      if (!isEquityEtf(s.data)) continue;
+      pool.push({
+        isin: s.isin,
+        name: s.data.profile.name,
+        ter: s.data.profile.ter,
+        data: s.data,
+      });
+    }
+    for (const c of candidates) {
+      if (!isEquityEtf(c.data)) continue;
+      if (pool.some(p => p.isin === c.isin)) continue;
+      pool.push({ isin: c.isin, name: c.name, ter: c.ter, data: c.data });
+    }
+    return suggestFewestEtfs(pool, model);
+  }
+
   const baseScore = proposeSavings(savings, portfolio, model, mode).coverageScore;
   const byIsin = new Map(candidates.map(c => [c.isin, c]));
   const steps = greedySteps(
@@ -150,6 +171,28 @@ export function suggestAdditionsSavings(
     },
   );
   return { baseScore, steps };
+}
+
+/** Baukasten von leer: bestes Ergebnis mit möglichst wenigen ETFs. */
+export function suggestFewestEtfs(
+  pool: { isin: string; name?: string; ter?: number | null; data: EtfData }[],
+  model: BenchmarkModel,
+): AdditionsResult {
+  const picks = pickBestDepotEtfs(pool, model);
+  const byIsin = new Map(pool.map(p => [p.isin, p]));
+  return {
+    baseScore: 0,
+    steps: picks.map(p => {
+      const meta = byIsin.get(p.isin);
+      return {
+        isin: p.isin,
+        name: meta?.name ?? meta?.data.profile.name ?? p.isin,
+        ter: meta?.ter ?? meta?.data.profile.ter ?? null,
+        score: p.score,
+        improvement: p.improvement,
+      };
+    }),
+  };
 }
 
 /* ================= Tausch-Hinweis ================= */

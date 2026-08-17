@@ -1,0 +1,290 @@
+{
+ "description": "Erwerbsbevölkerung 15–64, Gewichte über MSCI-ACWI-IMI-Universum",
+ "source": "Our World in Data, Population by age group, basierend auf UN World Population Prospects 2024 (Medium). 15–64 = Ages 15–24 + Ages 25–64. Kalenderjahr 2023 = letztes Schätzjahr der WPP-2024-Revision (2024+ sind Projektionen).",
+ "year": 2023,
+ "unit": "people",
+ "countryCount": 56,
+ "total": 3573537350.0,
+ "weights": {
+  "AE": {
+   "name": "Vereinigte Arabische Emirate",
+   "people": 8722830.0,
+   "weight": 0.002441
+  },
+  "AT": {
+   "name": "Österreich",
+   "people": 5983478.0,
+   "weight": 0.001674
+  },
+  "AU": {
+   "name": "Australien",
+   "people": 17083647.0,
+   "weight": 0.004781
+  },
+  "BE": {
+   "name": "Belgien",
+   "people": 7445178.0,
+   "weight": 0.002083
+  },
+  "BR": {
+   "name": "Brasilien",
+   "people": 146595893.0,
+   "weight": 0.041023
+  },
+  "CA": {
+   "name": "Kanada",
+   "people": 25676984.0,
+   "weight": 0.007185
+  },
+  "CH": {
+   "name": "Schweiz",
+   "people": 5799364.0,
+   "weight": 0.001623
+  },
+  "CL": {
+   "name": "Chile",
+   "people": 13549330.0,
+   "weight": 0.003792
+  },
+  "CN": {
+   "name": "China",
+   "people": 982925266.0,
+   "weight": 0.275057
+  },
+  "CO": {
+   "name": "Kolumbien",
+   "people": 36638789.0,
+   "weight": 0.010253
+  },
+  "CY": {
+   "name": "Zypern",
+   "people": 936409.0,
+   "weight": 0.000262
+  },
+  "CZ": {
+   "name": "Tschechien",
+   "people": 6894489.0,
+   "weight": 0.001929
+  },
+  "DE": {
+   "name": "Deutschland",
+   "people": 53514286.0,
+   "weight": 0.014975
+  },
+  "DK": {
+   "name": "Dänemark",
+   "people": 3779021.0,
+   "weight": 0.001058
+  },
+  "EG": {
+   "name": "Ägypten",
+   "people": 71693891.0,
+   "weight": 0.020062
+  },
+  "ES": {
+   "name": "Spanien",
+   "people": 31663634.0,
+   "weight": 0.008861
+  },
+  "FI": {
+   "name": "Finnland",
+   "people": 3444009.0,
+   "weight": 0.000964
+  },
+  "FR": {
+   "name": "Frankreich",
+   "people": 40837342.0,
+   "weight": 0.011428
+  },
+  "GB": {
+   "name": "Vereinigtes Königreich (England)",
+   "people": 43512530.0,
+   "weight": 0.012176
+  },
+  "GR": {
+   "name": "Griechenland",
+   "people": 6445881.0,
+   "weight": 0.001804
+  },
+  "GT": {
+   "name": "Guatemala",
+   "people": 11441758.0,
+   "weight": 0.003202
+  },
+  "HK": {
+   "name": "Hong Kong",
+   "people": 5035434.0,
+   "weight": 0.001409
+  },
+  "HU": {
+   "name": "Ungarn",
+   "people": 6266703.0,
+   "weight": 0.001754
+  },
+  "ID": {
+   "name": "Indonesien",
+   "people": 191256543.0,
+   "weight": 0.05352
+  },
+  "IE": {
+   "name": "Irland",
+   "people": 3400740.0,
+   "weight": 0.000952
+  },
+  "IL": {
+   "name": "Israel",
+   "people": 5550982.0,
+   "weight": 0.001553
+  },
+  "IN": {
+   "name": "Indien",
+   "people": 978190679.0,
+   "weight": 0.273732
+  },
+  "IS": {
+   "name": "Island",
+   "people": 258093.0,
+   "weight": 7.2e-05
+  },
+  "IT": {
+   "name": "Italien",
+   "people": 37863536.0,
+   "weight": 0.010596
+  },
+  "JE": {
+   "name": "Jersey",
+   "people": 69279.0,
+   "weight": 1.9e-05
+  },
+  "JP": {
+   "name": "Japan",
+   "people": 73116310.0,
+   "weight": 0.02046
+  },
+  "KR": {
+   "name": "Südkorea",
+   "people": 36583336.0,
+   "weight": 0.010237
+  },
+  "KW": {
+   "name": "Kuwait",
+   "people": 3795751.0,
+   "weight": 0.001062
+  },
+  "LT": {
+   "name": "Litauen",
+   "people": 1862495.0,
+   "weight": 0.000521
+  },
+  "LU": {
+   "name": "Luxemburg",
+   "people": 459413.0,
+   "weight": 0.000129
+  },
+  "MO": {
+   "name": "Macau",
+   "people": 517055.0,
+   "weight": 0.000145
+  },
+  "MX": {
+   "name": "Mexiko",
+   "people": 87049387.0,
+   "weight": 0.024359
+  },
+  "MY": {
+   "name": "Malaysia",
+   "people": 24680030.0,
+   "weight": 0.006906
+  },
+  "NL": {
+   "name": "Niederlande",
+   "people": 11700794.0,
+   "weight": 0.003274
+  },
+  "NO": {
+   "name": "Norwegen",
+   "people": 3585218.0,
+   "weight": 0.001003
+  },
+  "NZ": {
+   "name": "Neuseeland",
+   "people": 3353377.0,
+   "weight": 0.000938
+  },
+  "PE": {
+   "name": "Peru",
+   "people": 22557855.0,
+   "weight": 0.006312
+  },
+  "PH": {
+   "name": "Philippinen",
+   "people": 75977868.0,
+   "weight": 0.021261
+  },
+  "PL": {
+   "name": "Polen",
+   "people": 25328545.0,
+   "weight": 0.007088
+  },
+  "PR": {
+   "name": "Puerto Rico",
+   "people": 2066836.0,
+   "weight": 0.000578
+  },
+  "PT": {
+   "name": "Portugal",
+   "people": 6570828.0,
+   "weight": 0.001839
+  },
+  "QA": {
+   "name": "Katar",
+   "people": 2480602.0,
+   "weight": 0.000694
+  },
+  "RO": {
+   "name": "Rumänien",
+   "people": 12306640.0,
+   "weight": 0.003444
+  },
+  "SA": {
+   "name": "Saudi Arabien",
+   "people": 24310558.0,
+   "weight": 0.006803
+  },
+  "SE": {
+   "name": "Schweden",
+   "people": 6564488.0,
+   "weight": 0.001837
+  },
+  "SG": {
+   "name": "Singapur",
+   "people": 4348600.0,
+   "weight": 0.001217
+  },
+  "TH": {
+   "name": "Thailand",
+   "people": 50329419.0,
+   "weight": 0.014084
+  },
+  "TR": {
+   "name": "Türkei",
+   "people": 59482915.0,
+   "weight": 0.016645
+  },
+  "TW": {
+   "name": "Taiwan",
+   "people": 16258491.0,
+   "weight": 0.00455
+  },
+  "US": {
+   "name": "Vereinigte Staaten (USA)",
+   "people": 223169392.0,
+   "weight": 0.062451
+  },
+  "ZA": {
+   "name": "Südafrika",
+   "people": 42605149.0,
+   "weight": 0.011922
+  }
+ }
+}
