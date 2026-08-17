@@ -89,6 +89,7 @@ export function RebalancingTable({
           <tr key={a.isin}>
             <td>
               {a.name}
+              <div className="isinSub">{a.isin}</div>
               {newIsins?.includes(a.isin) && <small className="chipNew">neuer ETF</small>}
               {a.againstMarket && <small className="chipWarn">gegen den Weltmarkt gerichtet</small>}
               {a.reserve && <small className="chipReserve">Reserve, unverändert</small>}
