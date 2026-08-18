@@ -24,12 +24,8 @@ export type {
 export const MEIN_DEPOT_NAME = 'Mein Depot';
 
 export const MEIN_DEPOT_HOLDINGS: Holding[] = [
-  { isin: 'IE00B4L5Y983', amountEur: 6000, monthlyEur: null },
-  { isin: 'IE00B4ND3602', amountEur: 938, monthlyEur: 25 },
-  { isin: 'IE0003XJA0J9', amountEur: 792, monthlyEur: 150 },
-  { isin: 'IE00BTJRMP35', amountEur: 528, monthlyEur: null },
-  { isin: 'LU0908500753', amountEur: 399, monthlyEur: 40 },
-  { isin: 'IE00BKM4GZ66', amountEur: 373, monthlyEur: 40 },
+  { isin: 'IE00B3RBWM25', amountEur: 8000, monthlyEur: 200 },
+  { isin: 'IE00BF4RFH31', amountEur: 2000, monthlyEur: null },
 ];
 
 const ACTIVE_KEY = 'active_depot_id';

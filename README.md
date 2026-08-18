@@ -6,9 +6,9 @@
   <img src="docs/screenshot.png" alt="Portfolio ↔ Weltmarkt Dashboard" width="700" />
 </p>
 
-Lokales Tool, das ein ETF-Depot und den Sparplan gegen einen Länder-Weltmarkt hält. Eingabe sind Bestände und €/Monat. Ausgabe ist ein Deckungs-Score, die Zielmischung und ein konkreter Umschichtungs- oder Kaufplan.
+Ein lokales Tool, das dein ETF-Depot und deinen Sparplan gegen einen Länder-Weltmarkt hält. Für diesen Weltmarkt gibt es verschiedene Simulationen. Du gibst Bestände und Monatsraten ein, es rechnet dir Deckungs-Score, Zielmischung und einen konkreten Umschichtungs- oder Kaufplan aus.
 
-Kein Robo-Advisor. Keine Kurse, keine Prognose. Nur Look-through der ETF-Länder gegen festgelegte Benchmarks.
+Kein Robo-Advisor, keine Kurse, keine Prognosen. Nur der Look-through deiner ETF-Länder gegen festgelegte Benchmarks.
 
 ## Features
 

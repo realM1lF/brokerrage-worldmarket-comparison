@@ -10,7 +10,7 @@ import type { DepotSession } from '@/lib/db/types';
 import { useDepotState } from './useDepotState';
 import type { PortfolioEtf } from '@/lib/optimizer/optimize';
 
-const WORLD = 'IE00B4L5Y983';
+const WORLD = 'IE00B3RBWM25';
 
 const loadFixture = (isin: string): EtfData =>
   JSON.parse(
@@ -32,7 +32,7 @@ const session: DepotSession = {
     },
   ],
   activeId: 1,
-  holdings: [{ isin: WORLD, amountEur: 6000, monthlyEur: null }],
+  holdings: [{ isin: WORLD, amountEur: 8000, monthlyEur: 200 }],
 };
 
 const fakeRes = (ok: boolean, payload: unknown, status = ok ? 200 : 500) => ({
@@ -101,8 +101,8 @@ describe('useDepotState', () => {
     expect(h.current.ready).toBe(true);
     expect(h.current.portfolio).toHaveLength(1);
     expect(h.current.portfolio[0].isin).toBe(WORLD);
-    expect(h.current.portfolio[0].amountEur).toBe(6000);
-    expect(h.current.portfolio[0].data.profile.name).toContain('MSCI World');
+    expect(h.current.portfolio[0].amountEur).toBe(8000);
+    expect(h.current.portfolio[0].data.profile.name).toContain('FTSE All-World');
     expect(puts).toHaveLength(0);
     h.root.unmount();
   });
@@ -132,9 +132,9 @@ describe('useDepotState', () => {
     const next: PortfolioEtf[] = [
       ...h.current.portfolio,
       {
-        isin: 'IE00B4ND3602',
-        amountEur: 938,
-        monthlyEur: 25,
+        isin: 'IE00BF4RFH31',
+        amountEur: 500,
+        monthlyEur: 50,
         data: worldData,
       },
     ];
@@ -146,8 +146,8 @@ describe('useDepotState', () => {
     expect(puts).toHaveLength(1);
     const body = JSON.parse(puts[0]) as { holdings: { isin: string; amountEur: number; monthlyEur: number | null }[] };
     expect(body.holdings).toEqual([
-      { isin: WORLD, amountEur: 6000, monthlyEur: null },
-      { isin: 'IE00B4ND3602', amountEur: 938, monthlyEur: 25 },
+      { isin: WORLD, amountEur: 8000, monthlyEur: 200 },
+      { isin: 'IE00BF4RFH31', amountEur: 500, monthlyEur: 50 },
     ]);
     h.root.unmount();
   });

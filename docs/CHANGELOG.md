@@ -124,8 +124,7 @@ still verschluckt, neue ETFs waren nach Reload oft weg.
 - SQLite-Datei `data/finance.db` (`node:sqlite`), API `/api/depots`.
 - Mehrere Depots: anlegen, wechseln, löschen (letztes bleibt).
 - Holdings nur ISIN + € + Sparrate. Exposure kommt weiter von `/api/etf`.
-- Seed: Depot „Mein Depot“ mit den sechs RIn-Positionen (World, Gold,
-  Prime AC, Xtrackers EM, Stoxx 600, EM IMI).
+- Seed: Depot „Mein Depot“ mit Demo-Positionen.
 
 ### Verifikation
 
@@ -230,8 +229,8 @@ RIn-Freigabe: Farben #4d6bdd, #FF9B40, #13CC89, #FF6B4A, #7F56D9.
 
 ## 2026-08-17 — Test-Session (3 Subagenten) + 4 Bugfixes + Gold raus aus der Optimierung
 
-Drei parallele Test-Subagenten (Daten / Rechenkern / UI) mit RIns echtem
-Portfolio (6 ETFs, 9 030 €, 255 €/Monat). Tests 44 → **127** (+30 Live-Tests
+Drei parallele Test-Subagenten (Daten / Rechenkern / UI) mit einem Test-Portfolio.
+Tests 44 → **127** (+30 Live-Tests
 mit `RUN_LIVE`-Gate). Alle Befunde vom Orchestrator gegengeprüft.
 
 ### Bugfixes
@@ -239,7 +238,7 @@ mit `RUN_LIVE`-Gate). Alle Befunde vom Orchestrator gegengeprüft.
 - **projectSimplex (schwer):** `optimize.ts:145` — theta nutzte die Gesamtsumme
   statt der Teilsumme der rho größten Elemente (Duchi). Folgen: Σw=1.0023,
   +21 € Schieflage in der Umschichtungs-Tabelle, Sparplan „Lücken füllen"
-  (GDP/PPP/Blend) Kauf-Liste nur 142 € statt 255 €. Gegenbeispiel im Test
+  (GDP/PPP/Blend) Kauf-Liste nur 142 € statt des vollen Betrags. Gegenbeispiel im Test
   verankert (`[1, 0.5, -0.5] → [0.75, 0.25, 0]`).
 - **ongoingCharges (TER) immer null:** extraETF liefert `ongoing_charges` als
   String (`'0.20'`), `num()` (extraetf.ts) akzeptierte nur numbers. Jetzt
@@ -533,8 +532,8 @@ Erste Umsetzungssession. Schritte 1-5 des Go-Befehls abgeschlossen.
 
 ## 2026-08-17 (Abend-Fixes): 7 verifizierte Bugs behoben
 
-Review-Session vom Abend: 7 Bugs aus dem Alltags-Test mit RIns Portfolio
-(6 ETFs, 9 030 €, 255 €/Monat). Alle Fixes mit kleinstem korrektem Diff,
+Review-Session vom Abend: 7 Bugs aus dem Alltags-Test mit einem Test-Portfolio.
+Alle Fixes mit kleinstem korrektem Diff,
 bestehende 128 Tests bleiben grün, 18 neue Tests (Hooks, L1/L2-Mismatch).
 
 ### Bug 1: Universe-Toggle Stale-State (Schwer)

@@ -36,11 +36,11 @@ describe('GET/POST /api/depots', () => {
     expect(json.depots).toHaveLength(1);
     expect(json.depots[0].name).toBe('Mein Depot');
     expect(json.activeId).toBe(json.depots[0].id);
-    expect(json.holdings).toHaveLength(6);
+    expect(json.holdings).toHaveLength(2);
     expect(json.holdings[0]).toEqual({
-      isin: 'IE00B4L5Y983',
-      amountEur: 6000,
-      monthlyEur: null,
+      isin: 'IE00B3RBWM25',
+      amountEur: 8000,
+      monthlyEur: 200,
     });
   });
 

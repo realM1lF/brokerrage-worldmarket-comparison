@@ -33,8 +33,8 @@ Konkrete Kollisionen (2026-08-17, Blend, Sparplan, Testdepot):
 
 | Was man sieht | Was man denkt | Was es wirklich ist |
 |---|---|---|
-| Ist-Analyse USA **−4,6 %** | Depot untergewichtet USA | nur die **255 € Käufe** vs. Blend |
-| Länder-Drift nach 1 Monat USA **+13,5 %** | nach +21 € Sparplan-Tweak | **Depot** (6.000 € World) plus ein Tropfen 255 € |
+| Ist-Analyse USA **−4,6 %** | Depot untergewichtet USA | nur die **Käufe** vs. Blend |
+| Länder-Drift nach 1 Monat USA **+13,5 %** | nach +21 € Sparplan-Tweak | **Depot** plus ein Tropfen Käufe |
 | Nordamerika Weltmarkt **65,9 %** | Blend-Weltmarkt | Marktkap-Region (USA+Kanada), `acwi-imi-marktkap.json` 65,85 % |
 | Hover USA Weltmarkt **~45,7 %** | Widerspruch zu 65,9 % | Blend-Land, korrekt. Region und Land nutzen **verschiedene Modelle** |
 
@@ -60,7 +60,7 @@ Verboten in der UI:
 
 - Dieselbe Balkenoptik für Depot-Anteile und €/Monat-Anteile ohne Kapitelwand.
 - „Nach 1 Monat“ als Überschrift über einer Länderkarte, die wie die
-  Ist-Karte aussieht. Ein Monat 255 € auf ~9.000 € Depot ändert Länder um
+  Ist-Karte aussieht. Ein Monat Käufe auf ein großes Depot ändert Länder um
   wenige Zehntelpunkte, nicht um 18 Prozentpunkte vs. der Flow-Karte.
 - Weltmarkt-Prozent aus Modell A neben Weltmarkt-Prozent aus Modell B
   (Marktkap-Region neben Blend-Land).
