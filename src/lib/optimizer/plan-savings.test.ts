@@ -106,6 +106,20 @@ describe('planSavingsProposal Kombinationen', () => {
     expect(gdpEur('new', 'bestDepot', null)).toBeGreaterThan(1);
   }, 30_000);
 
+  it('alter Render-Deckel + neuer Katalog: GDP bleibt drin (so darf die UI nicht rechnen)', () => {
+    const filtered = catalog.filter(c => (c.data.profile.ter ?? 1) <= TER_CAP + 1e-9);
+    const stale = planSavingsProposal({
+      universe: 'few',
+      mode: 'bestDepot',
+      model: 'blend',
+      maxTer: null,
+      savings,
+      portfolio,
+      catalog: filtered,
+    });
+    expect(stale.proposal.allocations.find(a => a.isin === GDP)!.suggestedMonthlyEur).toBeGreaterThan(1);
+  }, 30_000);
+
   it('benchmark + Deckel: new darf mehr ETFs als few, beide ohne GDP', () => {
     const fewPaid = paidEquity('few', 'benchmark', TER_CAP);
     const newPaid = paidEquity('new', 'benchmark', TER_CAP);

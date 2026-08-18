@@ -207,6 +207,7 @@ export default function Home() {
     createDepot,
     switchDepot,
     deleteActiveDepot,
+    renameActiveDepot,
   } = useDepotState();
   const [busy, setBusy] = useState(false);
   const loading = busy || depotLoading;
@@ -258,6 +259,7 @@ export default function Home() {
       cands: CandidateWithData[] | null = catalog,
       uni: Universe = universe,
       etfs: PortfolioEtf[] = bestandEtfs,
+      cap: number | null = maxTer,
     ) => {
       if (etfs.length === 0) {
         setResult(null);
@@ -271,7 +273,7 @@ export default function Home() {
           const pool = proposalPool(
             etfs.filter(e => e.amountEur > 0),
             cands!,
-            maxTer,
+            cap,
           );
           const additionsRes = suggestFewestEtfs(pool, m);
           setAdditions(additionsRes);
@@ -329,6 +331,7 @@ export default function Home() {
       portf: PortfolioEtf[] = portfolio,
       cands: CandidateWithData[] | null = catalog,
       uni: Universe = universe,
+      cap: number | null = maxTer,
     ) => {
       const flow = portf.filter(e => (e.monthlyEur ?? 0) > 0);
       if (flow.length === 0) {
@@ -370,7 +373,7 @@ export default function Home() {
           universe: uni,
           mode,
           model: m,
-          maxTer,
+          maxTer: cap,
           savings: universeEtfs,
           portfolio: bestand,
           catalog: cands,
@@ -436,15 +439,21 @@ export default function Home() {
   /* ---- ETF-Universum: nur eigene ETFs oder + Kandidaten (Stufe B) ---- */
 
   const universeRef = useRef(universe);
+  const maxTerRef = useRef(maxTer);
   useEffect(() => {
     universeRef.current = universe;
+    maxTerRef.current = maxTer;
   });
 
-  const applyUniverse = (u: Universe, cands: CandidateWithData[] | null) => {
+  const applyUniverse = (
+    u: Universe,
+    cands: CandidateWithData[] | null,
+    cap: number | null,
+  ) => {
     if (view === 'sparplan') {
-      if (hasFlow) computeSavings(model, savingsMode, portfolio, cands, u);
+      if (hasFlow) computeSavings(model, savingsMode, portfolio, cands, u, cap);
     } else if (hasBestand) {
-      analyzeBestand(model, cands, u);
+      analyzeBestand(model, cands, u, bestandEtfs, cap);
     }
   };
 
@@ -456,11 +465,11 @@ export default function Home() {
     setUniverse(u);
     if (!changed) return;
     if (u === 'mine') {
-      applyUniverse('mine', catalogOf(candidates, maxTer));
+      applyUniverse('mine', catalogOf(candidates, maxTer), maxTer);
       return;
     }
     if (candidates !== null) {
-      applyUniverse(u, catalogOf(candidates, maxTer));
+      applyUniverse(u, catalogOf(candidates, maxTer), maxTer);
       return;
     }
     void (async () => {
@@ -473,7 +482,8 @@ export default function Home() {
       // Nur anwenden, wenn der Toggle noch auf einem Katalog-Modus steht
       // (sonst hat der User zwischenzeitlich zurückgeschaltet).
       if (usesCatalog(universeRef.current)) {
-        applyUniverse(universeRef.current, catalogOf(loaded, maxTer));
+        const cap = maxTerRef.current;
+        applyUniverse(universeRef.current, catalogOf(loaded, cap), cap);
       }
     })();
   };
@@ -483,9 +493,27 @@ export default function Home() {
     setMaxTer(t);
     if (!changed) return;
     if (usesCatalog(universe) && candidates) {
-      applyUniverse(universe, catalogOf(candidates, t));
+      applyUniverse(universe, catalogOf(candidates, t), t);
     }
   };
+
+  // Nachgeladenes Katalog oder persistierter Deckel: nicht mit dem
+  // Ergebnis vom vorherigen Render stehen bleiben.
+  useEffect(() => {
+    if (view !== 'sparplan' || !hasFlow) return;
+    if (usesCatalog(universe) && !candidates) return;
+    computeSavings(
+      model,
+      savingsMode,
+      portfolio,
+      catalogOf(candidates, maxTer),
+      universe,
+      maxTer,
+    );
+    // Nur Schalter, die die Rechnung ändern. catalogOf liefert jedes Render
+    // ein neues Array, darf nicht in den Deps stehen.
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- siehe Kommentar
+  }, [view, hasFlow, universe, maxTer, candidates, model, savingsMode, portfolio]);
 
   /* ---- ETF hinzufügen/entfernen ---- */
 
@@ -527,9 +555,9 @@ export default function Home() {
         // Auto-Re-Analyse (Bug 2): nach erfolgreichem Add ohne Klick auf
         // "Analysieren" neu rechnen, damit kein Stale-Stand stehen bleibt.
         if (view === 'sparplan') {
-          computeSavings(model, savingsMode, next, catalogOf(candidates, maxTer), universe);
+          computeSavings(model, savingsMode, next, catalogOf(candidates, maxTer), universe, maxTer);
         } else if (next.some(e => e.amountEur > 0)) {
-          analyzeBestand(model, catalogOf(candidates, maxTer), universe, next.filter(e => e.amountEur > 0));
+          analyzeBestand(model, catalogOf(candidates, maxTer), universe, next.filter(e => e.amountEur > 0), maxTer);
         }
       } catch (err) {
         setError(err instanceof Error ? err.message : String(err));
@@ -548,9 +576,9 @@ export default function Home() {
       // Auto-Re-Analyse (Bug 2): nach Remove ohne Klick auf "Analysieren"
       // neu rechnen. Leere Listen nullen die Ergebnis-States intern.
       if (view === 'sparplan') {
-        computeSavings(model, savingsMode, next, catalogOf(candidates, maxTer), universe);
+        computeSavings(model, savingsMode, next, catalogOf(candidates, maxTer), universe, maxTer);
       } else {
-        analyzeBestand(model, catalogOf(candidates, maxTer), universe, next.filter(e => e.amountEur > 0));
+        analyzeBestand(model, catalogOf(candidates, maxTer), universe, next.filter(e => e.amountEur > 0), maxTer);
       }
     },
     [portfolio, setPortfolio, view, model, savingsMode, candidates, maxTer, universe, computeSavings, analyzeBestand],
@@ -573,6 +601,22 @@ export default function Home() {
     [portfolio, setPortfolio, view, model, savingsMode, computeSavings],
   );
 
+  /* ---- Depotwert nachträglich ändern (inline in der Tabelle) ---- */
+
+  const changeAmount = useCallback(
+    (isin: string, amountEur: number) => {
+      const next = portfolio.map(e => (e.isin === isin ? { ...e, amountEur } : e));
+      setPortfolio(next);
+      // Bestand zählt in beiden Ansichten → in beiden live auffrischen.
+      if (view === 'sparplan') {
+        computeSavings(model, savingsMode, next);
+      } else {
+        analyzeBestand(model, catalogOf(candidates, maxTer), universe, next.filter(e => e.amountEur > 0), maxTer);
+      }
+    },
+    [portfolio, setPortfolio, view, model, savingsMode, computeSavings, analyzeBestand, candidates, maxTer, universe],
+  );
+
   const analyze = useCallback(() => {
     if (view === 'sparplan') {
       computeSavings(model, savingsMode);
@@ -591,13 +635,7 @@ export default function Home() {
   const showMissingAfter =
     result !== null && missingCodesDiffer(result.currentMissingCountries, result.missingCountries);
 
-  /* ---- Vorschlag: „Diesen Monat kaufen“ + Tabellen-Mapping ---- */
-  const buyList = proposalResult
-    ? [...proposalResult.allocations]
-        .filter(a => a.suggestedMonthlyEur > 0)
-        .sort((a, b) => b.suggestedMonthlyEur - a.suggestedMonthlyEur)
-    : [];
-
+  /* ---- Vorschlag: Tabellen-Mapping ---- */
   const proposalAllocations = proposalResult
     ? proposalResult.allocations
         .filter(
@@ -679,6 +717,7 @@ export default function Home() {
           setReplacement(null);
           void deleteActiveDepot();
         }}
+        onRename={name => void renameActiveDepot(name)}
       />
       <PortfolioInput
         portfolio={portfolio}
@@ -687,6 +726,7 @@ export default function Home() {
         onAdd={addEtf}
         onRemove={removeEtf}
         onMonthlyChange={changeMonthly}
+        onAmountChange={changeAmount}
       />
       {error && <div className="error">{error}</div>}
 
@@ -1039,37 +1079,15 @@ export default function Home() {
                 </section>
                 <section className={`card ${styles.topDeltasCard}`}>
                   <h3>
-                    Diesen Monat kaufen
-                    <SimpleTooltip text="Deine monatliche Sparrate, aufgeteilt auf die ETFs — die wichtigste Position steht ganz oben. Grün = mehr als bisher, Rot = weniger als bisher." />
+                    Sparplan-Änderung (Ist → Ziel)
+                    <SimpleTooltip text="Vergleich: deine aktuelle Sparrate (Ist) vs. die vorgeschlagene Sparrate (Ziel) je ETF, in €/Monat und als Anteil der Monatsrate. Grün = mehr besparen, Rot = weniger besparen. Spalten sind sortierbar (klick)." />
                   </h3>
-                  <ol className="rankList">
-                    {buyList.map(a => (
-                      <li key={a.isin}>
-                        <span>
-                          {a.name}
-                          {a.currentMonthlyEur <= 0 &&
-                            (!portfolioIsinSet.has(a.isin) ? (
-                              <small className="chipNew">neuer ETF</small>
-                            ) : (
-                              <small className="buyDelta">neu im Sparplan</small>
-                            ))}
-                          {a.againstMarket && (
-                            <small className="chipWarn">gegen den Weltmarkt gerichtet</small>
-                          )}
-                          {a.reserve && (
-                            <small className="chipReserve">Reserve, unverändert</small>
-                          )}
-                        </span>
-                        <span className="num">
-                          <b>{eurMonth(a.suggestedMonthlyEur)}</b>{' '}
-                          <small className={`buyDelta ${a.deltaEur >= 0 ? 'pos' : 'neg'}`}>
-                            {a.deltaEur >= 0 ? '+' : '−'}
-                            {eurMonth(Math.abs(a.deltaEur))} vs. heute
-                          </small>
-                        </span>
-                      </li>
-                    ))}
-                  </ol>
+                  <RebalancingTable
+                    allocations={proposalAllocations}
+                    totalEur={proposalResult.totalMonthlyEur}
+                    newIsins={newInResult(proposalAllocations)}
+                    showSharePct
+                  />
                 </section>
 
                 {usesCatalog(universe) && additions && (
@@ -1085,18 +1103,6 @@ export default function Home() {
                   <p className="muted">Neue ETFs werden geladen …</p>
                 )}
 
-                <section className={`card ${styles.wideCard}`}>
-                  <h3>
-                    Sparplan-Änderung (Ist → Ziel)
-                    <SimpleTooltip text="Vergleich: deine aktuelle Sparrate (Ist) vs. die vorgeschlagene Sparrate (Ziel) je ETF, in €/Monat und als Anteil der Monatsrate. Grün = mehr besparen, Rot = weniger besparen. Spalten sind sortierbar (klick)." />
-                  </h3>
-                  <RebalancingTable
-                    allocations={proposalAllocations}
-                    totalEur={proposalResult.totalMonthlyEur}
-                    newIsins={newInResult(proposalAllocations)}
-                    showSharePct
-                  />
-                </section>
                 <section className={`card ${styles.countryCard}`}>
                   <h3>Länder der vorgeschlagenen Käufe</h3>
                   <DriftBars data={toDriftData(proposalResult.flowCountryDrift).slice(0, 25)} />

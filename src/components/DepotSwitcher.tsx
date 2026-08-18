@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import type { Depot } from '@/lib/db/types';
 
 export function DepotSwitcher({
@@ -10,6 +10,7 @@ export function DepotSwitcher({
   hydrated,
   onSwitch,
   onCreate,
+  onRename,
   onDelete,
 }: {
   depots: Depot[];
@@ -18,9 +19,15 @@ export function DepotSwitcher({
   hydrated: boolean;
   onSwitch: (id: number) => void;
   onCreate: (name: string) => void;
+  onRename: (name: string) => void;
   onDelete: () => void;
 }) {
   const [newName, setNewName] = useState('');
+  const [renaming, setRenaming] = useState(false);
+  const [renameDraft, setRenameDraft] = useState('');
+  const escapeRef = useRef(false);
+
+  const active = depots.find(d => d.id === activeId) ?? null;
 
   const create = () => {
     const name = newName.trim();
@@ -29,22 +36,66 @@ export function DepotSwitcher({
     setNewName('');
   };
 
+  const startRename = () => {
+    if (!active || renaming) return;
+    setRenameDraft(active.name);
+    setRenaming(true);
+  };
+
+  const commitRename = () => {
+    if (escapeRef.current) {
+      escapeRef.current = false;
+      setRenaming(false);
+      return;
+    }
+    const name = renameDraft.trim();
+    setRenaming(false);
+    if (!name || !active || name === active.name) return;
+    onRename(name);
+  };
+
   return (
     <section className="card">
       <div className="depotRow">
         <label htmlFor="depot-select">Depot</label>
-        <select
-          id="depot-select"
-          value={activeId ?? ''}
-          disabled={hydrated && (loading || depots.length === 0) ? true : undefined}
-          onChange={e => onSwitch(Number(e.target.value))}
+        {renaming && active ? (
+          <input
+            type="text"
+            value={renameDraft}
+            aria-label="Depotname"
+            onChange={e => setRenameDraft(e.target.value)}
+            onBlur={commitRename}
+            onKeyDown={e => {
+              if (e.key === 'Enter') (e.target as HTMLInputElement).blur();
+              if (e.key === 'Escape') {
+                escapeRef.current = true;
+                (e.target as HTMLInputElement).blur();
+              }
+            }}
+          />
+        ) : (
+          <select
+            id="depot-select"
+            value={activeId ?? ''}
+            disabled={hydrated && (loading || depots.length === 0) ? true : undefined}
+            onChange={e => onSwitch(Number(e.target.value))}
+          >
+            {depots.map(d => (
+              <option key={d.id} value={d.id}>
+                {d.name}
+              </option>
+            ))}
+          </select>
+        )}
+        <button
+          type="button"
+          aria-label="Depot umbenennen"
+          title="Depot umbenennen"
+          disabled={hydrated && (loading || !active) ? true : undefined}
+          onClick={startRename}
         >
-          {depots.map(d => (
-            <option key={d.id} value={d.id}>
-              {d.name}
-            </option>
-          ))}
-        </select>
+          ✎
+        </button>
         <input
           type="text"
           placeholder="Neues Depot"

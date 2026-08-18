@@ -3,15 +3,48 @@
 import { useState } from 'react';
 import type { PortfolioEtf } from '@/lib/optimizer/optimize';
 
-function eur(n: number): string {
-  return n.toLocaleString('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
-}
-
 /** Liest einen Betrag aus dem Eingabefeld: leer → 0, ungültig → null. */
 function parseEuro(raw: string): number | null {
   if (raw.trim() === '') return 0;
   const n = Number(raw.trim().replace(',', '.'));
   return Number.isFinite(n) ? n : null;
+}
+
+/** Inline editierbarer Depotwert je Zeile (nachträglich änderbar). */
+function AmountCell({
+  etf,
+  onCommit,
+}: {
+  etf: PortfolioEtf;
+  onCommit: (isin: string, amountEur: number) => void;
+}) {
+  const [draft, setDraft] = useState<string | null>(null);
+  const current = etf.amountEur > 0 ? String(etf.amountEur) : '';
+  const display = draft ?? current;
+
+  const commit = () => {
+    if (draft === null) return;
+    const parsed = parseEuro(draft);
+    setDraft(null);
+    if (parsed === null || parsed < 0) return;
+    onCommit(etf.isin, parsed);
+  };
+
+  return (
+    <input
+      className="monthlyInput"
+      type="text"
+      inputMode="decimal"
+      placeholder="—"
+      value={display}
+      aria-label={`Depotwert für ${etf.data.profile.name}`}
+      onChange={e => setDraft(e.target.value)}
+      onBlur={commit}
+      onKeyDown={e => {
+        if (e.key === 'Enter') (e.target as HTMLInputElement).blur();
+      }}
+    />
+  );
 }
 
 /** Inline editierbare Sparrate je Zeile (nachträglich änderbar). */
@@ -58,6 +91,7 @@ export function PortfolioInput({
   onAdd,
   onRemove,
   onMonthlyChange,
+  onAmountChange,
 }: {
   portfolio: PortfolioEtf[];
   loading: boolean;
@@ -65,6 +99,7 @@ export function PortfolioInput({
   onAdd: (isin: string, amountEur: number, monthlyEur?: number) => void;
   onRemove: (isin: string) => void;
   onMonthlyChange: (isin: string, monthlyEur: number | undefined) => void;
+  onAmountChange: (isin: string, amountEur: number) => void;
 }) {
   const [isin, setIsin] = useState('');
   const [amount, setAmount] = useState('');
@@ -140,7 +175,9 @@ export function PortfolioInput({
                   {e.data.profile.name}
                   <div className="isinSub">{e.isin}</div>
                 </td>
-                <td className="num">{eur(e.amountEur)}</td>
+                <td className="num">
+                  <AmountCell etf={e} onCommit={onAmountChange} />
+                </td>
                 <td className="num">
                   <MonthlyCell etf={e} onCommit={onMonthlyChange} />
                 </td>
